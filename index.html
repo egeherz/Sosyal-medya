@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kovboy Tarzı Sosyal Medya Linkleri</title>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Orbitron&family=Poppins:wght@600&display=swap" rel="stylesheet" />
+<style>
+  /* Genel reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+
+  body {
+    background: linear-gradient(135deg, #1a120b, #392f26);
+    font-family: 'Poppins', sans-serif;
+    color: #ffd966;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 15px;
+    overflow-x: hidden;
+  }
+
+  /* Başlık ve saat */
+  header {
+    font-family: 'Alfa Slab One', cursive;
+    font-size: 2.5rem;
+    text-shadow:
+      0 0 8px #ffb300,
+      0 0 15px #ff8c00;
+    margin-bottom: 8px;
+    user-select: none;
+  }
+
+  #clock {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.3rem;
+    color: #ffbb33;
+    text-shadow: 0 0 6px #ffaa00;
+    margin-bottom: 30px;
+  }
+
+  /* Buton grubu */
+  .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    max-width: 460px;
+  }
+
+  /* Butonlar */
+  a.btn {
+    flex: 1 1 45%;
+    max-width: 220px;
+    background: linear-gradient(135deg, #d47a00, #ffbb33);
+    box-shadow:
+      0 0 10px #ffb300,
+      0 0 20px #ff8c00,
+      inset 0 0 15px #fff2a8;
+    border-radius: 30px;
+    text-decoration: none;
+    color: #3a1c00;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 14px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+    box-shadow:
+      0 0 12px #ffb300,
+      0 0 30px #ff8c00,
+      inset 0 0 15px #fff2a8;
+    text-shadow: 0 0 6px #fff7cc;
+  }
+
+  a.btn:hover {
+    transform: scale(1.1) rotate(-3deg);
+    box-shadow:
+      0 0 20px #fff176,
+      0 0 40px #ff8c00,
+      inset 0 0 25px #fff3b0;
+    color: #5a3500;
+    text-shadow:
+      0 0 10px #fffde7,
+      0 0 15px #ffd54f;
+  }
+
+  /* Buton ikonları */
+  .btn i {
+    font-size: 1.5rem;
+    filter: drop-shadow(0 0 3px #ffcc33);
+  }
+
+  /* Responsive */
+  @media(max-width: 600px) {
+    a.btn {
+      flex: 1 1 45%;
+      font-size: 1rem;
+      padding: 12px 0;
+      max-width: none;
+    }
+  }
+
+  @media(max-width: 360px) {
+    .btn-group {
+      gap: 12px;
+    }
+    a.btn {
+      flex: 1 1 100%;
+      max-width: none;
+    }
+  }
+</style>
+
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<header>Kovboy Sosyal</header>
+<div id="clock" aria-live="polite" aria-atomic="true" aria-label="Şu anki saat"></div>
+
+<div class="btn-group" role="navigation" aria-label="Sosyal medya bağlantıları">
+  <a href="https://www.instagram.com/egeherz" target="_blank" rel="noopener noreferrer" class="btn" aria-label="Instagram">
+    <i class="fab fa-instagram"></i> Instagram
+  </a>
+  <a href="https://t.me/egeherz" target="_blank" rel="noopener noreferrer" class="btn" aria-label="Telegram">
+    <i class="fab fa-telegram"></i> Telegram
+  </a>
+  <a href="https://wa.me/447846848820" target="_blank" rel="noopener noreferrer" class="btn" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i> WhatsApp
+  </a>
+  <a href="https://www.tiktok.com/@egeherz" target="_blank" rel="noopener noreferrer" class="btn" aria-label="TikTok">
+    <i class="fab fa-tiktok"></i> TikTok
+  </a>
+</div>
+
+<script>
+  // Saat ve tarih animasyonu
+  function updateClock() {
+    const now = new Date();
+    const days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
+    const dayName = days[now.getDay()];
+    const date = now.toLocaleDateString('tr-TR');
+    const time = now.toLocaleTimeString('tr-TR', { hour12: false });
+    document.getElementById('clock').textContent = `${dayName}, ${date} - ${time}`;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+</script>
+
+</body>
+</html>

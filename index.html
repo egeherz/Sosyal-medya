@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bartın Ege Karahanlı - Sosyal Hesaplarım</title>
+
+<!-- Google AdSense -->
+<script data-ad-client="ca-pub-3792540598411579" async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<style>
+  /* Temel stil ve modal */
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9f9f9;
+    margin: 0; padding: 0;
+    color: #333;
+  }
+  header {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+  }
+  main {
+    max-width: 480px;
+    margin: 1rem auto;
+    padding: 0 1rem;
+  }
+  h1#pageHeader {
+    font-weight: 800;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  /* Sosyal hesap kartları */
+  .accounts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+  .account {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 7px rgb(0 0 0 / 0.12);
+    padding: 0.8rem 1rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.25s ease;
+  }
+  .account:hover {
+    background-color: #444;
+    color: #eee;
+  }
+  /* Hakkımda ve Gizlilik butonları */
+  #aboutBtn, #privacyBtn {
+    width: 100%;
+    margin-top: 0.8rem;
+    padding: 1rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    background-color: #222;
+    color: white;
+    box-shadow: 0 4px 9px rgb(0 0 0 / 0.25);
+    transition: background-color 0.3s ease;
+  }
+  #aboutBtn:hover, #privacyBtn:hover {
+    background-color: #555;
+  }
+  /* Modal arka plan */
+  .modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    z-index: 9999;
+  }
+  .modal[aria-hidden="true"] {
+    display: none;
+  }
+  /* Modal içerik kutusu */
+  .modal-content {
+    background: white;
+    border-radius: 16px;
+    max-width: 480px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 6px 14px rgb(0 0 0 / 0.25);
+    outline: none;
+  }
+  .modal-content h2 {
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  .modal-content p {
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .modal-content a {
+    color: #0078d7;
+    text-decoration: none;
+  }
+  .modal-content a:hover {
+    text-decoration: underline;
+  }
+  /* Geri butonu */
+  .back-btn {
+    display: inline-block;
+    background-color: #0078d7;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem;
+    user-select: none;
+  }
+  .back-btn:hover {
+    background-color: #005fa3;
+  }
+  /* Dil ve tema seçim alanları */
+  #controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  select {
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    border: 1.5px solid #aaa;
+    cursor: pointer;
+    background-color: white;
+  }
+  select:focus {
+    outline-color: #0078d7;
+    border-color: #0078d7;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="pageHeader">HESAPLARIM ⬇️</h1>
+  <div id="clock" aria-live="polite" style="font-weight:700; font-size:1.2rem; letter-spacing: 0.15rem;"></div>
+</header>
+
+<main>
+  <div id="controls" aria-label="Dil ve Tema Seçimi">
+    <select id="languageSelect" aria-label="Dil Seçimi">
+      <option value="tr">Türkçe</option>
+      <option value="en">English</option>
+      <option value="ru">Русский</option>
+      <option value="de">Deutsch</option>
+      <option value="fr">Français</option>
+      <option value="es">Español</option>
+      <option value="it">Italiano</option>
+      <option value="ja">日本語</option>
+      <option value="zh">中文</option>
+      <option value="ar">العربية</option>
+    </select>
+
+    <select id="themeSelect" aria-label="Tema Seçimi">
+      <option value="default">Varsayılan Tema</option>
+      <option value="dark">Koyu Tema</option>
+      <option value="blue">Mavi Tema</option>
+    </select>
+  </div>
+
+  <div class="accounts" role="list">
+    <a href="https://instagram.com/egeherz" target="_blank" class="account" role="listitem" aria-label="Instagram">Instagram</a>
+    <a href="https://t.me/egeherz" target="_blank" class="account" role="listitem" aria-label="Telegram">Telegram</a>
+    <a href="https://wa.me/447846848820" target="_blank" class="account" role="listitem" aria-label="WhatsApp">WhatsApp</a>
+    <a href="https://www.tiktok.com/@egeherz" target="_blank" class="account" role="listitem" aria-label="TikTok">TikTok</a>
+  </div>
+
+  <button id="aboutBtn" aria-haspopup="dialog" aria-controls="aboutModal" aria-expanded="false">Hakkımda</button>
+  <button id="privacyBtn" aria-haspopup="dialog" aria-controls="privacyModal" aria-expanded="false">Gizlilik Politikası</button>
+</main>
+
+<!-- Hakkımda Modal -->
+<div id="aboutModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle" aria-hidden="true" tabindex="-1">
+  <div class="modal-content" tabindex="0">
+    <h2 id="aboutTitle">Hakkımda - Bartın Ege Karahanlı'nın Kişisel Bilgileri ve Hedefleri</h2>
+    <div id="aboutContent">
+      <!-- Dinamik içerik buraya -->
+    </div>
+    <button class="back-btn" aria-label="Geri" type="button">Geri</button>
+  </div>
+</div>
+
+<!-- Gizlilik Politikası Modal -->
+<div id="privacyModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle" aria-hidden="true" tabindex="-1">
+  <div class="modal-content" tabindex="0">
+    <h2 id="privacyTitle">Gizlilik Politikası - Ziyaretçi Verilerinin Kullanımı ve Korunması</h2>
+    <div id="privacyContent">
+      <!-- Dinamik içerik buraya -->
+    </div>
+    <button class="back-btn" aria-label="Geri" type="button">Geri</button>
+  </div>
+</div>
+
+<script>
+  // Çok dilli metinler
+  const texts = {
+    tr: {
+      header: "HESAPLARIM ⬇️",
+      aboutTitle: "Hakkımda - Bartın Ege Karahanlı'nın Kişisel Bilgileri ve Hedefleri",
+      aboutContent: `
+        <p>Merhaba! Ben Bartın Ege Karahanlı. Yazılım geliştirme alanında uzmanlaşmış, C++, Python, Node.js ve C# dillerinde deneyimli bir yazılımcıyım. İngilizce, Rusça ve Türkçe dillerini akıcı şekilde konuşuyorum.</p>
+        <p>Yazılım projelerinde yenilikçi ve yaratıcı çözümler üretmek benim tutkum. Teknoloji dünyasındaki gelişmeleri yakından takip eder, sürekli öğrenmeye ve kendimi geliştirmeye önem veririm.</p>
+        <p>Vizyonum, teknolojiyi insan hayatını kolaylaştırmak için en iyi şekilde kullanmak ve global çapta projelerde yer almak.</p>
+        <p>Bu web sitesi, sosyal medya hesaplarımı ve profesyonel bilgilerimi paylaşmak amacıyla oluşturuldu. Bana ulaşmak için bağlantılardan birini kullanabilirsiniz.</p>
+      `,
+      privacyTitle: "Gizlilik Politikası - Ziyaretçi Verilerinin Kullanımı ve Korunması",
+      privacyContent: `
+        <p>Bu web sitesi, ziyaretçi gizliliğine büyük önem verir. Sitenin kullanımı sırasında toplanan veriler, sadece hizmet kalitesini artırmak ve reklamların doğru şekilde gösterilmesi için kullanılır.</p>
+        <p>Kişisel bilgileriniz asla üçüncü taraflarla paylaşılmaz ve güvenlik önlemleriyle korunur. Google AdSense reklamları, Google tarafından sağlanan çerezleri kullanabilir; ancak bu çerezler sizin kimliğinizi doğrudan tanımlamaz.</p>
+        <p>Web sitemizde bulunan reklamlar Google tarafından yönetilmekte olup, Google’ın <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Gizlilik Politikası</a> geçerlidir.</p>
+        <p>Gizlilik konusundaki sorularınız için benimle iletişime geçmekten çekinmeyin.</p>
+      `
+    },
+    en: {
+      header: "MY ACCOUNTS ⬇️",
+      aboutTitle: "About Me - Personal Information and Goals of Bartın Ege Karahanlı",
+      aboutContent: `
+        <p>Hello! I'm Bartın Ege Karahanlı, a software developer specialized in C++, Python, Node.js, and C#. I speak English, Russian, and Turkish fluently.</p>
+        <p>I'm passionate about creating innovative and creative solutions in software projects. I closely follow technological developments and prioritize continuous learning and self-improvement.</p>
+        <p>My vision is to leverage technology to simplify human life and participate in global-scale projects.</p>
+        <p>This website is created to share my social media accounts and professional information. You can reach me via the links provided.</p>
+      `,
+      privacyTitle: "Privacy Policy - Visitor Data Usage and Protection",
+      privacyContent: `
+        <p>This website highly values visitor privacy. Data collected during site usage is only used to improve service quality and display relevant ads.</p>
+        <p>Your personal information is never shared with third parties and is protected with security measures. Google AdSense ads may use cookies provided by Google; however, these cookies do not directly identify you.</p>
+        <p>The ads on our site are managed by Google and are subject to Google's <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</p>
+        <p>If you have any questions about privacy, feel free to contact me.</p>
+      `
+    },
+    ru: {
+      header: "МОИ АККАУНТЫ ⬇️",
+      aboutTitle: "Обо мне - Личная информация и цели Бартина Эге Караханлы",
+      aboutContent: `
+        <p>Здравствуйте! Я - Бартин Эге Караханлы, разработчик программного обеспечения, специализирующийся на C++, Python, Node.js и C#. Свободно говорю на английском, русском и турецком языках.</p>
+        <p>Мне нравится создавать инновационные и креативные решения в программных проектах. Я внимательно слежу за технологическими разработками и уделяю большое внимание непрерывному обучению и саморазвитию.</p>
+        <p>Моя цель - использовать технологии для упрощения жизни людей и участвовать в проектах глобального масштаба.</p>
+        <p>Этот сайт создан для того, чтобы поделиться моими аккаунтами в социальных сетях и профессиональной информацией. Вы можете связаться со мной через предоставленные ссылки.</p>
+      `,
+      privacyTitle: "Политика конфиденциальности - Использование и защита данных посетителей",
+      privacyContent: `
+        <p>Этот сайт очень ценит конфиденциальность посетителей. Данные, собираемые во время использования сайта, используются только для улучшения качества обслуживания и отображения релевантной рекламы.</p>
+        <p>Ваша личная информация никогда не передается третьим лицам и защищена мерами безопасности. Реклама Google AdSense может использовать файлы cookie, предоставленные Google, однако эти файлы cookie не идентифицируют вас напрямую.</p>
+        <p>Реклама на нашем сайте управляется Google и подчиняется <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Политике конфиденциальности</a> Google.</p>
+        <p>Если у вас есть вопросы о конфиденциальности, не стесняйтесь связаться со мной.</p>
+      `
+    },
+    de: {
+      header: "MEINE KONTO ⬇️",
+      aboutTitle: "Über mich - Persönliche Informationen und Ziele von Bartın Ege Karahanlı",
+      aboutContent: `
+        <p>Hallo! Ich bin Bartın Ege Karahanlı, ein Softwareentwickler, spezialisiert auf C++, Python, Node.js und C#. Ich spreche fließend Englisch, Russisch und Türkisch.</p>
+        <p>Ich liebe es, innovative und kreative Lösungen in Softwareprojekten zu entwickeln. Ich verfolge technologische Entwicklungen genau und lege großen Wert auf kontinuierliches Lernen und Selbstverbesserung.</p>
+        <p>Meine Vision ist es, Technologie zu nutzen, um das Leben der Menschen zu vereinfachen und an globalen Projekten teilzunehmen.</p>
+        <p>Diese Website wurde erstellt, um meine sozialen Medien und professionellen Informationen zu teilen. Sie können mich über die bereitgestellten Links erreichen.</p>
+      `,
+      privacyTitle: "Datenschutzrichtlinie - Nutzung und Schutz von Besucherdaten",
+      privacyContent: `
+        <p>Diese Website legt großen Wert auf den Schutz der Privatsphäre der Besucher. Die während der Nutzung der Website gesammelten Daten werden nur verwendet, um die Servicequalität zu verbessern und relevante Anzeigen anzuzeigen.</p>
+        <p>Ihre persönlichen Daten werden niemals an Dritte weitergegeben und sind durch Sicherheitsmaßnahmen geschützt. Google AdSense-Anzeigen können Cookies von Google verwenden; diese Cookies identifizieren Sie jedoch nicht direkt.</p>
+        <p>Die Anzeigen auf unserer Website werden von Google verwaltet und unterliegen der <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Datenschutzrichtlinie</a> von Google.</p>
+        <p>Bei Fragen zum Datenschutz können Sie mich gerne kontaktieren.</p>
+      `
+    },
+    fr: {
+      header: "MES COMPTES ⬇️",
+      aboutTitle: "À propos de moi - Informations personnelles et objectifs de Bartın Ege Karahanlı",
+      aboutContent: `
+        <p>Bonjour! Je suis Bartın Ege Karahanlı, développeur spécialisé en C++, Python, Node.js et C#. Je parle couramment anglais, russe et turc.</p>
+        <p>Je suis passionné par la création de solutions innovantes et créatives dans les projets logiciels. Je suis de près les développements technologiques et j'accorde une grande importance à l'apprentissage continu et à l'amélioration personnelle.</p>
+        <p>Ma vision est d'utiliser la technologie pour simplifier la vie humaine et participer à des projets à l'échelle mondiale.</p>
+        <p>Ce site web a été créé pour partager mes comptes de réseaux sociaux et mes informations professionnelles. Vous pouvez me contacter via les liens fournis.</p>
+      `,
+      privacyTitle: "Politique de confidentialité - Utilisation et protection des données des visiteurs",
+      privacyContent: `
+        <p>Ce site attache une grande importance à la confidentialité des visiteurs. Les données collectées lors de l'utilisation du site sont uniquement utilisées pour améliorer la qualité du service et afficher des annonces pertinentes.</p>
+        <p>Vos informations personnelles ne sont jamais partagées avec des tiers et sont protégées par des mesures de sécurité. Les annonces Google AdSense peuvent utiliser des cookies fournis par Google; cependant, ces cookies ne vous identifient pas directement.</p>
+        <p>Les annonces sur notre site sont gérées par Google et sont soumises à la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Politique de confidentialité</a> de Google.</p>
+        <p>Si vous avez des questions sur la confidentialité, n'hésitez pas à me contacter.</p>
+      `
+    },
+    es: {
+      header: "MIS CUENTAS ⬇️",
+      aboutTitle: "Sobre mí - Información personal y objetivos de Bartın Ege Karahanlı",
+      aboutContent: `
+        <p>¡Hola! Soy Bartın Ege Karahanlı, desarrollador de software especializado en C++, Python, Node.js y C#. Hablo inglés, ruso y turco con fluidez.</p>
+        <p>Me apasiona crear soluciones innovadoras y creativas en proyectos de software. Sigo de cerca los desarrollos tecnológicos y doy prioridad al aprendizaje continuo y al auto-mejoramiento.</p>
+        <p>Mi visión es aprovechar la tecnología para simplificar la vida humana y participar en proyectos a escala global.</p>
+        <p>Este sitio web fue creado para compartir mis cuentas de redes sociales e información profesional. Puedes contactarme a través de los enlaces proporcionados.</p>
+      `,
+      privacyTitle: "Política de privacidad - Uso y protección de datos de visitantes",
+      privacyContent: `
+        <p>Este sitio web valora mucho la privacidad de los visitantes. Los datos recopilados durante el uso del sitio solo se utilizan para mejorar la calidad del servicio y mostrar anuncios relevantes.</p>
+        <p>Tu información personal nunca se comparte con terceros y está protegida por medidas de seguridad. Los anuncios de Google AdSense pueden usar cookies proporcionadas por Google; sin embargo, estas cookies no te identifican directamente.</p>
+        <p>Los anuncios en nuestro sitio son gestionados por Google y están sujetos a la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Política de privacidad</a> de Google.</p>
+        <p>Si tienes preguntas sobre la privacidad, no dudes en contactarme.</p>
+      `
+    },
+    it: {
+      header: "I MIEI ACCOUNT ⬇️",
+      aboutTitle: "Chi sono - Informazioni personali e obiettivi di Bartın Ege Karahanlı",
+      aboutContent: `
+        <p>Ciao! Sono Bartın Ege Karahanlı, sviluppatore software specializzato in C++, Python, Node.js e C#. Parlo fluentemente inglese, russo e turco.</p>
+        <p>Mi appassiona creare soluzioni innovative e creative nei progetti software. Seguo da vicino gli sviluppi tecnologici e do grande importanza all'apprendimento continuo e al miglioramento personale.</p>
+        <p>La mia visione è utilizzare la tecnologia per semplificare la vita umana e partecipare a progetti su scala globale.</p>
+        <p>Questo sito web è stato creato per condividere i miei account social e le informazioni professionali. Puoi contattarmi tramite i link forniti.</p>
+      `,
+      privacyTitle: "Informativa sulla privacy - Uso e protezione dei dati dei visitatori",
+      privacyContent: `
+        <p>Questo sito web dà molta importanza alla privacy dei visitatori. I dati raccolti durante l'uso del sito vengono utilizzati solo per migliorare la qualità del servizio e mostrare annunci pertinenti.</p>
+        <p>Le tue informazioni personali non vengono mai condivise con terze parti e sono protette da misure di sicurezza. Gli annunci Google AdSense possono utilizzare cookie forniti da Google; tuttavia, questi cookie non ti identificano direttamente.</p>
+        <p>Gli annunci sul nostro sito sono gestiti da Google e sono soggetti all'<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Informativa sulla privacy</a> di Google.</p>
+        <p>Se hai domande sulla privacy, non esitare a contattarmi.</p>
+      `
+    },
+    ja: {
+      header: "私のアカウント ⬇️",
+      aboutTitle: "私について - Bartın Ege Karahanlıの個人情報と目標",
+      aboutContent: `
+        <p>こんにちは！私はBartın Ege Karahanlıです。C++、Python、Node.js、C#に特化したソフトウェア開発者です。英語、ロシア語、トルコ語を流暢に話します。</p>
+        <p>ソフトウェアプロジェクトで革新的でクリエイティブなソリューションを作成することに情熱を持っています。技術の進歩を注意深く追い、継続的な学習と自己改善を重視しています。</p>
+        <p>私のビジョンは、人々の生活を簡素化するために技術を活用し、グローバル規模のプロジェクトに参加することです。</p>
+        <p>このウェブサイトは、私のソーシャルメディアアカウントと専門情報を共有するために作成されました。リンクから私に連絡できます。</p>
+      `,
+      privacyTitle: "プライバシーポリシー - 訪問者データの使用と保護",
+      privacyContent: `
+        <p>このウェブサイトは、訪問者のプライバシーを非常に重視しています。サイト利用中に収集されたデータは、サービス品質の向上と関連広告の表示のみに使用されます。</p>
+        <p>個人情報は第三者と共有されず、セキュリティ対策によって保護されています。Google AdSenseの広告はGoogleが提供するクッキーを使用する場合がありますが、これらのクッキーはあなたを直接識別しません。</p>
+        <p>当サイトの広告はGoogleによって管理されており、Googleの<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>が適用されます。</p>
+        <p>プライバシーに関する質問があれば、お気軽にお問い合わせください。</p>
+      `
+    },
+    zh: {
+      header: "我的账户 ⬇️",
+      aboutTitle: "关于我 - Bartın Ege Karahanlı 的个人信息和目标",
+      aboutContent: `
+        <p>你好！我是 Bartın Ege Karahanlı，专注于 C++、Python、Node.js 和 C# 的软件开发人员。我流利地讲英语、俄语和土耳其语。</p>
+        <p>我热衷于在软件项目中创造创新和富有创意的解决方案。我密切关注技术发展，重视持续学习和自我提升。</p>
+        <p>我的愿景是利用技术简化人类生活，并参与全球项目。</p>
+        <p>此网站用于分享我的社交媒体账户和专业信息。您可以通过链接与我联系。</p>
+      `,
+      privacyTitle: "隐私政策 - 访客数据的使用和保护",
+      privacyContent: `
+        <p>本网站高度重视访客隐私。网站使用期间收集的数据仅用于提高服务质量和展示相关广告。</p>
+        <p>您的个人信息绝不会与第三方共享，并通过安全措施进行保护。Google AdSense 广告可能使用 Google 提供的 Cookie，但这些 Cookie 不会直接识别您的身份。</p>
+        <p>本网站上的广告由 Google 管理，受 Google 的<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">隐私政策</a>约束。</p>
+        <p>如果您对隐私有任何疑问，请随时与我联系。</p>
+      `
+    },
+    ar: {
+      header: "حساباتي ⬇️",
+      aboutTitle: "من أنا - المعلومات الشخصية والأهداف لـ Bartın Ege Karahanlı",
+      aboutContent: `
+        <p>مرحبًا! أنا Bartın Ege Karahanlı، مطور برامج متخصص في C++ وPython وNode.js وC#. أتحدث الإنجليزية والروسية والتركية بطلاقة.</p>
+        <p>أنا شغوف بابتكار حلول مبتكرة وخلاقة في مشاريع البرمجيات. أتابع التطورات التكنولوجية عن كثب وأعطي أولوية للتعلم المستمر وتحسين الذات.</p>
+        <p>رؤيتي هي استخدام التكنولوجيا لتبسيط حياة الإنسان والمشاركة في مشاريع على نطاق عالمي.</p>
+        <p>تم إنشاء هذا الموقع لمشاركة حساباتي على وسائل التواصل الاجتماعي والمعلومات المهنية الخاصة بي. يمكنك التواصل معي عبر الروابط المقدمة.</p>
+      `,
+      privacyTitle: "سياسة الخصوصية - استخدام وحماية بيانات الزوار",
+      privacyContent: `
+        <p>يولي هذا الموقع أهمية كبيرة لخصوصية الزوار. تُستخدم البيانات التي يتم جمعها أثناء استخدام الموقع فقط لتحسين جودة الخدمة وعرض الإعلانات ذات الصلة.</p>
+        <p>لا تتم مشاركة معلوماتك الشخصية مع أطراف ثالثة أبدًا ويتم حمايتها بإجراءات أمنية. قد تستخدم إعلانات Google AdSense ملفات تعريف الارتباط التي توفرها Google؛ ولكن هذه الملفات لا تحدد هويتك بشكل مباشر.</p>
+        <p>تُدار الإعلانات على موقعنا بواسطة Google وتخضع لـ <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">سياسة الخصوصية</a> الخاصة بـ Google.</p>
+        <p>إذا كانت لديك أسئلة حول الخصوصية، فلا تتردد في الاتصال بي.</p>
+      `
+    }
+  };
+
+  // Elemanlar
+  const languageSelect = document.getElementById("languageSelect");
+  const themeSelect = document.getElementById("themeSelect");
+  const pageHeader = document.getElementById("pageHeader");
+  const aboutBtn = document.getElementById("aboutBtn");
+  const privacyBtn = document.getElementById("privacyBtn");
+  const mainContent = document.getElementById("mainContent");
+  const aboutTitle = document.getElementById("aboutTitle");
+  const aboutContent = document.getElementById("aboutContent");
+  const privacyTitle = document.getElementById("privacyTitle");
+  const privacyContent = document.getElementById("privacyContent");
+  const backBtn = document.getElementById("backBtn");
+
+  // URL Hash kontrolü ve sayfa yüklenirken dil seçimi
+  function loadLanguageFromStorageOrDefault() {
+    const savedLang = localStorage.getItem("selectedLanguage") || "tr";
+    languageSelect.value = savedLang;
+    updateTexts(savedLang);
+    return savedLang;
+  }
+
+  // Dil değiştiğinde içeriği güncelle ve yerel depolamaya kaydet
+  languageSelect.addEventListener("change", () => {
+    const selectedLang = languageSelect.value;
+    localStorage.setItem("selectedLanguage", selectedLang);
+    updateTexts(selectedLang);
+  });
+
+  // Sayfa yenilendiğinde seçilen dili koru
+  document.addEventListener("DOMContentLoaded", () => {
+    const lang = loadLanguageFromStorageOrDefault();
+    updateTexts(lang);
+    showMainPage();
+  });
+
+  // İçerik güncelleme fonksiyonu
+  function updateTexts(lang) {
+    pageHeader.textContent = translations[lang].header;
+    aboutBtn.textContent = translations[lang].aboutTitle;
+    privacyBtn.textContent = translations[lang].privacyTitle;
+    aboutTitle.textContent = translations[lang].aboutTitle;
+    aboutContent.innerHTML = translations[lang].aboutContent;
+    privacyTitle.textContent = translations[lang].privacyTitle;
+    privacyContent.innerHTML = translations[lang].privacyContent;
+  }
+
+  // Sayfa geçiş fonksiyonları
+  aboutBtn.addEventListener("click", () => {
+    showAboutPage();
+  });
+
+  privacyBtn.addEventListener("click", () => {
+    showPrivacyPage();
+  });
+
+  backBtn.addEventListener("click", () => {
+    showMainPage();
+  });
+
+  function showMainPage() {
+    mainContent.style.display = "none";
+    aboutTitle.style.display = "none";
+    aboutContent.style.display = "none";
+    privacyTitle.style.display = "none";
+    privacyContent.style.display = "none";
+    backBtn.style.display = "none";
+    aboutBtn.style.display = "inline-block";
+    privacyBtn.style.display = "inline-block";
+  }
+
+  function showAboutPage() {
+    mainContent.style.display = "block";
+    aboutTitle.style.display = "block";
+    aboutContent.style.display = "block";
+    privacyTitle.style.display = "none";
+    privacyContent.style.display = "none";
+    backBtn.style.display = "inline-block";
+    aboutBtn.style.display = "none";
+    privacyBtn.style.display = "none";
+  }
+
+  function showPrivacyPage() {
+    mainContent.style.display = "block";
+    aboutTitle.style.display = "none";
+    aboutContent.style.display = "none";
+    privacyTitle.style.display = "block";
+    privacyContent.style.display = "block";
+    backBtn.style.display = "inline-block";
+    aboutBtn.style.display = "none";
+    privacyBtn.style.display = "none";
+  }
+</script>
+
+</body>
+</html>

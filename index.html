@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HESAPLARIM ⬇️ | Egeherz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca‑pub‑7831163932493310" crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --bg: #f9fafb;
+      --fg: #333;
+      --btn-bg: #555;
+      --btn-shadow: rgba(0,0,0,0.1);
+    }
+    .theme-dark     { --bg:#1e1e2f; --fg:#f5f5f5; --btn-bg:#444; --btn-shadow:rgba(255,255,255,0.1); }
+    .theme-light    { --bg:#ffffff; --fg:#222; --btn-bg:#777; --btn-shadow:rgba(0,0,0,0.1); }
+    .theme-purple   { --bg:#faf3ff; --fg:#2b0e38; --btn-bg:#6a0dad; --btn-shadow:rgba(106,13,173,0.3); }
+    .theme-pastel   { --bg:#fdf6e3; --fg:#5a4e3c; --btn-bg:#ffb3ba; --btn-shadow:rgba(255,179,186,0.3); }
+
+    *, *::before,*::after { margin:0;padding:0;box-sizing:border-box; }
+    body {
+      font-family:'Inter',sans-serif;
+      min-height:100vh;
+      background-color:var(--bg);
+      color:var(--fg);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:40px 20px;
+      transition:background .3s,color .3s;
+    }
+    header { font-weight:700;font-size:2.6rem;letter-spacing:.07em;margin-bottom:20px;user-select:none; }
+    #clock { font-weight:500;font-size:1.3rem;margin-bottom:20px;user-select:none; }
+    .selectors select {
+      margin:0 8px 20px;
+      padding:8px 16px;
+      font-size:1rem;
+      border-radius:8px;
+      border:2px solid var(--btn-bg);
+      background:#fff;
+    }
+    .btn-group {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+      gap:16px;
+      width:100%;
+      max-width:600px;
+      margin-bottom:30px;
+    }
+    .btn {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:16px;
+      border-radius:16px;
+      font-weight:600;
+      font-size:1rem;
+      text-decoration:none;
+      color:#fff;
+      cursor:pointer;
+      background:var(--btn-bg);
+      box-shadow:0 4px 12px var(--btn-shadow);
+      transition:transform .2s,box-shadow .2s;
+      border:none;
+    }
+    .btn:hover { transform:translateY(-4px);box-shadow:0 8px 20px var(--btn-shadow); }
+    .btn i { font-size:2rem; filter:drop-shadow(0 0 2px rgba(0,0,0,0.4)); }
+
+    .modal {
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:999;
+      background:rgba(0,0,0,0.6);
+      align-items:center;
+      justify-content:center;
+    }
+    .modal-content {
+      background:#fff;
+      border-radius:12px;
+      padding:24px;
+      max-width:500px;
+      width:90%;
+      max-height:80vh;
+      overflow-y:auto;
+      position:relative;
+      text-align:left;
+    }
+    .close-btn, .back-btn {
+      position:absolute;
+      font-size:1.2rem;
+      border:none;
+      background:none;
+      cursor:pointer;
+    }
+    .close-btn { top:12px; right:16px; }
+    .back-btn  { top:12px; left:16px; }
+    .ads-container {
+      width:100%;
+      max-width:600px;
+      margin-bottom:30px;
+      display:flex;
+      justify-content:center;
+    }
+    @media(max-width:500px){
+      .btn-group { grid-template-columns:1fr; }
+      .btn { font-size:.9rem;padding:12px; }
+    }
+  </style>
+</head>
+<body class="theme-default">
+  <header id="header-title">HESAPLARIM ⬇️</header>
+  <div id="clock" aria-live="polite"></div>
+
+  <div class="selectors">
+    <select id="language-select" aria-label="Dil seçimi">
+      <option value="tr">Türkçe</option>
+      <option value="en">English</option>
+      <option value="ru">Русский</option>
+    </select>
+    <select id="theme-select" aria-label="Tema seçimi">
+      <option value="theme-default">Varsayılan</option>
+      <option value="theme-dark">Koyu</option>
+      <option value="theme-light">Aydınlık</option>
+      <option value="theme-purple">Mor</option>
+      <option value="theme-pastel">Pastel</option>
+    </select>
+  </div>
+
+  <main>
+    <section class="btn-group" role="list">
+      <a class="btn" href="https://instagram.com/egeherz" target="_blank"><i class="fab fa-instagram"></i><span>Instagram</span></a>
+      <a class="btn" href="https://t.me/egeherz" target="_blank"><i class="fab fa-telegram"></i><span>Telegram</span></a>
+      <a class="btn" href="https://wa.me/447846848820" target="_blank"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
+      <a class="btn" href="https://www.tiktok.com/@egeherz" target="_blank"><i class="fab fa-tiktok"></i><span>TikTok</span></a>
+      <button id="btn-about" class="btn"><i class="fas fa-info-circle"></i><span class="btn-text">Hakkımda</span></button>
+      <button id="btn-privacy" class="btn"><i class="fas fa-shield-alt"></i><span class="btn-text">Gizlilik</span></button>
+    </section>
+
+    <div class="ads-container">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca‑pub‑7831163932493310"
+           data-ad-slot="6819739349"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+
+    <div id="modal-about" class="modal" role="dialog">
+      <div class="modal-content">
+        <button class="back-btn">←</button>
+        <button class="close-btn">×</button>
+        <h2>Hakkımda</h2>
+        <div class="content-body"></div>
+      </div>
+    </div>
+
+    <div id="modal-privacy" class="modal" role="dialog">
+      <div class="modal-content">
+        <button class="back-btn">←</button>
+        <button class="close-btn">×</button>
+        <h2>Gizlilik Politikası</h2>
+        <div class="content-body"></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Saat güncellemesi
+    function updateClock() {
+      document.getElementById('clock').textContent =
+        new Date().toLocaleTimeString('tr-TR', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Tema
+    document.getElementById('theme-select').addEventListener('change', e => {
+      document.body.className = e.target.value;
+    });
+
+    // İçerik metinleri
+    const texts = {
+      tr: {
+        header: 'HESAPLARIM ⬇️',
+        about: `Merhaba kanka! Ben Egeherz — teknoloji manyağı, kod savaşçısı ve dijital göçebe. Sosyal medya hesaplarım hep aktif; takılmak, sohbet etmek, yeni projeler konuşmak isteyen herkese açığım.`,
+        privacy: `Dinle kardeşim, gizlilik politikasına bakıyorsan ya çok meraklısın ya da sıkıldın. Neyse, şu var: bu sayfada senden *tıkladığın dışında* hiçbir veriyi çalmıyorum. Reklam ekranı var, ama bu alanı ben değil Google dolduruyor. Yani ne yiyorum, ne içiyorum, ne salçalı makarna yediğim seni ilgilendirmez. Giriş yap, linklere bas, takıl... Özetle: tuttuğum tek şey; hangi butona basıldığı. O da sadece topluluk analizi için, ondan şikayet ediyorsan, 🙂 gidip Telegram’da kavga edebilirsin.`,
+        aboutBtn: 'Hakkımda',
+        privacyBtn: 'Gizlilik'
+      },
+      en: {
+        header: 'MY ACCOUNTS ⬇️',
+        about: `Hey buddy! I'm Egeherz — tech geek, code warrior & digital nomad. My social media is always buzzing; feel free to hit me up for chats, collabs or just plain nonsense.`,
+        privacy: `Alright pal, here's the scoop: I don’t collect any personal data except which button you clicked. Ads? Yeah, Google’s doing that. So chill, click whatever you like, and enjoy. If you’re bugged by this policy, go argue in Telegram—I'm not stopping you.`,
+        aboutBtn: 'About',
+        privacyBtn: 'Privacy'
+      },
+      ru: {
+        header: 'МОИ АККАУНТЫ ⬇️',
+        about: `Привет, друган! Я Egeherz — техногик, кодовый боец и цифровой кочевник. В соцсетях тусуюсь постоянно, так что пиши — поговорим или совместим проекты.`,
+        privacy: `Слушай, братан: я не собираю твои личные данные — кроме того, на какую кнопку ты нажал. Рекламу крутит Google. Лови ссылки, кликай, кайфуй. Если не устраивает, дерись в Telegram.`,
+        aboutBtn: 'О нас',
+        privacyBtn: 'Конфиденц.'
+      }
+    };
+
+    const langSel = document.getElementById('language-select');
+    const headerEl = document.getElementById('header-title');
+    const btnTexts = document.querySelectorAll('.btn-text');
+
+    langSel.addEventListener('change', e => {
+      const t = texts[e.target.value];
+      headerEl.textContent = t.header;
+      btnTexts[4].textContent = t.aboutBtn;
+      btnTexts[5].textContent = t.privacyBtn;
+    });
+
+    // Modal setup
+    function setupModal(btnId, modalId, key) {
+      const btn = document.getElementById(btnId);
+      const modal = document.getElementById(modalId);
+      const close = modal.querySelector('.close-btn');
+      const back = modal.querySelector('.back-btn');
+      const body = modal.querySelector('.content-body');
+
+      btn.addEventListener('click', () => {
+        const lang = langSel.value;
+        body.textContent = texts[lang][key];
+        modal.style.display = 'flex';
+      });
+      [close, back].forEach(el => el.addEventListener('click', () => modal.style.display = 'none'));
+      window.addEventListener('click', e => {
+        if (e.target === modal) modal.style.display = 'none';
+      });
+    }
+    setupModal('btn-about', 'modal-about', 'about');
+    setupModal('btn-privacy', 'modal-privacy', 'privacy');
+  </script>
+</body>
+</html>

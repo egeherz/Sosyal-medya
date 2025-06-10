@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hakkımda | Egeherz</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<!-- Google AdSense ana scripti burada, head içinde -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7831163932493310"
+     crossorigin="anonymous"></script>
+
+<style>
+  *, *::before, *::after {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 60px;
+    line-height: 1.5;
+    transition: background-color 0.5s, color 0.5s;
+  }
+  header {
+    font-weight: 700;
+    font-size: 2.6rem;
+    user-select: none;
+    letter-spacing: 0.07em;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  #clock {
+    font-weight: 500;
+    font-size: 1.3rem;
+    user-select: none;
+    margin-bottom: 40px;
+    font-feature-settings: "tnum";
+    letter-spacing: 0.02em;
+  }
+  /* Geri butonu */
+  a.back-btn {
+    margin-top: 30px;
+    padding: 12px 22px;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    background: #ff6f61;
+    color: white;
+    text-decoration: none;
+    box-shadow:
+      0 0 8px 1px #ff6f61,
+      0 0 25px 6px #ff6f61;
+    transition: box-shadow 0.3s ease, transform 0.15s ease;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  a.back-btn:hover,
+  a.back-btn:focus-visible {
+    transform: translateY(-3px);
+    box-shadow:
+      0 0 15px 2px #ff6f61,
+      0 0 45px 10px #ff6f61;
+    outline: none;
+  }
+  a.back-btn:active {
+    transform: translateY(0);
+    box-shadow:
+      0 0 9px 1px #ff6f61,
+      0 0 27px 7px #ff6f61;
+  }
+
+  /* Temalar */
+  body.theme-day {
+    background-color: #f9fafb;
+    color: #222;
+  }
+  body.theme-night {
+    background-color: #0f172a;
+    color: #cbd5e1;
+  }
+  body.theme-purple {
+    background-color: #1e0e4f;
+    color: #d8b4fe;
+  }
+  body.theme-turquoise {
+    background-color: #004d40;
+    color: #a7ffeb;
+  }
+
+  /* Reklam kapsayıcı */
+  .adsense-container {
+    margin: 30px auto;
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<header id="page-header">HAKKIMDA</header>
+<div id="clock" aria-live="polite" aria-atomic="true" aria-label="Şu anki saat"></div>
+
+<main style="max-width:600px; text-align:center; font-size:1.15rem; line-height:1.6;">
+  <p>
+    Merhaba! Ben Egeherz. Bu sayfa sosyal medya hesaplarım ve projelerim hakkında bilgi vermek için hazırlanmıştır.
+  </p>
+  <p>
+    Burada dilediğiniz dil ve tema seçeneğini kullanabilir, <strong>Hesaplarım</strong> sayfasına geri dönebilirsiniz.
+  </p>
+
+  <!-- Google AdSense reklam alanı -->
+  <div class="adsense-container">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-7831163932493310"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</main>
+
+<a href="index.html" class="back-btn" aria-label="Hesaplarım sayfasına geri dön">
+  <i class="fas fa-arrow-left"></i> Geri
+</a>
+
+<script>
+  // Buraya istersen saat/dil veya diğer scriptleri ekleyebilirsin
+</script>
+
+</body>
+</html>

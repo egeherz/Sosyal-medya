@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hesaplarım | Egeherz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7830253932493310"
+       crossorigin="anonymous"></script> 
+
+  <style>
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+      line-height: 1.5;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    .container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
+      max-width: 1200px;
+      gap: 40px;
+    }
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 560px;
+      flex: 1;
+    }
+    .ad-sidebar {
+      width: 300px;
+      height: 600px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 0 6px rgba(255,255,255,0.15);
+      margin-top: 100px;
+      display: none;
+    }
+    .ad-sidebar ins {
+      width: 100%;
+      height: 100%;
+    }
+    header {
+      font-weight: 700;
+      font-size: 2.6rem;
+      user-select: none;
+      letter-spacing: 0.07em;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    #clock {
+      font-weight: 500;
+      font-size: 1.3rem;
+      user-select: none;
+      margin-bottom: 40px;
+      font-feature-settings: "tnum";
+      letter-spacing: 0.02em;
+    }
+    #language-select {
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 2px solid;
+      cursor: pointer;
+      user-select: none;
+      max-width: 180px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    #language-select:focus,
+    #language-select:hover {
+      outline: none;
+    }
+    #theme-select {
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+      padding: 10px 18px;
+      border-radius: 12px;
+      border: 2px solid;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      max-width: 180px;
+    }
+    #theme-select:focus,
+    #theme-select:hover {
+      outline: none;
+    }
+    .btn-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 22px;
+      width: 100%;
+      max-width: 560px;
+    }
+    a.btn, button.btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 16px 0;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      text-decoration: none;
+      box-shadow: 0 0 6px rgba(255,255,255,0.15), 0 0 20px rgba(255,255,255,0.15);
+      transition: box-shadow 0.4s ease, transform 0.15s ease;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+    a.btn i, button.btn i {
+      font-size: 1.5rem;
+      filter: drop-shadow(0 0 2px #0004);
+    }
+    a.btn:hover, a.btn:focus-visible, button.btn:hover, button.btn:focus-visible {
+      transform: translateY(-3px);
+      box-shadow: 0 0 12px 2px currentColor, 0 0 40px 10px currentColor;
+      outline: none;
+    }
+    a.btn:active, button.btn:active {
+      transform: translateY(0);
+      box-shadow: 0 0 8px 1px currentColor, 0 0 25px 6px currentColor;
+    }
+    a#btn-instagram {
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      color: white;
+    }
+    a#btn-telegram {
+      background: #0088cc;
+      color: white;
+    }
+    a#btn-whatsapp {
+      background: #25d366;
+      color: white;
+    }
+    a#btn-tiktok {
+      background: #000000;
+      color: white;
+    }
+    button#btn-about {
+      background: linear-gradient(45deg, #ec4899, #8b5cf6);
+      color: white;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background-color: #333;
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      transition: background-color 0.5s, color 0.5s;
+    }
+    .modal-content h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+    .modal-content p {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      color: inherit;
+    }
+    .back-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: linear-gradient(45deg, #ec4899, #8b5cf6);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+    @media (min-width: 1200px) {
+      .ad-sidebar {
+        display: block;
+      }
+    }
+    @media (max-width: 1200px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .ad-sidebar {
+        width: 100%;
+        max-width: 600px;
+        height: 250px;
+        margin-top: 20px;
+        margin-bottom: 40px;
+        display: block;
+      }
+    }
+    @media (max-width: 400px) {
+      header {
+        font-size: 2rem;
+      }
+      a.btn, button.btn {
+        font-size: 1rem;
+        padding: 14px 0;
+      }
+    }
+    body.theme-day {
+      background-color: #f9fafb;
+      color: #333;
+      border-color: #2563eb;
+    }
+    body.theme-day .modal-content {
+      background-color: #ffffff;
+      color: #333;
+    }
+    body.theme-night {
+      background-color: #22222a;
+      color: #cbd5e1;
+      border-color: #3b82f6;
+    }
+    body.theme-night .modal-content {
+      background-color: #1e293b;
+      color: #cbd5e1;
+    }
+    body.theme-purple {
+      background-color: #1e293b;
+      color: #d8b4fe;
+      border-color: #8b5cf6;
+    }
+    body.theme-purple .modal-content {
+      background-color: #2e1b7a;
+      color: #d8b4fe;
+    }
+    body.theme-turquoise {
+      background-color: #004d40;
+      color: #a7ffeb;
+      border-color: #26a69a;
+    }
+    body.theme-turquoise .modal-content {
+      background-color: #00332a;
+      color: #a7ffeb;
+    }
+    body.theme-day #theme-select {
+      border-color: #2563eb;
+      background-color: white;
+      color: #2563eb;
+    }
+    body.theme-night #theme-select {
+      border-color: #3b82f6;
+      background-color: #1e293b;
+      color: #cbd5e1;
+    }
+    body.theme-purple #theme-select {
+      border-color: #8b5cf6;
+      background-color: #2c1366;
+      color: #d8b4fe;
+    }
+    body.theme-turquoise #theme-select {
+      border-color: #26a69a;
+      background-color: #00332a;
+      color: #a7ffeb;
+    }
+  </style>
+</head>
+<body>
+  <div;EA
+
+  <div class="container">
+    <div class="main-content">
+      <select id="language-select" aria-label="Dil seçimi / Language selection" title="Dil seçimi">
+        <option value="tr">Türkçe</option>
+        <option value="en">English</option>
+        <option value="ru">Русский</option>
+        <option value="de">Deutsch</option>
+        <option value="zh">中文</option>
+        <option value="fr">Français</option>
+      </select>
+
+      <header id="page-header">HESAPLARIM</header>
+      <div id="clock" aria-live="polite" aria-atomic="true" aria-label="Şu anki saat"></div>
+
+      <select id="theme-select" aria-label="Tema seçimi / Theme selection" title="Tema seçimi">
+        <option value="theme-day">Gündüz</option>
+        <option value="theme-night">Gece</option>
+        <option value="theme-purple">Mor Neon</option>
+        <option value="theme-turquoise">Turkuaz Neon</option>
+      </select>
+
+      <div class="btn-group" role="navigation" aria-label="Sosyal medya bağlantıları ve hakkımda">
+        <a href="https://www.instagram.com/egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-instagram" aria-label="Instagram">
+          <i class="fab fa-instagram"></i> Instagram
+        </a>
+        <a href="https://t.me/egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-telegram" aria-label="Telegram">
+          <i class="fab fa-telegram"></i> Telegram
+        </a>
+        <a href="https://wa.me/447846848820" target="_blank" rel="noopener noreferrer" class="btn" id="btn-whatsapp" aria-label="WhatsApp">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <a href="https://www.tiktok.com/@egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-tiktok" aria-label="TikTok">
+          <i class="fab fa-tiktok"></i> TikTok
+        </a>
+        <button class="btn" id="btn-about" onclick="toggleModal()" aria-label="Hakkımda">
+          <i class="fas fa-user"></i> Hakkımda
+        </button>
+      </div>
+    </div>
+
+    <div class="ad-sidebar">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-7830253932493310"
+           data-ad-slot="auto"
+           data-ad-format="vertical"
+           data-full-width-responsive="false"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="close" class="close" onclick="toggleModal()">×</span>
+      <h2 id="modal-title">Hakkımda</h2>
+      <p id="modal-text">
+        Merhaba! Ben Ege, sosyal medya ve dijital içerik üretiyorum. Burada sosyal medya hesaplarımı bulabilirsiniz. İlginiz için teşekkürler!
+      </p>
+      <button class="back-btn" onclick="toggleModal()">Geri</button>
+    </div>
+  </div>
+
+  <script>
+    const translations = {
+      tr: {
+        header: "HESAPLARIM",
+        clockLabel: "Şu anki saat",
+        buttons: {
+          instagram: "Instagram",
+          telegram: "Telegram",
+          whatsapp: "WhatsApp",
+          tiktok: "TikTok",
+          about: "Hakkımda"
+        },
+        modal: {
+          title: "Hakkımda",
+          text: "Merhaba! Ben Ege, sosyal medya ve dijital içerik üretiyorum. Burada sosyal medya hesaplarımı bulabilirsiniz. İlginiz için teşekkür ederim!"
+        },
+        themeOptions: {
+          "theme-day": "Gündüz",
+          "theme-night": "Gece",
+          "theme-purple": "Mor Neon",
+          "theme-turquoise": "Turkuaz Neon"
+        }
+      },
+      en: {
+        header: "MY ACCOUNTS",
+        clockLabel: "Current time",
+        buttons: {
+          instagram: "Instagram",
+          telegram: "Telegram",
+          whatsapp: "WhatsApp",
+          tiktok: "TikTok",
+          about: "About Me"
+        },
+        modal: {
+          title: "About Me",
+          text: "Hi! I'm Ege, I create social media and digital content. You can find my social media accounts here. Thanks for your interest!"
+        },
+        themeOptions: {
+          "theme-day": "Day",
+          "theme-night": "Night",
+          "theme-purple": "Purple Neon",
+          "theme-turquoise": "Turquoise Neon"
+        }
+      },
+      ru: {
+        header: "МОИ АККАУНТЫ",
+        clockLabel: "Текущее время",
+        buttons: {
+          instagram: "Инстаграм",
+          telegram: "Телеграм",
+          whatsapp: "WhatsApp",
+          tiktok: "ТикТок",
+          about: "Обо мне"
+        },
+        modal: {
+          title: "Обо мне",
+          text: "Привет! Меня зовут Эге, я создаю контент для социальных сетей и цифровых платформ. Здесь вы найдете мои аккаунты в социальных сетях. Спасибо за ваш интерес!"
+        },
+        themeOptions: {
+          "theme-day": "День",
+          "theme-night": "Ночь",
+          "theme-purple": "Фиолетовый Неон",
+          "theme-turquoise": "Бирюзовый Неон"
+        }
+      },
+      de: {
+        header: "MEINE KONTEN",
+        clockLabel: "Aktuelle Uhrzeit",
+        buttons: {
+          instagram: "Instagram",
+          telegram: "Telegram",
+          whatsapp: "WhatsApp",
+          tiktok: "TikTok",
+          about: "Über mich"
+        },
+        modal: {
+          title: "Über mich",
+          text: "Hallo! Ich bin Ege, ich erstelle Inhalte für soziale Medien und digitale Plattformen. Hier findest du meine Social-Media-Konten. Vielen Dank für dein Interesse!"
+        },
+        themeOptions: {
+          "theme-day": "Tag",
+          "theme-night": "Nacht",
+          "theme-purple": "Lila Neon",
+          "theme-turquoise": "Türkis Neon"
+        }
+      },
+      zh: {
+        header: "我的账户",
+        clockLabel: "当前时间",
+        buttons: {
+          instagram: "Instagram",
+          telegram: "Telegram",
+          whatsapp: "WhatsApp",
+          tiktok: "TikTok",
+          about: "关于我"
+        },
+        modal: {
+          title: "关于我",
+          text: "你好！我是Ege，我为社交媒体和数字平台创建内容。你可以在这里找到我的社交媒体账户。感谢你的关注！"
+        },
+        themeOptions: {
+          "theme-day": "白天",
+          "theme-night": "夜晚",
+          "theme-purple": "紫色霓虹",
+          "theme-turquoise": "绿松石霓虹"
+        }
+      },
+      fr: {
+        header: "MES COMPTES",
+        clockLabel: "Heure actuelle",
+        buttons: {
+          instagram: "Instagram",
+          telegram: "Telegram",
+          whatsapp: "WhatsApp",
+          tiktok: "TikTok",
+          about: "À propos"
+        },
+        modal: {
+          title: "À propos de moi",
+          text: "Bonjour ! Je suis Ege, je crée du contenu pour les médias sociaux et les plateformes numériques. Vous pouvez trouver mes comptes de médias sociaux ici. Merci pour votre intérêt !"
+        },
+        themeOptions: {
+          "theme-day": "Jour",
+          "theme-night": "Nuit",
+          "theme-purple": "Néon violet",
+          "theme-turquoise": "Néon turquoise"
+        }
+      }
+    };
+
+    const header = document.getElementById('page-header');
+    const clock = document.getElementById('clock');
+    const languageSelect = document.getElementById('language-select');
+    const themeSelect = document.getElementById('theme-select');
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalText = document.getElementById('modal-text');
+
+    function updateClock(lang) {
+      const now = new Date();
+      const days = {
+        tr: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+        en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        ru: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+        de: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+        zh: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+        fr: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
+      };
+
+      const dayName = days[lang][now.getDay()];
+      const dateStr = now.toLocaleDateString(lang === 'zh' ? 'zh-CN' : lang);
+      const timeStr = now.toLocaleTimeString(lang === 'zh' ? 'zh-CN' : lang, { hour12: lang !== 'zh' });
+      clock.textContent = `${dayName}, ${dateStr} - ${timeStr}`;
+      clock.setAttribute('aria-label', translations[lang].clockLabel);
+    }
+
+    function updateThemeOptions(lang) {
+      for (const opt of themeSelect.options) {
+        opt.textContent = translations[lang].themeOptions[opt.value] || opt.value;
+      }
+    }
+
+    function updateButtonTexts(lang) {
+      document.querySelector('#btn-instagram').innerHTML = `<i class="fab fa-instagram"></i> ${translations[lang].buttons.instagram}`;
+      document.querySelector('#btn-telegram').innerHTML = `<i class="fab fa-telegram"></i> ${translations[lang].buttons.telegram}`;
+      document.querySelector('#btn-whatsapp').innerHTML = `<i class="fab fa-whatsapp"></i> ${translations[lang].buttons.whatsapp}`;
+      document.querySelector('#btn-tiktok').innerHTML = `<i class="fab fa-tiktok"></i> ${translations[lang].buttons.tiktok}`;
+      document.querySelector('#btn-about').innerHTML = `<i class="fas fa-user"></i> ${translations[lang].buttons.about}`;
+    }
+
+    function updateModalContent(lang) {
+      modalTitle.textContent = translations[lang].modal.title;
+      modalText.textContent = translations[lang].modal.text;
+    }
+
+    function toggleModal() {
+      modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function loadTheme() {
+      const savedTheme = localStorage.getItem('selectedTheme') || 'theme-day';
+      document.body.className = savedTheme;
+      themeSelect.value = savedTheme;
+    }
+
+    function loadLanguage() {
+      const savedLanguage = localStorage.getItem('selectedLanguage') || 'tr';
+      languageSelect.value = savedLanguage;
+      updateContent(savedLanguage);
+    }
+
+    function updateContent(lang) {
+      header.textContent = translations[lang].header;
+      updateButtonTexts(lang);
+      updateThemeOptions(lang);
+      updateModalContent(lang);
+      updateClock(lang);
+      localStorage.setItem('selectedLanguage', lang);
+    }
+
+    themeSelect.addEventListener('change', () => {
+      document.body.className = themeSelect.value;
+      localStorage.setItem('selectedTheme', themeSelect.value);
+    });
+
+    languageSelect.addEventListener('change', () => {
+      updateContent(languageSelect.value);
+    });
+
+    window.onload = () => {
+      loadTheme();
+      loadLanguage();
+      setInterval(() => updateClock(languageSelect.value), 1000);
+
+      document.getElementById('close').addEventListener('click', toggleModal);
+      window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+          toggleModal();
+        }
+      });
+    };
+  </script>
+</body>
+</html>

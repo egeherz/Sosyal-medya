@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HESAPLARIM ⬇️ | Egeherz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7830253932493310"
+       crossorigin="anonymous"></script> 
+
+  <style>
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+      line-height: 1.5;
+      transition: background-color 0.5s, color 0.5s;
+      background-color: #f9fafb;
+      color: #333;
+    }
+    header {
+      font-weight: 700;
+      font-size: 2.6rem;
+      user-select: none;
+      letter-spacing: 0.07em;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #clock {
+      font-weight: 500;
+      font-size: 1.3rem;
+      user-select: none;
+      margin-bottom: 40px;
+      font-feature-settings: "tnum";
+      letter-spacing: 0.02em;
+      text-align: center;
+    }
+    #language-select {
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 2px solid #2563eb;
+      cursor: pointer;
+      user-select: none;
+      max-width: 180px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #language-select:focus,
+    #language-select:hover {
+      outline: none;
+      background-color: #2563eb;
+      color: white;
+    }
+    .btn-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto 50px;
+    }
+    a.btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 24px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 1.25rem;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      user-select: none;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      border: none;
+      text-align: center;
+    }
+    a.btn i {
+      font-size: 2.6rem;
+      filter: drop-shadow(0 0 2px #0004);
+    }
+    a.btn:hover, a.btn:focus-visible {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      outline: none;
+    }
+    a#btn-instagram {
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    }
+    a#btn-telegram {
+      background: #0088cc;
+    }
+    a#btn-whatsapp {
+      background: #25d366;
+    }
+    a#btn-tiktok {
+      background: #000000;
+    }
+    .section {
+      max-width: 600px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+    }
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 18px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .section p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      text-align: justify;
+      white-space: pre-line;
+    }
+    .privacy-policy {
+      font-size: 0.9rem;
+      color: #555;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+      text-align: center;
+      user-select: text;
+    }
+    @media (max-width: 500px) {
+      .btn-group {
+        grid-template-columns: 1fr;
+      }
+      a.btn {
+        font-size: 1.1rem;
+        padding: 20px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>HESAPLARIM ⬇️</header>
+  <div id="clock" aria-live="polite" aria-atomic="true"></div>
+  
+  <select id="language-select" aria-label="Dil seçimi">
+    <option value="tr" selected>Türkçe</option>
+    <option value="en">English</option>
+    <option value="ru">Русский</option>
+  </select>
+
+  <main>
+    <section class="btn-group" role="list" aria-label="Sosyal Medya Hesapları">
+      <a id="btn-instagram" href="https://instagram.com/egeherz" target="_blank" rel="noopener" class="btn" role="listitem" aria-label="Instagram">
+        <i class="fab fa-instagram" aria-hidden="true"></i> Instagram
+      </a>
+      <a id="btn-telegram" href="https://t.me/egeherz" target="_blank" rel="noopener" class="btn" role="listitem" aria-label="Telegram">
+        <i class="fab fa-telegram" aria-hidden="true"></i> Telegram
+      </a>
+      <a id="btn-whatsapp" href="https://wa.me/447846848820" target="_blank" rel="noopener" class="btn" role="listitem" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp
+      </a>
+      <a id="btn-tiktok" href="https://www.tiktok.com/@egeherz" target="_blank" rel="noopener" class="btn" role="listitem" aria-label="TikTok">
+        <i class="fab fa-tiktok" aria-hidden="true"></i> TikTok
+      </a>
+    </section>
+
+    <section class="section" id="about-section">
+      <h2>Hakkımda</h2>
+      <p>
+        Merhaba! Ben Egeherz, teknoloji ve dijital dünya tutkunu bir yazılım geliştiricisiyim. Sosyal medya hesaplarımı sizlerle paylaşarak, hem profesyonel hem de kişisel paylaşımlarımı kolayca ulaşılabilir hale getirmek istiyorum. 
+        Teknoloji alanındaki gelişmeleri yakından takip ediyor ve çeşitli projelerde aktif olarak yer alıyorum. İletişim kanallarımı bu sayfada bulabilir, dilediğiniz platformdan bana ulaşabilirsiniz. 
+        Amacım, bilgi ve deneyimlerimi paylaşmak, yeni bağlantılar kurmak ve dijital dünyada güçlü bir topluluk oluşturmak.
+      </p>
+    </section>
+
+    <section class="section" id="privacy-policy">
+      <h2>Gizlilik Politikası</h2>
+      <p>
+        Bu sitede yer alan sosyal medya hesaplarına tıkladığınızda, ilgili platformların kendi gizlilik politikaları geçerli olacaktır. Kişisel verilerinizin korunması bizim için önemlidir. Google AdSense reklamları, kullanıcı deneyimini iyileştirmek için çerezler kullanabilir. 
+        Siteyi kullanmaya devam ederek, bu politikaları kabul etmiş sayılırsınız. Daha fazla bilgi için lütfen Google'ın gizlilik politikalarını inceleyin.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    // Saat fonksiyonu
+    function updateClock() {
+      const now = new Date();
+      let h = now.getHours().toString().padStart(2, '0');
+      let m = now.getMinutes().toString().padStart(2, '0');
+      let s = now.getSeconds().toString().padStart(2, '0');
+      document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Dil seçimi ile içerik değişimi
+    const languageSelect = document.getElementById('language-select');
+    const header = document.querySelector('header');
+    const aboutTitle = document.querySelector('#about-section h2');
+    const aboutText = document.querySelector('#about-section p');
+    const privacyTitle = document.querySelector('#privacy-policy h2');
+    const privacyText = document.querySelector('#privacy-policy p');
+    const btnInstagram = document.getElementById('btn-instagram');
+    const btnTelegram = document.getElementById('btn-telegram');
+    const btnWhatsapp = document.getElementById('btn-whatsapp');
+    const btnTiktok = document.getElementById('btn-tiktok');
+
+    languageSelect.addEventListener('change', () => {
+      const lang = languageSelect.value;
+      if (lang === 'tr') {
+        header.textContent = 'HESAPLARIM ⬇️';
+        btnInstagram.innerHTML = '<i class="fab fa-instagram" aria-hidden="true"></i> Instagram';
+        btnTelegram.innerHTML = '<i class="fab fa-telegram" aria-hidden="true"></i> Telegram';
+        btnWhatsapp.innerHTML = '<i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp';
+        btnTiktok.innerHTML = '<i class="fab fa-tiktok" aria-hidden="true"></i> TikTok';
+        aboutTitle.textContent = 'Hakkımda';
+        aboutText.textContent = 'Merhaba! Ben Egeherz, teknoloji ve dijital dünya tutkunu bir yazılım geliştiricisiyim. Sosyal medya hesaplarımı sizlerle paylaşarak, hem profesyonel hem de kişisel paylaşımlarımı kolayca ulaşılabilir hale getirmek istiyorum. \nTeknoloji alanındaki gelişmeleri yakından takip ediyor ve çeşitli projelerde aktif olarak yer alıyorum. İletişim kanallarımı bu sayfada bulabilir, dilediğiniz platformdan bana ulaşabilirsiniz. \nAmacım, bilgi ve deneyimlerimi paylaşmak, yeni bağlantılar kurmak ve dijital dünyada güçlü bir topluluk oluşturmak.';
+        privacyTitle.textContent = 'Gizlilik Politikası';
+        privacyText.textContent = 'Bu sitede yer alan sosyal medya hesaplarına tıkladığınızda, ilgili platformların kendi gizlilik politikaları geçerli olacaktır. Kişisel verilerinizin korunması bizim için önemlidir. Google AdSense reklamları, kullanıcı deneyimini iyileştirmek için çerezler kullanabilir. \nSiteyi kullanmaya devam ederek, bu politikaları kabul etmiş sayılırsınız. Daha fazla bilgi için lütfen Google\'ın gizlilik politikalarını inceleyin.';
+      } else if (lang === 'en') {
+        header.textContent = 'MY ACCOUNTS ⬇️';
+        btnInstagram.innerHTML = '<i class="fab fa-instagram" aria-hidden="true"></i> Instagram';
+        btnTelegram.innerHTML = '<i class="fab fa-telegram" aria-hidden="true"></i> Telegram';
+        btnWhatsapp.innerHTML = '<i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp';
+        btnTiktok.innerHTML = '<i class="fab fa-tiktok" aria-hidden="true"></i> TikTok';
+        aboutTitle.textContent = 'About Me';
+        aboutText.textContent = 'Hello! I am Egeherz, a software developer passionate about technology and the digital world. By sharing my social media accounts, I aim to make my professional and personal content easily accessible. \nI closely follow developments in technology and actively participate in various projects. You can find my contact channels on this page and reach me on any platform you prefer. \nMy goal is to share knowledge and experiences, build new connections, and create a strong community in the digital world.';
+        privacyTitle.textContent = 'Privacy Policy';
+        privacyText.textContent = 'When you click on the social media accounts on this site, the privacy policies of the respective platforms will apply. Protecting your personal data is important to us. Google AdSense ads may use cookies to improve user experience. \nBy continuing to use the site, you agree to these policies. Please review Google\'s privacy policies for more information.';
+      } else if (lang === 'ru') {
+        header.textContent = 'МОИ АККАУНТЫ ⬇️';
+        btnInstagram.innerHTML = '<i class="fab fa-instagram" aria-hidden="true"></i> Инстаграм';
+        btnTelegram.innerHTML = '<i class="fab fa-telegram" aria-hidden="true"></i> Телеграм';
+        btnWhatsapp.innerHTML = '<i class="fab fa-whatsapp" aria-hidden="true"></i> Ватсап';
+        btnTiktok.innerHTML = '<i class="fab fa-tiktok" aria-hidden="true"></i> ТикТок';
+        aboutTitle.textContent = 'Обо мне';
+        aboutText.textContent = 'Привет! Я Egeherz, разработчик программного обеспечения, увлеченный технологиями и цифровым миром. Делюсь своими аккаунтами в социальных сетях, чтобы вы могли легко получить доступ к моему профессиональному и личному контенту. \nЯ внимательно слежу за развитием технологий и активно участвую в различных проектах. Связаться со мной можно на этой странице, выбрав удобную для вас платформу. \nМоя цель - делиться знаниями и опытом, налаживать новые связи и создавать сильное сообщество в цифровом мире.';
+        privacyTitle.textContent = 'Политика конфиденциальности';
+        privacyText.textContent = 'При переходе по ссылкам на социальные сети на этом сайте применяются политики конфиденциальности соответствующих платформ. Защита ваших персональных данных важна для нас. Рекламные объявления Google AdSense могут использовать файлы cookie для улучшения пользовательского опыта. \nПродолжая использовать сайт, вы соглашаетесь с этими политиками. Для получения дополнительной информации ознакомьтесь с политиками конфиденциальности Google.';
+      }
+    });
+  </script>
+</body>
+</html>

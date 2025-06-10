@@ -4,7 +4,12 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hesaplarım | Egeherz</title>
+
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+<!-- FontAwesome Pro (or free kit) -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 <style>
   *, *::before, *::after {
@@ -12,109 +17,142 @@
   }
   body {
     font-family: 'Inter', sans-serif;
-    background: #f9fafb;
-    color: #222;
+    background: linear-gradient(135deg, #f0f4ff, #d9e6ff);
+    color: #1f2937;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px 20px 60px;
-    line-height: 1.5;
+    padding: 50px 20px 80px;
+    line-height: 1.6;
   }
   header {
     font-weight: 700;
-    font-size: 2.4rem;
-    color: #1f2937;
-    margin-bottom: 20px;
+    font-size: 2.8rem;
+    color: #1e40af;
+    margin-bottom: 15px;
     user-select: none;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.07em;
     text-align: center;
+    text-shadow: 0 2px 6px rgba(30, 64, 175, 0.4);
   }
   #clock {
-    font-weight: 500;
-    font-size: 1.2rem;
-    color: #4b5563;
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #334155;
     margin-bottom: 45px;
     user-select: none;
-    font-feature-settings: "tnum";
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
+    background: #e0e7ff;
+    padding: 10px 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(56, 96, 178, 0.15);
+    min-width: 280px;
+    text-align: center;
   }
 
   /* Dil seçici kutusu */
   #language-select {
     margin-bottom: 35px;
     font-size: 1rem;
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 1.8px solid #2563eb;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 2px solid #2563eb;
     background: white;
     color: #2563eb;
     cursor: pointer;
     user-select: none;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgb(37 99 235 / 0.3);
   }
   #language-select:hover,
   #language-select:focus {
     background-color: #e0e7ff;
     outline: none;
+    color: #1e40af;
   }
 
   .btn-group {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 25px;
     width: 100%;
-    max-width: 520px;
+    max-width: 600px;
   }
 
   a.btn {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    padding: 14px 0;
+    gap: 10px;
+    padding: 18px 12px;
     background: #2563eb;
     color: white;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 1.1rem;
+    border-radius: 18px;
+    font-weight: 700;
+    font-size: 1.15rem;
     text-decoration: none;
-    box-shadow: 0 6px 15px rgb(37 99 235 / 0.4);
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 20px rgb(37 99 235 / 0.5);
+    transition: background-color 0.35s ease, transform 0.25s ease, box-shadow 0.35s ease;
     user-select: none;
+    position: relative;
   }
   a.btn i {
-    font-size: 1.4rem;
+    font-size: 2.8rem;
+    color: white;
+    filter: drop-shadow(0 0 6px #3b82f6);
   }
   a.btn:hover,
   a.btn:focus-visible {
     background: #1d4ed8;
-    box-shadow: 0 8px 24px rgb(29 78 216 / 0.6);
-    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgb(29 78 216 / 0.7);
+    transform: translateY(-4px);
     outline: none;
   }
   a.btn:active {
     transform: translateY(0);
-    box-shadow: 0 4px 10px rgb(29 78 216 / 0.4);
+    box-shadow: 0 6px 15px rgb(29 78 216 / 0.5);
   }
 
-  @media (max-width: 400px) {
+  /* Tooltip stili */
+  a.btn .tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e40afcc;
+    color: white;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 10px;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  a.btn:hover .tooltip,
+  a.btn:focus .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  @media (max-width: 420px) {
     header {
-      font-size: 1.8rem;
+      font-size: 2rem;
     }
     a.btn {
       font-size: 1rem;
-      padding: 12px 0;
+      padding: 16px 10px;
+      gap: 8px;
+    }
+    a.btn i {
+      font-size: 2.2rem;
     }
   }
 </style>
-
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
-<!-- Google AdSense Kodu -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7831163932493310"
-     crossorigin="anonymous"></script>
-
 </head>
 <body>
 
@@ -129,16 +167,24 @@
 
 <div class="btn-group" role="navigation" aria-label="Sosyal medya bağlantıları">
   <a href="https://www.instagram.com/egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-instagram" aria-label="Instagram">
-    <i class="fab fa-instagram"></i> Instagram
+    <i class="fab fa-instagram"></i>
+    Instagram
+    <span class="tooltip" aria-hidden="true">Fotoğraf ve video paylaşımı</span>
   </a>
   <a href="https://t.me/egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-telegram" aria-label="Telegram">
-    <i class="fab fa-telegram"></i> Telegram
+    <i class="fab fa-telegram"></i>
+    Telegram
+    <span class="tooltip" aria-hidden="true">Hızlı mesajlaşma uygulaması</span>
   </a>
   <a href="https://wa.me/447846848820" target="_blank" rel="noopener noreferrer" class="btn" id="btn-whatsapp" aria-label="WhatsApp">
-    <i class="fab fa-whatsapp"></i> WhatsApp
+    <i class="fab fa-whatsapp"></i>
+    WhatsApp
+    <span class="tooltip" aria-hidden="true">Anlık mesajlaşma ve arama</span>
   </a>
   <a href="https://www.tiktok.com/@egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-tiktok" aria-label="TikTok">
-    <i class="fab fa-tiktok"></i> TikTok
+    <i class="fab fa-tiktok"></i>
+    TikTok
+    <span class="tooltip" aria-hidden="true">Kısa video paylaşımı</span>
   </a>
 </div>
 
@@ -152,6 +198,12 @@
         telegram: "Telegram",
         whatsapp: "WhatsApp",
         tiktok: "TikTok"
+      },
+      tooltips: {
+        instagram: "Fotoğraf ve video paylaşımı",
+        telegram: "Hızlı mesajlaşma uygulaması",
+        whatsapp: "Anlık mesajlaşma ve arama",
+        tiktok: "Kısa video paylaşımı"
       }
     },
     en: {
@@ -162,6 +214,12 @@
         telegram: "Telegram",
         whatsapp: "WhatsApp",
         tiktok: "TikTok"
+      },
+      tooltips: {
+        instagram: "Photo and video sharing",
+        telegram: "Fast messaging app",
+        whatsapp: "Instant messaging and calls",
+        tiktok: "Short video sharing"
       }
     }
   };
@@ -174,7 +232,7 @@
   const btnWhatsApp = document.getElementById('btn-whatsapp');
   const btnTikTok = document.getElementById('btn-tiktok');
 
-  // Saat güncelleme fonksiyonu, dil seçimine göre aria-label değişecek
+  // Saat güncelleme fonksiyonu
   function updateClock() {
     const now = new Date();
     const daysTr = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
@@ -189,37 +247,34 @@
     clock.setAttribute('aria-label', translations[lang].clockLabel);
   }
 
-  // Dil değiştirildiğinde sayfadaki metinleri değiştir
+  // Dil değiştirildiğinde metinleri değiştir
   function updateLanguage(lang) {
     header.textContent = translations[lang].header;
-    btnInstagram.textContent = '';
-    btnInstagram.appendChild(document.createElement('i')).className = 'fab fa-instagram';
-    btnInstagram.append(' ' + translations[lang].buttons.instagram);
 
-    btnTelegram.textContent = '';
-    btnTelegram.appendChild(document.createElement('i')).className = 'fab fa-telegram';
-    btnTelegram.append(' ' + translations[lang].buttons.telegram);
+    // Güncelle buton isimleri ve tooltipler
+    const btns = [
+      { el: btnInstagram, key: 'instagram' },
+      { el: btnTelegram, key: 'telegram' },
+      { el: btnWhatsApp, key: 'whatsapp' },
+      { el: btnTikTok, key: 'tiktok' }
+    ];
 
-    btnWhatsApp.textContent = '';
-    btnWhatsApp.appendChild(document.createElement('i')).className = 'fab fa-whatsapp';
-    btnWhatsApp.append(' ' + translations[lang].buttons.whatsapp);
-
-    btnTikTok.textContent = '';
-    btnTikTok.appendChild(document.createElement('i')).className = 'fab fa-tiktok';
-    btnTikTok.append(' ' + translations[lang].buttons.tiktok);
+    btns.forEach(({ el, key }) => {
+      el.innerHTML = `<i class="fab fa-${key}"></i> ${translations[lang].buttons[key]}<span class="tooltip" aria-hidden="true">${translations[lang].tooltips[key]}</span>`;
+      el.setAttribute('aria-label', translations[lang].buttons[key]);
+    });
 
     updateClock();
     localStorage.setItem('preferredLanguage', lang);
   }
 
-  // Sayfa yüklenirken tercih edilen dili uygula
+  // Sayfa yüklendiğinde tercih edilen dili uygula
   document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('preferredLanguage') || 'tr';
     langSelect.value = savedLang;
     updateLanguage(savedLang);
   });
 
-  // Dil seçimi değiştiğinde güncelle
   langSelect.addEventListener('change', (e) => {
     updateLanguage(e.target.value);
   });

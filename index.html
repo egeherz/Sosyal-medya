@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bağlantılar - Bartın Ege Karahanlı</title>
+
+<!-- Google AdSense script -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7831163932493310"
+     crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg); color: var(--fg);
+    display: flex; flex-direction: column; align-items: center;
+    min-height: 100vh; transition: background 0.4s, color 0.4s;
+  }
+  header { font-size: 2.4rem; margin: 30px 0 10px; font-weight: 700; }
+  #clock { font-size: 1.2rem; margin-bottom: 20px; }
+  .selectors { display: flex; gap: 15px; margin-bottom: 20px; }
+  select {
+    padding: 7px 12px; font-size:1rem; border-radius:6px;
+    border:1.8px solid var(--secondary); background:var(--select-bg);
+    color:var(--fg); transition: border-color .3s;
+  }
+  select:focus { border-color: var(--primary); outline:none; }
+  nav {
+    display: grid; grid-template-columns: repeat(3,160px); gap:14px 20px;
+    justify-content: center; margin-bottom: 30px;
+  }
+  nav a, nav button {
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    width:160px; font-weight:600; font-size:1.1rem;
+    text-decoration:none; color:var(--btn-text);
+    background:var(--primary); border:none; border-radius:10px;
+    padding:13px 0; cursor:pointer; box-shadow:0 5px 12px var(--shadow);
+    transition: background .3s, transform .15s;
+  }
+  nav a:hover, nav button:hover,
+  nav a:focus, nav button:focus {
+    background:var(--primary-dark); outline:none; transform:translateY(-3px);
+  }
+  nav i { font-size:1.7rem; min-width:24px; text-align:center; }
+  .ads-container {
+    width:320px; max-width:90vw;
+    box-shadow:0 4px 15px var(--shadow); border-radius:14px;
+    overflow:hidden; margin-bottom:30px;
+  }
+  .modal {
+    display:none; position:fixed; inset:0; z-index:1050;
+    background:rgba(0,0,0,.5);
+    align-items:center; justify-content:center;
+  }
+  .modal[aria-hidden="false"] { display:flex; }
+  .modal-content {
+    background:var(--bg); color:var(--fg);
+    max-width:460px; max-height:75vh; overflow-y:auto;
+    padding:30px 25px 35px; border-radius:16px;
+    box-shadow:0 10px 28px var(--shadow);
+    font-size:1rem; line-height:1.6; position:relative;
+  }
+  .modal h2 { margin-top:0; font-size:1.8rem; margin-bottom:20px; }
+  .back-btn {
+    position:absolute; top:16px; left:18px;
+    background:none; border:none; font-size:1.5rem;
+    color:var(--primary); cursor:pointer;
+  }
+  .back-btn:hover, .back-btn:focus { color:var(--primary-dark); outline:none; }
+  .modal-content::-webkit-scrollbar {
+    width:7px;
+  }
+  .modal-content::-webkit-scrollbar-thumb {
+    background:var(--primary); border-radius:12px;
+  }
+  .modal-content::-webkit-scrollbar-track { background:transparent; }
+  @media(max-width:520px){
+    nav { grid-template-columns:repeat(2,140px); gap:12px 14px; }
+    nav a, nav button { width:140px; font-size:1rem; padding:12px 0; }
+    nav i { font-size:1.5rem; min-width:22px; }
+    header { font-size:2rem; margin:20px 0 10px; }
+    .modal-content { max-width:90vw; max-height:70vh; font-size:.95rem; padding:24px 20px 30px; }
+    .modal h2 { font-size:1.6rem; margin-bottom:18px; }
+  }
+  :root {
+    --primary:#3b82f6; --primary-dark:#2563eb;
+    --secondary:#6b7280; --shadow:rgba(59,130,246,.4);
+    --bg:#f9fafb; --fg:#111827; --btn-text:#fff; --select-bg:#ffffffdd;
+  }
+  [data-theme="dark"] { --primary:#60a5fa; --primary-dark:#2563eb; --secondary:#9ca3af;
+    --shadow:rgba(96,165,250,.4); --bg:#1f2937; --fg:#f9fafb; --btn-text:#f0f9ff; --select-bg:#374151dd;
+  }
+  [data-theme="forest"] { --primary:#2e7d32; --primary-dark:#1b5e20; --secondary:#4caf50;
+    --shadow:rgba(46,125,50,.4); --bg:#e8f5e9; --fg:#1b5e20; --btn-text:#e8f5e9; --select-bg:#a5d6a7dd;
+  }
+  [data-theme="sunset"] { --primary:#f97316; --primary-dark:#c2410c; --secondary:#fb923c;
+    --shadow:rgba(249,115,22,.4); --bg:#fff7ed; --fg:#7c2d12; --btn-text:#fff7ed; --select-bg:#fed7aaee;
+  }
+  [data-theme="ocean"] { --primary:#0288d1; --primary-dark:#01579b; --secondary:#03a9f4;
+    --shadow:rgba(2,136,209,.4); --bg:#e1f5fe; --fg:#01579b; --btn-text:#e1f5fe; --select-bg:#81d4faee;
+  }
+  [data-theme="midnight"] { --primary:#9c27b0; --primary-dark:#6a1b9a; --secondary:#ba68c8;
+    --shadow:rgba(156,39,176,.4); --bg:#f3e5f5; --fg:#4a148c; --btn-text:#f3e5f5; --select-bg:#ce93d8ee;
+  }
+</style>
+</head>
+<body>
+
+<header id="pageHeader">HESAPLARIM ⬇️</header>
+<div id="clock" aria-live="polite"></div>
+
+<div class="selectors">
+  <select id="languageSelect">
+    <option value="tr">Türkçe</option><option value="en">English</option>
+    <option value="ru">Русский</option><option value="es">Español</option>
+    <option value="fr">Français</option><option value="de">Deutsch</option>
+    <option value="it">Italiano</option><option value="pt">Português</option>
+    <option value="zh">中文</option><option value="ja">日本語</option>
+  </select>
+  <select id="themeSelect">
+    <option value="default">Mavi (Default)</option>
+    <option value="dark">Karanlık</option>
+    <option value="forest">Orman</option>
+    <option value="sunset">Günbatımı</option>
+    <option value="ocean">Okyanus</option>
+    <option value="midnight">Gece Yarısı</option>
+  </select>
+</div>
+
+<main>
+  <nav>
+    <a href="https://instagram.com/egeherz" target="_blank" class="btn"><i class="fab fa-instagram"></i>Instagram</a>
+    <a href="https://t.me/egeherz" target="_blank" class="btn"><i class="fab fa-telegram"></i>Telegram</a>
+    <a href="https://wa.me/447846848820" target="_blank" class="btn"><i class="fab fa-whatsapp"></i>WhatsApp</a>
+    <a href="https://www.tiktok.com/@egeherz" target="_blank" class="btn"><i class="fab fa-tiktok"></i>TikTok</a>
+    <button id="aboutBtn" class="btn"><i class="fas fa-user"></i>Hakkımda</button>
+    <button id="privacyBtn" class="btn"><i class="fas fa-shield-alt"></i>Gizlilik Politikası</button>
+  </nav>
+  <div class="ads-container">
+    <ins class="adsbygoogle" style="display:block"
+         data-ad-client="ca-pub-7831163932493310"
+         data-ad-slot="9934452809"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+</main>
+
+<div id="aboutModal" class="modal" aria-hidden="true" aria-modal="true" role="dialog">
+  <div class="modal-content">
+    <button class="back-btn">&#8592;</button><h2 id="aboutTitle"></h2>
+    <div id="aboutContent"></div>
+  </div>
+</div>
+
+<div id="privacyModal" class="modal" aria-hidden="true" aria-modal="true" role="dialog">
+  <div class="modal-content">
+    <button class="back-btn">&#8592;</button><h2 id="privacyTitle"></h2>
+    <div id="privacyContent"></div>
+  </div>
+</div>
+
+<script>
+  const texts = {
+    tr: {header:"HESAPLARIM ⬇️",aboutTitle:"Hakkımda",about:"Ege Karahanlı...",privacyTitle:"Gizlilik Politikası",privacy:"Veriler paylaşılmaz..."},
+    en: {header:"MY ACCOUNTS ⬇️",aboutTitle:"About Me",about:"Ege Karahanlı...",privacyTitle:"Privacy Policy",privacy:"No data is shared..."},
+    ru: {header:"МОИ АККАУНТЫ ⬇️",aboutTitle:"Обо мне",about:"Эге Караханлы...",privacyTitle:"Политика конфиденциальности",privacy:"Данные не передаются..."},
+    es: {header:"MIS CUENTAS ⬇️",aboutTitle:"Sobre mí",about:"Ege Karahanlı...",privacyTitle:"Política de privacidad",privacy:"No se comparten datos..."},
+    fr: {header:"MES COMPTES ⬇️",aboutTitle:"À propos de moi",about:"Ege Karahanlı...",privacyTitle:"Politique de confidentialité",privacy:"Aucune donnée partagée..."},
+    de: {header:"MEINE KONTEN ⬇️",aboutTitle:"Über mich",about:"Ege Karahanlı...",privacyTitle:"Datenschutz",privacy:"Keine Daten geteilt..."},
+    it: {header:"I MIEI ACCOUNT ⬇️",aboutTitle:"Chi sono",about:"Ege Karahanlı...",privacyTitle:"Informativa sulla privacy",privacy:"Nessun dato condiviso..."},
+    pt: {header:"MINHAS CONTAS ⬇️",aboutTitle:"Sobre mim",about:"Ege Karahanlı...",privacyTitle:"Política de Privacidade",privacy:"Nenhum dado compartilhado..."},
+    zh: {header:"我的账户 ⬇️",aboutTitle:"关于我",about:"Ege Karahanlı...",privacyTitle:"隐私政策",privacy:"没有数据共享..."},
+    ja: {header:"私のアカウント ⬇️",aboutTitle:"私について",about:"Ege Karahanlı...",privacyTitle:"プライバシーポリシー",privacy:"データは共有されません..."}
+  };
+  const languageSelect=document.getElementById('languageSelect');
+  const themeSelect=document.getElementById('themeSelect');
+  const pageHeader=document.getElementById('pageHeader');
+  const aboutBtn=document.getElementById('aboutBtn');
+  const privacyBtn=document.getElementById('privacyBtn');
+  const aboutModal=document.getElementById('aboutModal');
+  const privacyModal=document.getElementById('privacyModal');
+  const aboutTitle=document.getElementById('aboutTitle');
+  const aboutContent=document.getElementById('aboutContent');
+  const privacyTitle=document.getElementById('privacyTitle');
+  const privacyContent=document.getElementById('privacyContent');
+  const backButtons=document.querySelectorAll('.back-btn');
+
+  function updateText(){
+    const lang=languageSelect.value;
+    pageHeader.textContent=texts[lang].header;
+    aboutTitle.textContent=texts[lang].aboutTitle + " - Bartın Ege Karahanlı'nın Kişisel Bilgileri ve Hedefleri";
+    aboutContent.textContent=texts[lang].about;
+    privacyTitle.textContent=texts[lang].privacyTitle + " - Ziyaretçi Verilerinin Kullanımı ve Korunması";
+    privacyContent.textContent=texts[lang].privacy;
+  }
+
+  languageSelect.addEventListener('change',()=>{
+    updateText();
+  });
+
+  themeSelect.addEventListener('change',()=>{
+    const theme=themeSelect.value;
+    if(theme==="default") {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+  });
+
+  aboutBtn.addEventListener('click',()=>{
+    aboutModal.setAttribute('aria-hidden','false');
+    aboutModal.focus();
+  });
+
+  privacyBtn.addEventListener('click',()=>{
+    privacyModal.setAttribute('aria-hidden','false');
+    privacyModal.focus();
+  });
+
+  backButtons.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      btn.closest('.modal').setAttribute('aria-hidden','true');
+    });
+  });
+
+  // Clock display
+  function updateClock(){
+    const now=new Date();
+    const locale=languageSelect.value;
+    const timeString=now.toLocaleTimeString(locale);
+    document.getElementById('clock').textContent=timeString;
+  }
+  setInterval(updateClock,1000);
+  updateClock();
+
+  // Initialize texts on load
+  updateText();
+</script>
+
+</body>
+</html>

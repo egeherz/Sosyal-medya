@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Bartın Ege Karahanlı - Kişisel Bağlantılar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #000000;
+      --btn-bg: #f0f0f0;
+      --btn-fg: #000000;
+      --btn-border: #ccc;
+      --font: 'Segoe UI', sans-serif;
+    }
+
+    body.dark {
+      --bg: #1e1e1e;
+      --fg: #ffffff;
+      --btn-bg: #333333;
+      --btn-fg: #ffffff;
+      --btn-border: #555555;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      text-align: center;
+      padding: 1.5rem 1rem 0.5rem;
+    }
+
+    .lang-selector {
+      margin: 1rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .container {
+      padding: 1rem;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 1rem;
+      height: 80px;
+      border: 1px solid var(--btn-border);
+      border-radius: 10px;
+      background: var(--btn-bg);
+      color: var(--btn-fg);
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    .section {
+      display: none;
+      max-width: 600px;
+      padding: 1rem;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .back-btn {
+      margin-bottom: 1rem;
+      display: inline-block;
+      cursor: pointer;
+      color: var(--btn-fg);
+      text-decoration: underline;
+    }
+  </style>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</head>
+<body>
+  <header>
+    <h1>HESAPLARIM ⬇️</h1>
+    <select class="lang-selector" onchange="changeLang(this.value)">
+      <option value="tr">Türkçe</option>
+      <option value="en">English</option>
+      <option value="ru">Русский</option>
+      <option value="de">Deutsch</option>
+      <option value="fr">Français</option>
+      <option value="es">Español</option>
+      <option value="zh">中文</option>
+      <option value="ar">العربية</option>
+      <option value="hi">हिंदी</option>
+      <option value="pt">Português</option>
+    </select>
+  </header>
+
+  <div class="container" id="main-content">
+    <div class="grid">
+      <a href="https://instagram.com/egeherz" class="btn" data-i18n="instagram">Instagram</a>
+      <a href="https://t.me/egeherz" class="btn" data-i18n="telegram">Telegram</a>
+      <a href="https://wa.me/447846848820" class="btn" data-i18n="whatsapp">WhatsApp</a>
+      <a href="https://www.tiktok.com/@egeherz" class="btn" data-i18n="tiktok">TikTok</a>
+      <a href="#" class="btn" onclick="showSection('about')" data-i18n="about">Hakkımda</a>
+      <a href="#" class="btn" onclick="showSection('privacy')" data-i18n="privacy">Gizlilik Politikası</a>
+    </div>
+  </div>
+
+  <div class="section" id="about">
+    <span class="back-btn" onclick="goBack()" data-i18n="back">⬅ Geri Dön</span>
+    <h2 data-i18n="about-title">Hakkımda - Bartın Ege Karahanlı'nın Kişisel Bilgileri ve Hedefleri</h2>
+    <p data-i18n="about-text">
+      Bartın Ege Karahanlı, çok dilli yazılım geliştirme ve dijital içerik üretimi konularında uzmanlaşmış bir yazılımcıdır. C++, Python, Node.js ve diğer modern yazılım dillerini ustalıkla kullanır. Hedefi, herkesin özgürce dijital varlıklarını inşa edebileceği bir dünya yaratmaktır.
+    </p>
+  </div>
+
+  <div class="section" id="privacy">
+    <span class="back-btn" onclick="goBack()" data-i18n="back">⬅ Geri Dön</span>
+    <h2 data-i18n="privacy-title">Gizlilik Politikası - Ziyaretçi Verilerinin Kullanımı ve Korunması</h2>
+    <p data-i18n="privacy-text">
+      Bu site hiçbir kişisel verinizi izinsiz toplamaz. Çerezler sadece Google AdSense tarafından analiz amaçlı kullanılabilir. Bu veriler sadece reklam performansını artırmak için Google’a sunulmaktadır. Site sahibi olarak sizin hakkınızda hiçbir veri saklamıyorum. Kısacası: sizi gözetlemiyorum, sizi kovalamıyorum, sadece bağlantılarımı paylaşıyorum.
+    </p>
+  </div>
+
+  <script>
+    function changeLang(lang) {
+      const elements = document.querySelectorAll('[data-i18n]');
+      elements.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+    }
+
+    function showSection(id) {
+      document.getElementById("main-content").style.display = "none";
+      document.getElementById(id).classList.add("active");
+    }
+
+    function goBack() {
+      document.getElementById("main-content").style.display = "block";
+      document.querySelectorAll('.section').forEach(s => s.classList.remove("active"));
+    }
+
+    const translations = {
+      en: {
+        instagram: "Instagram",
+        telegram: "Telegram",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok",
+        about: "About Me",
+        privacy: "Privacy Policy",
+        back: "⬅ Back",
+        "about-title": "About Me - Bartın Ege Karahanlı's Personal Info & Goals",
+        "privacy-title": "Privacy Policy - Use & Protection of Visitor Data",
+        "about-text": "Bartın Ege Karahanlı is a developer specialized in multilingual software and content. Fluent in C++, Python, and Node.js, his goal is to empower digital freedom for everyone.",
+        "privacy-text": "This site collects no personal data. Only Google AdSense may use cookies for ad purposes. I do not store or track your info. You're safe here — just links, no tricks."
+      },
+      tr: {
+        instagram: "Instagram",
+        telegram: "Telegram",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok",
+        about: "Hakkımda",
+        privacy: "Gizlilik Politikası",
+        back: "⬅ Geri Dön",
+        "about-title": "Hakkımda - Bartın Ege Karahanlı'nın Kişisel Bilgileri ve Hedefleri",
+        "privacy-title": "Gizlilik Politikası - Ziyaretçi Verilerinin Kullanımı ve Korunması",
+        "about-text": "Bartın Ege Karahanlı, çok dilli yazılım geliştirme ve dijital içerik üretimi konularında uzmanlaşmış bir yazılımcıdır. C++, Python, Node.js ve diğer modern yazılım dillerini ustalıkla kullanır. Hedefi, herkesin özgürce dijital varlıklarını inşa edebileceği bir dünya yaratmaktır.",
+        "privacy-text": "Bu site hiçbir kişisel verinizi izinsiz toplamaz. Çerezler sadece Google AdSense tarafından analiz amaçlı kullanılabilir. Bu veriler sadece reklam performansını artırmak için Google’a sunulmaktadır. Site sahibi olarak sizin hakkınızda hiçbir veri saklamıyorum. Kısacası: sizi gözetlemiyorum, sizi kovalamıyorum, sadece bağlantılarımı paylaşıyorum."
+      }
+      // Diğer diller (ru, de, fr, es, zh, ar, hi, pt) eklenecekse aynı yapıyla genişletilir.
+    };
+  </script>
+</body>
+</html>

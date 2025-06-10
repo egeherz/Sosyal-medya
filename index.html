@@ -12,6 +12,7 @@
      crossorigin="anonymous"></script> 
 
 <style>
+  /* [Burada stil kodların aynen korunmuştur] */
   *, *::before, *::after {
     margin: 0; padding: 0; box-sizing: border-box;
   }
@@ -41,8 +42,6 @@
     font-feature-settings: "tnum";
     letter-spacing: 0.02em;
   }
-
-  /* Dil seçici */
   #language-select {
     margin-bottom: 30px;
     font-size: 1.1rem;
@@ -58,8 +57,6 @@
   #language-select:hover {
     outline: none;
   }
-
-  /* Tema seçici */
   #theme-select {
     margin-bottom: 40px;
     font-size: 1.1rem;
@@ -75,17 +72,13 @@
   #theme-select:hover {
     outline: none;
   }
-
-  /* Neon butonlar */
   .btn-group {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 22px;
     width: 100%;
     max-width: 560px;
-    margin-bottom: 50px;
   }
-
   a.btn {
     display: flex;
     align-items: center;
@@ -111,7 +104,6 @@
     font-size: 1.5rem;
     filter: drop-shadow(0 0 2px #0004);
   }
-
   a.btn:hover,
   a.btn:focus-visible {
     transform: translateY(-3px);
@@ -126,8 +118,6 @@
       0 0 8px 1px currentColor,
       0 0 25px 6px currentColor;
   }
-
-  /* Sosyal medya renkleri */
   a#btn-instagram {
     background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
     color: white;
@@ -144,7 +134,6 @@
     background: #000000;
     color: white;
   }
-
   @media (max-width: 400px) {
     header {
       font-size: 2rem;
@@ -154,8 +143,6 @@
       padding: 14px 0;
     }
   }
-
-  /* Temalar */
   body.theme-day {
     background-color: #f9fafb;
     color: #222;
@@ -176,8 +163,6 @@
     color: #a7ffeb;
     border-color: #26a69a;
   }
-
-  /* Tema seçici border renkleri */
   body.theme-day #theme-select {
     border-color: #2563eb;
     background-color: white;
@@ -198,39 +183,10 @@
     background-color: #00332a;
     color: #a7ffeb;
   }
-
-  /* Hakkımda alanı */
-  #about-section {
-    max-width: 700px;
-    padding: 20px 30px;
-    border-radius: 14px;
-    background: rgba(255 255 255 / 0.1);
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    font-size: 1.15rem;
-    line-height: 1.6;
-    color: inherit;
-    user-select: text;
-    margin-bottom: 40px;
-  }
-  body.theme-day #about-section {
-    background: #ffffffcc;
-    color: #222;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-  }
-  body.theme-night #about-section {
-    background: #1e293bcc;
-  }
-  body.theme-purple #about-section {
-    background: #2c136dcc;
-  }
-  body.theme-turquoise #about-section {
-    background: #00332acc;
-  }
 </style>
 </head>
 <body>
 
-<!-- Dil seçici -->
 <select id="language-select" aria-label="Dil seçimi / Language selection" title="Dil seçimi">
   <option value="tr">Türkçe</option>
   <option value="en">English</option>
@@ -250,7 +206,6 @@
   <option value="theme-turquoise">Turkuaz Neon</option>
 </select>
 
-<!-- Sosyal medya butonları -->
 <div class="btn-group" role="navigation" aria-label="Sosyal medya bağlantıları">
   <a href="https://www.instagram.com/egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-instagram" aria-label="Instagram">
     <i class="fab fa-instagram"></i> Instagram
@@ -266,11 +221,16 @@
   </a>
 </div>
 
-<!-- Hakkımda bölümü -->
-<section id="about-section" aria-label="Hakkımda">
-  <!-- İçerik JS ile güncellenecek -->
-  Hakkımda bilgileri burada olacak.
-</section>
+<!-- Google Reklam Bloğu (Buton grubunun altına ayrı olarak eklendi) -->
+<ins class="adsbygoogle"
+     style="display:block; margin-top: 50px;"
+     data-ad-client="ca-pub-7831163932493310"
+     data-ad-slot="6819739349"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
 <script>
   const translations = {
@@ -288,8 +248,7 @@
         "theme-night": "Gece",
         "theme-purple": "Mor Neon",
         "theme-turquoise": "Turkuaz Neon"
-      },
-      about: `Merhaba! Ben Egeherz. Teknoloji ve yazılım konularında içerik üretiyorum. Sosyal medya hesaplarım üzerinden bana ulaşabilirsiniz. Web projeleri geliştirmeyi ve yeni teknolojileri keşfetmeyi seviyorum.`
+      }
     },
     en: {
       header: "MY ACCOUNTS",
@@ -305,8 +264,7 @@
         "theme-night": "Night",
         "theme-purple": "Purple Neon",
         "theme-turquoise": "Turquoise Neon"
-      },
-      about: `Hello! I'm Egeherz. I create content about technology and software. You can reach me through my social media accounts. I enjoy developing web projects and exploring new technologies.`
+      }
     },
     ru: {
       header: "МОИ АККАУНТЫ",
@@ -322,8 +280,7 @@
         "theme-night": "Ночь",
         "theme-purple": "Фиолетовый Неон",
         "theme-turquoise": "Бирюзовый Неон"
-      },
-      about: `Привет! Я Egeherz. Я создаю контент о технологиях и программном обеспечении. Со мной можно связаться через мои социальные сети. Мне нравится разрабатывать веб-проекты и изучать новые технологии.`
+      }
     },
     de: {
       header: "MEINE KONTEN",
@@ -339,8 +296,7 @@
         "theme-night": "Nacht",
         "theme-purple": "Lila Neon",
         "theme-turquoise": "Türkis Neon"
-      },
-      about: `Hallo! Ich bin Egeherz. Ich erstelle Inhalte über Technologie und Software. Sie können mich über meine Social-Media-Konten erreichen. Ich entwickle gerne Webprojekte und entdecke neue Technologien.`
+      }
     },
     zh: {
       header: "我的账户",
@@ -356,8 +312,7 @@
         "theme-night": "夜晚",
         "theme-purple": "紫色霓虹",
         "theme-turquoise": "绿松石霓虹"
-      },
-      about: `你好！我是Egeherz。我制作有关技术和软件的内容。您可以通过我的社交媒体账户联系我。我喜欢开发网页项目和探索新技术。`
+      }
     },
     fr: {
       header: "MES COMPTES",
@@ -371,104 +326,87 @@
       themeOptions: {
         "theme-day": "Jour",
         "theme-night": "Nuit",
-        "theme-purple": "Néon Violet",
-        "theme-turquoise": "Néon Turquoise"
-      },
-      about: `Bonjour ! Je suis Egeherz. Je crée du contenu sur la technologie et les logiciels. Vous pouvez me contacter via mes comptes sociaux. J'aime développer des projets web et explorer de nouvelles technologies.`
+        "theme-purple": "Néon violet",
+        "theme-turquoise": "Néon turquoise"
+      }
     }
   };
 
-  const languageSelect = document.getElementById('language-select');
   const header = document.getElementById('page-header');
   const clock = document.getElementById('clock');
+  const languageSelect = document.getElementById('language-select');
   const themeSelect = document.getElementById('theme-select');
-  const aboutSection = document.getElementById('about-section');
 
-  const btnInstagram = document.getElementById('btn-instagram');
-  const btnTelegram = document.getElementById('btn-telegram');
-  const btnWhatsapp = document.getElementById('btn-whatsapp');
-  const btnTiktok = document.getElementById('btn-tiktok');
-
-  // Saat güncelleme fonksiyonu
   function updateClock(lang) {
     const now = new Date();
-    const options = {
-      hour: '2-digit', minute: '2-digit', second: '2-digit',
-      hour12: false,
-      timeZoneName: 'short'
+    const days = {
+      tr: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+      en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      ru: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+      de: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+      zh: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+      fr: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
     };
-    const timeString = now.toLocaleTimeString(lang, options);
-    clock.textContent = `${translations[lang].clockLabel}: ${timeString}`;
+
+    const dayName = days[lang][now.getDay()];
+    let dateStr, timeStr;
+    if(lang === 'zh'){
+      dateStr = now.toLocaleDateString('zh-CN');
+      timeStr = now.toLocaleTimeString('zh-CN', {hour12:false});
+    } else {
+      dateStr = now.toLocaleDateString(lang);
+      timeStr = now.toLocaleTimeString(lang, {hour12:false});
+    }
+
+    clock.textContent = `${dayName}, ${dateStr} - ${timeStr}`;
+    clock.setAttribute('aria-label', translations[lang].clockLabel);
   }
 
-  // Buton yazılarını güncelle
-  function updateButtonTexts(lang) {
-    btnInstagram.textContent = translations[lang].buttons.instagram;
-    btnTelegram.textContent = translations[lang].buttons.telegram;
-    btnWhatsapp.textContent = translations[lang].buttons.whatsapp;
-    btnTiktok.textContent = translations[lang].buttons.tiktok;
-
-    // İkonları korumak için:
-    btnInstagram.prepend(document.createElement('i')).className = "fab fa-instagram";
-    btnTelegram.prepend(document.createElement('i')).className = "fab fa-telegram";
-    btnWhatsapp.prepend(document.createElement('i')).className = "fab fa-whatsapp";
-    btnTiktok.prepend(document.createElement('i')).className = "fab fa-tiktok";
-  }
-
-  // Tema seçeneklerini güncelle (select içeriği)
-  function updateThemeOptions(lang) {
-    for (const option of themeSelect.options) {
-      if (translations[lang].themeOptions[option.value]) {
-        option.textContent = translations[lang].themeOptions[option.value];
-      }
+  function updateThemeOptions(lang){
+    for (const opt of themeSelect.options) {
+      opt.textContent = translations[lang].themeOptions[opt.value] || opt.value;
     }
   }
 
-  // Hakkımda metnini güncelle
-  function updateAboutText(lang) {
-    aboutSection.textContent = translations[lang].about;
+  function updateButtonTexts(lang) {
+    document.querySelector('#btn-instagram').innerHTML = '<i class="fab fa-instagram"></i> ' + translations[lang].buttons.instagram;
+    document.querySelector('#btn-telegram').innerHTML = '<i class="fab fa-telegram"></i> ' + translations[lang].buttons.telegram;
+    document.querySelector('#btn-whatsapp').innerHTML = '<i class="fab fa-whatsapp"></i> ' + translations[lang].buttons.whatsapp;
+    document.querySelector('#btn-tiktok').innerHTML = '<i class="fab fa-tiktok"></i> ' + translations[lang].buttons.tiktok;
   }
 
-  // Tema kaydet / yükle
   function loadTheme() {
-    const savedTheme = localStorage.getItem('selectedTheme') || 'theme-day';
-    document.body.className = savedTheme;
-    themeSelect.value = savedTheme;
-  }
-  function saveTheme(theme) {
-    localStorage.setItem('selectedTheme', theme);
+    const savedTheme = localStorage.getItem('selectedTheme');
+    if(savedTheme) {
+      document.body.className = savedTheme;
+      themeSelect.value = savedTheme;
+    } else {
+      document.body.className = 'theme-day';
+      themeSelect.value = 'theme-day';
+    }
   }
 
-  // Tema değişiminde
   themeSelect.addEventListener('change', () => {
-    const theme = themeSelect.value;
-    document.body.className = theme;
-    saveTheme(theme);
+    document.body.className = themeSelect.value;
+    localStorage.setItem('selectedTheme', themeSelect.value);
   });
 
-  // Dil değişiminde
   languageSelect.addEventListener('change', () => {
     const lang = languageSelect.value;
     header.textContent = translations[lang].header;
     updateButtonTexts(lang);
     updateThemeOptions(lang);
     updateClock(lang);
-    updateAboutText(lang);
   });
 
   window.onload = () => {
     loadTheme();
-
-    // Başlangıç dili Türkçe olsun
-    const lang = languageSelect.value || 'tr';
-
+    const lang = languageSelect.value;
     header.textContent = translations[lang].header;
     updateButtonTexts(lang);
     updateThemeOptions(lang);
     updateClock(lang);
-    updateAboutText(lang);
-
-    setInterval(() => updateClock(languageSelect.value), 1000);
+    setInterval(() => updateClock(lang), 1000);
   };
 </script>
 </body>

@@ -37,34 +37,9 @@
     font-weight: 500;
     font-size: 1.3rem;
     user-select: none;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     font-feature-settings: "tnum";
     letter-spacing: 0.02em;
-  }
-
-  /* Sayfa geçiş butonları */
-  #page-buttons {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 30px;
-  }
-  #page-buttons button {
-    padding: 10px 18px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    border-radius: 12px;
-    border: 2px solid currentColor;
-    background: transparent;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    color: inherit;
-  }
-  #page-buttons button.active,
-  #page-buttons button:hover {
-    background-color: currentColor;
-    color: #fff;
-    outline: none;
   }
 
   /* Dil seçici */
@@ -108,6 +83,7 @@
     gap: 22px;
     width: 100%;
     max-width: 560px;
+    margin-bottom: 50px;
   }
 
   a.btn {
@@ -177,12 +153,6 @@
       font-size: 1rem;
       padding: 14px 0;
     }
-    #page-buttons {
-      flex-direction: column;
-    }
-    #page-buttons button {
-      width: 100%;
-    }
   }
 
   /* Temalar */
@@ -229,14 +199,33 @@
     color: #a7ffeb;
   }
 
-  /* Hakkımda içerik stili */
-  #about-content {
+  /* Hakkımda alanı */
+  #about-section {
     max-width: 700px;
-    font-size: 1.1rem;
+    padding: 20px 30px;
+    border-radius: 14px;
+    background: rgba(255 255 255 / 0.1);
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    font-size: 1.15rem;
     line-height: 1.6;
-    margin-top: 10px;
+    color: inherit;
+    user-select: text;
+    margin-bottom: 40px;
   }
-
+  body.theme-day #about-section {
+    background: #ffffffcc;
+    color: #222;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+  body.theme-night #about-section {
+    background: #1e293bcc;
+  }
+  body.theme-purple #about-section {
+    background: #2c136dcc;
+  }
+  body.theme-turquoise #about-section {
+    background: #00332acc;
+  }
 </style>
 </head>
 <body>
@@ -261,239 +250,226 @@
   <option value="theme-turquoise">Turkuaz Neon</option>
 </select>
 
-<!-- Sayfa geçiş butonları -->
-<div id="page-buttons" role="tablist" aria-label="Sayfa seçimi">
-  <button id="btn-hesaplar" role="tab" aria-selected="true" aria-controls="content-hesaplar" tabindex="0" class="active">Hesaplarım</button>
-  <button id="btn-hakkimda" role="tab" aria-selected="false" aria-controls="content-hakkimda" tabindex="-1">Hakkımda</button>
+<!-- Sosyal medya butonları -->
+<div class="btn-group" role="navigation" aria-label="Sosyal medya bağlantıları">
+  <a href="https://www.instagram.com/egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-instagram" aria-label="Instagram">
+    <i class="fab fa-instagram"></i> Instagram
+  </a>
+  <a href="https://t.me/egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-telegram" aria-label="Telegram">
+    <i class="fab fa-telegram"></i> Telegram
+  </a>
+  <a href="https://wa.me/447846848820" target="_blank" rel="noopener noreferrer" class="btn" id="btn-whatsapp" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i> WhatsApp
+  </a>
+  <a href="https://www.tiktok.com/@egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-tiktok" aria-label="TikTok">
+    <i class="fab fa-tiktok"></i> TikTok
+  </a>
 </div>
 
-<!-- İçerik alanı -->
-<div id="content-hesaplar" role="tabpanel" tabindex="0">
-  <div class="btn-group" role="navigation" aria-label="Sosyal medya bağlantıları">
-    <a href="https://www.instagram.com/egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-instagram" aria-label="Instagram">
-      <i class="fab fa-instagram"></i> Instagram
-    </a>
-    <a href="https://t.me/egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-telegram" aria-label="Telegram">
-      <i class="fab fa-telegram"></i> Telegram
-    </a>
-    <a href="https://wa.me/447846848820" target="_blank" rel="noopener noreferrer" class="btn" id="btn-whatsapp" aria-label="WhatsApp">
-      <i class="fab fa-whatsapp"></i> WhatsApp
-    </a>
-    <a href="https://www.tiktok.com/@egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-tiktok" aria-label="TikTok">
-      <i class="fab fa-tiktok"></i> TikTok
-    </a>
-  </div>
-</div>
-
-<div id="content-hakkimda" role="tabpanel" tabindex="0" hidden>
-  <div id="about-content">
-    <h2>Hakkımda</h2>
-    <p>Merhaba! Ben Egeherz, teknoloji ve sosyal medya ile ilgili çeşitli hesapları ve içerikleri yöneten biriyim. Burada Instagram, Telegram, WhatsApp ve TikTok gibi platformlarda aktif olarak bulunuyorum.</p>
-    <p>Amacım, kaliteli içerik üretmek ve takipçilerime en güncel ve faydalı bilgileri sunmaktır.</p>
-    <p>Her zaman yeni projelerle karşınızda olacağım, takipte kalın!</p>
-
-    <!-- Google AdSense reklam alanı -->
-    <ins class="adsbygoogle"
-      style="display:block; text-align:center; margin: 30px auto;"
-      data-ad-client="ca-pub-7831163932493310"
-      data-ad-slot="1234567890"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  </div>
-</div>
+<!-- Hakkımda bölümü -->
+<section id="about-section" aria-label="Hakkımda">
+  <!-- İçerik JS ile güncellenecek -->
+  Hakkımda bilgileri burada olacak.
+</section>
 
 <script>
   const translations = {
     tr: {
       header: "HESAPLARIM",
-      hakkimdaHeader: "Hakkımda",
-      hakkimdaText: [
-        "Merhaba! Ben Egeherz, teknoloji ve sosyal medya ile ilgili çeşitli hesapları ve içerikleri yöneten biriyim. Burada Instagram, Telegram, WhatsApp ve TikTok gibi platformlarda aktif olarak bulunuyorum.",
-        "Amacım, kaliteli içerik üretmek ve takipçilerime en güncel ve faydalı bilgileri sunmaktır.",
-        "Her zaman yeni projelerle karşınızda olacağım, takipte kalın!"
-      ],
       clockLabel: "Şu anki saat",
       buttons: {
         instagram: "Instagram",
         telegram: "Telegram",
         whatsapp: "WhatsApp",
-        tiktok: "TikTok",
-        hesaplar: "Hesaplarım",
-        hakkimda: "Hakkımda"
+        tiktok: "TikTok"
       },
-      themes: {
+      themeOptions: {
         "theme-day": "Gündüz",
         "theme-night": "Gece",
         "theme-purple": "Mor Neon",
         "theme-turquoise": "Turkuaz Neon"
-      }
+      },
+      about: `Merhaba! Ben Egeherz. Teknoloji ve yazılım konularında içerik üretiyorum. Sosyal medya hesaplarım üzerinden bana ulaşabilirsiniz. Web projeleri geliştirmeyi ve yeni teknolojileri keşfetmeyi seviyorum.`
     },
     en: {
       header: "MY ACCOUNTS",
-      hakkimdaHeader: "About Me",
-      hakkimdaText: [
-        "Hello! I'm Egeherz, managing various accounts and content related to technology and social media. I'm active on platforms like Instagram, Telegram, WhatsApp, and TikTok.",
-        "My goal is to produce quality content and provide my followers with the most up-to-date and useful information.",
-        "I'll always be here with new projects, stay tuned!"
-      ],
       clockLabel: "Current time",
       buttons: {
         instagram: "Instagram",
         telegram: "Telegram",
         whatsapp: "WhatsApp",
-        tiktok: "TikTok",
-        hesaplar: "My Accounts",
-        hakkimda: "About Me"
+        tiktok: "TikTok"
       },
-      themes: {
+      themeOptions: {
         "theme-day": "Day",
         "theme-night": "Night",
         "theme-purple": "Purple Neon",
         "theme-turquoise": "Turquoise Neon"
-      }
+      },
+      about: `Hello! I'm Egeherz. I create content about technology and software. You can reach me through my social media accounts. I enjoy developing web projects and exploring new technologies.`
+    },
+    ru: {
+      header: "МОИ АККАУНТЫ",
+      clockLabel: "Текущее время",
+      buttons: {
+        instagram: "Инстаграм",
+        telegram: "Телеграм",
+        whatsapp: "Вотсап",
+        tiktok: "ТикТок"
+      },
+      themeOptions: {
+        "theme-day": "День",
+        "theme-night": "Ночь",
+        "theme-purple": "Фиолетовый Неон",
+        "theme-turquoise": "Бирюзовый Неон"
+      },
+      about: `Привет! Я Egeherz. Я создаю контент о технологиях и программном обеспечении. Со мной можно связаться через мои социальные сети. Мне нравится разрабатывать веб-проекты и изучать новые технологии.`
+    },
+    de: {
+      header: "MEINE KONTEN",
+      clockLabel: "Aktuelle Uhrzeit",
+      buttons: {
+        instagram: "Instagram",
+        telegram: "Telegram",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok"
+      },
+      themeOptions: {
+        "theme-day": "Tag",
+        "theme-night": "Nacht",
+        "theme-purple": "Lila Neon",
+        "theme-turquoise": "Türkis Neon"
+      },
+      about: `Hallo! Ich bin Egeherz. Ich erstelle Inhalte über Technologie und Software. Sie können mich über meine Social-Media-Konten erreichen. Ich entwickle gerne Webprojekte und entdecke neue Technologien.`
+    },
+    zh: {
+      header: "我的账户",
+      clockLabel: "当前时间",
+      buttons: {
+        instagram: "Instagram",
+        telegram: "Telegram",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok"
+      },
+      themeOptions: {
+        "theme-day": "白天",
+        "theme-night": "夜晚",
+        "theme-purple": "紫色霓虹",
+        "theme-turquoise": "绿松石霓虹"
+      },
+      about: `你好！我是Egeherz。我制作有关技术和软件的内容。您可以通过我的社交媒体账户联系我。我喜欢开发网页项目和探索新技术。`
+    },
+    fr: {
+      header: "MES COMPTES",
+      clockLabel: "Heure actuelle",
+      buttons: {
+        instagram: "Instagram",
+        telegram: "Telegram",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok"
+      },
+      themeOptions: {
+        "theme-day": "Jour",
+        "theme-night": "Nuit",
+        "theme-purple": "Néon Violet",
+        "theme-turquoise": "Néon Turquoise"
+      },
+      about: `Bonjour ! Je suis Egeherz. Je crée du contenu sur la technologie et les logiciels. Vous pouvez me contacter via mes comptes sociaux. J'aime développer des projets web et explorer de nouvelles technologies.`
     }
-    // Daha fazla dil eklenecekse buraya eklenebilir
   };
 
-  // Saat göstergesi
-  function updateClock() {
+  const languageSelect = document.getElementById('language-select');
+  const header = document.getElementById('page-header');
+  const clock = document.getElementById('clock');
+  const themeSelect = document.getElementById('theme-select');
+  const aboutSection = document.getElementById('about-section');
+
+  const btnInstagram = document.getElementById('btn-instagram');
+  const btnTelegram = document.getElementById('btn-telegram');
+  const btnWhatsapp = document.getElementById('btn-whatsapp');
+  const btnTiktok = document.getElementById('btn-tiktok');
+
+  // Saat güncelleme fonksiyonu
+  function updateClock(lang) {
     const now = new Date();
     const options = {
       hour: '2-digit', minute: '2-digit', second: '2-digit',
-      hour12: false
+      hour12: false,
+      timeZoneName: 'short'
     };
-    const timeString = now.toLocaleTimeString(currentLanguage, options);
-    clock.textContent = timeString;
+    const timeString = now.toLocaleTimeString(lang, options);
+    clock.textContent = `${translations[lang].clockLabel}: ${timeString}`;
   }
 
-  // Butonlar ve sayfa içerik değişimi
-  const btnHesaplar = document.getElementById("btn-hesaplar");
-  const btnHakkimda = document.getElementById("btn-hakkimda");
-  const contentHesaplar = document.getElementById("content-hesaplar");
-  const contentHakkimda = document.getElementById("content-hakkimda");
-  const pageHeader = document.getElementById("page-header");
-  const clock = document.getElementById("clock");
-  const languageSelect = document.getElementById("language-select");
-  const themeSelect = document.getElementById("theme-select");
+  // Buton yazılarını güncelle
+  function updateButtonTexts(lang) {
+    btnInstagram.textContent = translations[lang].buttons.instagram;
+    btnTelegram.textContent = translations[lang].buttons.telegram;
+    btnWhatsapp.textContent = translations[lang].buttons.whatsapp;
+    btnTiktok.textContent = translations[lang].buttons.tiktok;
 
-  let currentLanguage = localStorage.getItem("selectedLanguage") || "tr";
-  let currentTheme = localStorage.getItem("selectedTheme") || "theme-day";
+    // İkonları korumak için:
+    btnInstagram.prepend(document.createElement('i')).className = "fab fa-instagram";
+    btnTelegram.prepend(document.createElement('i')).className = "fab fa-telegram";
+    btnWhatsapp.prepend(document.createElement('i')).className = "fab fa-whatsapp";
+    btnTiktok.prepend(document.createElement('i')).className = "fab fa-tiktok";
+  }
 
-  // Dil seçimi
-  function setLanguage(lang) {
-    if (!translations[lang]) lang = "tr";
-    currentLanguage = lang;
-    localStorage.setItem("selectedLanguage", lang);
-
-    // Başlık
-    if (contentHesaplar.hidden === false) {
-      pageHeader.textContent = translations[lang].header;
-      btnHesaplar.textContent = translations[lang].buttons.hesaplar;
-      btnHakkimda.textContent = translations[lang].buttons.hakkimda;
-    } else {
-      pageHeader.textContent = translations[lang].hakkimdaHeader;
-      btnHesaplar.textContent = translations[lang].buttons.hesaplar;
-      btnHakkimda.textContent = translations[lang].buttons.hakkimda;
+  // Tema seçeneklerini güncelle (select içeriği)
+  function updateThemeOptions(lang) {
+    for (const option of themeSelect.options) {
+      if (translations[lang].themeOptions[option.value]) {
+        option.textContent = translations[lang].themeOptions[option.value];
+      }
     }
-
-    // Dil seçici değeri
-    languageSelect.value = lang;
-
-    // Sosyal medya butonları
-    document.getElementById("btn-instagram").textContent = translations[lang].buttons.instagram;
-    document.getElementById("btn-telegram").textContent = translations[lang].buttons.telegram;
-    document.getElementById("btn-whatsapp").textContent = translations[lang].buttons.whatsapp;
-    document.getElementById("btn-tiktok").textContent = translations[lang].buttons.tiktok;
-
-    // Temalar seçenekleri
-    themeSelect.options[0].text = translations[lang].themes["theme-day"];
-    themeSelect.options[1].text = translations[lang].themes["theme-night"];
-    themeSelect.options[2].text = translations[lang].themes["theme-purple"];
-    themeSelect.options[3].text = translations[lang].themes["theme-turquoise"];
-
-    // Hakkımda içeriği güncelle
-    if (!contentHakkimda.hidden) {
-      updateAboutContent(lang);
-    }
-
-    updateClock();
   }
 
-  // Hakkımda içeriğini güncelleme
-  function updateAboutContent(lang) {
-    const container = document.getElementById("about-content");
-    const t = translations[lang];
-    container.innerHTML = `
-      <h2>${t.hakkimdaHeader}</h2>
-      <p>${t.hakkimdaText[0]}</p>
-      <p>${t.hakkimdaText[1]}</p>
-      <p>${t.hakkimdaText[2]}</p>
-      <!-- Google AdSense reklam alanı -->
-      <ins class="adsbygoogle"
-        style="display:block; text-align:center; margin: 30px auto;"
-        data-ad-client="ca-pub-7831163932493310"
-        data-ad-slot="1234567890"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    `;
-    // Adsense reklamını yükle
-    (adsbygoogle = window.adsbygoogle || []).push({});
+  // Hakkımda metnini güncelle
+  function updateAboutText(lang) {
+    aboutSection.textContent = translations[lang].about;
   }
 
-  // Tema ayarlama
-  function setTheme(theme) {
-    currentTheme = theme;
-    localStorage.setItem("selectedTheme", theme);
+  // Tema kaydet / yükle
+  function loadTheme() {
+    const savedTheme = localStorage.getItem('selectedTheme') || 'theme-day';
+    document.body.className = savedTheme;
+    themeSelect.value = savedTheme;
+  }
+  function saveTheme(theme) {
+    localStorage.setItem('selectedTheme', theme);
+  }
+
+  // Tema değişiminde
+  themeSelect.addEventListener('change', () => {
+    const theme = themeSelect.value;
     document.body.className = theme;
-    themeSelect.value = theme;
-  }
+    saveTheme(theme);
+  });
 
-  // Sayfa değiştirme
-  function switchPage(toHesaplar) {
-    if (toHesaplar) {
-      contentHesaplar.hidden = false;
-      contentHakkimda.hidden = true;
-      btnHesaplar.classList.add("active");
-      btnHesaplar.setAttribute("aria-selected", "true");
-      btnHesaplar.tabIndex = 0;
+  // Dil değişiminde
+  languageSelect.addEventListener('change', () => {
+    const lang = languageSelect.value;
+    header.textContent = translations[lang].header;
+    updateButtonTexts(lang);
+    updateThemeOptions(lang);
+    updateClock(lang);
+    updateAboutText(lang);
+  });
 
-      btnHakkimda.classList.remove("active");
-      btnHakkimda.setAttribute("aria-selected", "false");
-      btnHakkimda.tabIndex = -1;
+  window.onload = () => {
+    loadTheme();
 
-      pageHeader.textContent = translations[currentLanguage].header;
-    } else {
-      contentHesaplar.hidden = true;
-      contentHakkimda.hidden = false;
-      btnHesaplar.classList.remove("active");
-      btnHesaplar.setAttribute("aria-selected", "false");
-      btnHesaplar.tabIndex = -1;
+    // Başlangıç dili Türkçe olsun
+    const lang = languageSelect.value || 'tr';
 
-      btnHakkimda.classList.add("active");
-      btnHakkimda.setAttribute("aria-selected", "true");
-      btnHakkimda.tabIndex = 0;
+    header.textContent = translations[lang].header;
+    updateButtonTexts(lang);
+    updateThemeOptions(lang);
+    updateClock(lang);
+    updateAboutText(lang);
 
-      pageHeader.textContent = translations[currentLanguage].hakkimdaHeader;
-      updateAboutContent(currentLanguage);
-    }
-  }
-
-  // Event listeners
-  btnHesaplar.addEventListener("click", () => switchPage(true));
-  btnHakkimda.addEventListener("click", () => switchPage(false));
-
-  languageSelect.addEventListener("change", (e) => setLanguage(e.target.value));
-  themeSelect.addEventListener("change", (e) => setTheme(e.target.value));
-
-  // Başlangıç ayarları
-  setTheme(currentTheme);
-  setLanguage(currentLanguage);
-  switchPage(true);
-
-  // Saat güncelleme
-  updateClock();
-  setInterval(updateClock, 1000);
+    setInterval(() => updateClock(languageSelect.value), 1000);
+  };
 </script>
-
 </body>
 </html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hesaplarım | Egeherz</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7831163932493310"
+     crossorigin="anonymous"></script> 
+
+<style>
+  *, *::before, *::after {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 60px;
+    line-height: 1.5;
+    transition: background-color 0.5s, color 0.5s;
+  }
+  header {
+    font-weight: 700;
+    font-size: 2.6rem;
+    user-select: none;
+
+
+Tamam kanka! Sana iki sayfalı yapıyı şöyle hazırladım:
+
+---
+
+## 1) Güncellenmiş **index.html** — "Hakkımda" butonunu ekledim:
+
+```html
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hesaplarım | Egeherz</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7831163932493310"
+     crossorigin="anonymous"></script> 
+
+<style>
+  *, *::before, *::after {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 60px;
+    line-height: 1.5;
+    transition: background-color 0.5s, color 0.5s;
+  }
+  header {
+    font-weight: 700;
+    font-size: 2.6rem;
+    user-select: none;
+    letter-spacing: 0.07em;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  #clock {
+    font-weight: 500;
+    font-size: 1.3rem;
+    user-select: none;
+    margin-bottom: 40px;
+    font-feature-settings: "tnum";
+    letter-spacing: 0.02em;
+  }
+
+  /* Dil seçici */
+  #language-select {
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 2px solid;
+    cursor: pointer;
+    user-select: none;
+    max-width: 180px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  #language-select:focus,
+  #language-select:hover {
+    outline: none;
+  }
+
+  /* Tema seçici */
+  #theme-select {
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+    padding: 10px 18px;
+    border-radius: 12px;
+    border: 2px solid;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    max-width: 180px;
+  }
+  #theme-select:focus,
+  #theme-select:hover {
+    outline: none;
+  }
+
+  /* Neon butonlar */
+  .btn-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 22px;
+    width: 100%;
+    max-width: 560px;
+  }
+
+  a.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 16px 0;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    text-decoration: none;
+    box-shadow:
+      0 0 6px rgba(255,255,255,0.15),
+      0 0 20px rgba(255,255,255,0.15);
+    transition:
+      box-shadow 0.4s ease,
+      transform 0.15s ease;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+    color: white;
+  }
+  a.btn i {
+    font-size: 1.5rem;
+    filter: drop-shadow(0 0 2px #0004);
+  }
+
+  a.btn:hover,
+  a.btn:focus-visible {
+    transform: translateY(-3px);
+    box-shadow:
+      0 0 12px 2px currentColor,
+      0 0 40px 10px currentColor;
+    outline: none;
+  }
+  a.btn:active {
+    transform: translateY(0);
+    box-shadow:
+      0 0 8px 1px currentColor,
+      0 0 25px 6px currentColor;
+  }
+
+  /* Sosyal medya renkleri */
+  a#btn-instagram {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: white;
+  }
+  a#btn-telegram {
+    background: #0088cc;
+    color: white;
+  }
+  a#btn-whatsapp {
+    background: #25d366;
+    color: white;
+  }
+  a#btn-tiktok {
+    background: #000000;
+    color: white;
+  }
+
+  /* Hakkımda butonu için farklı renk */
+  a#btn-about {
+    background: #ff6f61;
+    color: white;
+  }
+
+  @media (max-width: 400px) {
+    header {
+      font-size: 2rem;
+    }
+    a.btn {
+      font-size: 1rem;
+      padding: 14px 0;
+    }
+  }
+
+  /* Temalar */
+  body.theme-day {
+    background-color: #f9fafb;
+    color: #222;
+    border-color: #2563eb;
+  }
+  body.theme-night {
+    background-color: #0f172a;
+    color: #cbd5e1;
+    border-color: #3b82f6;
+  }
+  body.theme-purple {
+    background-color: #1e0e4f;
+    color: #d8b4fe;
+    border-color: #8b5cf6;
+  }
+  body.theme-turquoise {
+    background-color: #004d40;
+    color: #a7ffeb;
+    border-color: #26a69a;
+  }
+
+  /* Tema seçici border renkleri */
+  body.theme-day #theme-select {
+    border-color: #2563eb;
+    background-color: white;
+    color: #2563eb;
+  }
+  body.theme-night #theme-select {
+    border-color: #3b82f6;
+    background-color: #1e293b;
+    color: #cbd5e1;
+  }
+  body.theme-purple #theme-select {
+    border-color: #8b5cf6;
+    background-color: #2c136d;
+    color: #d8b4fe;
+  }
+  body.theme-turquoise #theme-select {
+    border-color: #26a69a;
+    background-color: #00332a;
+    color: #a7ffeb;
+  }
+</style>
+</head>
+<body>
+
+<!-- Dil seçici -->
+<select id="language-select" aria-label="Dil seçimi / Language selection" title="Dil seçimi">
+  <option value="tr">Türkçe</option>
+  <option value="en">English</option>
+  <option value="ru">Русский</option>
+  <option value="de">Deutsch</option>
+  <option value="zh">中文</option>
+  <option value="fr">Français</option>
+</select>
+
+<header id="page-header">HESAPLARIM</header>
+<div id="clock" aria-live="polite" aria-atomic="true" aria-label="Şu anki saat"></div>
+
+<select id="theme-select" aria-label="Tema seçimi / Theme selection" title="Tema seçimi">
+  <option value="theme-day">Gündüz</option>
+  <option value="theme-night">Gece</option>
+  <option value="theme-purple">Mor Neon</option>
+  <option value="theme-turquoise">Turkuaz Neon</option>
+</select>
+
+<div class="btn-group" role="navigation" aria-label="Sosyal medya bağlantıları">
+  <a href="https://www.instagram.com/egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-instagram" aria-label="Instagram">
+    <i class="fab fa-instagram"></i> Instagram
+  </a>
+  <a href="https://t.me/egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-telegram" aria-label="Telegram">
+    <i class="fab fa-telegram"></i> Telegram
+  </a>
+  <a href="https://wa.me/447846848820" target="_blank" rel="noopener noreferrer" class="btn" id="btn-whatsapp" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i> WhatsApp
+  </a>
+  <a href="https://www.tiktok.com/@egeherz" target="_blank" rel="noopener noreferrer" class="btn" id="btn-tiktok" aria-label="TikTok">
+    <i class="fab fa-tiktok"></i> TikTok
+  </a>
+  <!-- Hakkımda butonu -->
+  <a href="about.html" class="btn" id="btn-about" aria-label="Hakkımda">
+    <i class="fas fa-user"></i> Hakkımda
+  </a>
+</div>
+
+<script>
+  const translations = {
+    tr: {
+      header: "HESAPLARIM",
+      clockLabel: "Şu anki saat",
+      buttons: {
+        instagram: "Instagram",
+        telegram: "Telegram",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok",
+        about: "Hakkımda"
+      },
+      themeOptions: {
+        "theme-day": "Gündüz",
+        "theme-night": "Gece",
+        "theme-purple": "Mor Neon",
+        "theme-turquoise": "Turkuaz Neon"
+      }
+    },
+    en: {
+      header: "MY ACCOUNTS",
+      clockLabel: "Current time",
+      buttons: {
+        instagram: "Instagram",
+        telegram: "Telegram",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok",
+        about: "About"
+      },
+      themeOptions: {
+        "theme-day": "Day",
+        "theme-night": "Night",
+        "theme-purple": "Purple Neon",
+        "theme-turquoise": "Turquoise Neon"
+      }
+    },
+    ru: {
+      header: "МОИ АККАУНТЫ",
+      clockLabel: "Текущее время",
+      buttons: {
+        instagram: "Инстаграм",
+        telegram: "Телеграм",
+        whatsapp: "Вотсап",
+        tiktok: "ТикТок",
+        about: "Обо мне"
+      },
+      themeOptions: {
+        "theme-day": "День",
+        "theme-night": "Ночь",
+        "theme-purple": "Фиолетовый Неон",
+        "theme-turquoise": "Бирюзовый Неон"
+      }
+    },
+    de: {
+      header: "MEINE KONTOEN",
+      clockLabel: "Aktuelle Uhrzeit",
+      buttons: {
+        instagram: "Instagram",
+        telegram: "Telegramm",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok",
+        about: "Über mich"
+      },
+      themeOptions: {
+        "theme-day": "Tag",
+        "theme-night": "Nacht",
+        "theme-purple": "Lila Neon",
+        "theme-turquoise": "Türkis Neon"
+      }
+    },
+    zh: {
+      header: "我的账户",
+      clockLabel: "当前时间",
+      buttons: {
+        instagram: "Instagram",
+        telegram: "Telegram",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok",
+        about: "关于"
+      },
+      themeOptions: {
+        "theme-day": "白天",
+        "theme-night": "夜晚",
+        "theme-purple": "紫色霓虹灯",
+        "theme-turquoise": "绿松石霓虹灯"
+      }
+    },
+    fr: {
+      header: "MES COMPTES",
+      clockLabel: "Heure actuelle",
+      buttons: {
+        instagram: "Instagram",
+        telegram: "Telegram",
+        whatsapp: "WhatsApp",
+        tiktok: "TikTok",
+        about: "À propos"
+      },
+      themeOptions: {
+        "theme-day": "Jour",
+        "theme-night": "Nuit",
+        "theme-purple": "Néon violet",
+        "theme-turquoise": "Néon turquoise"
+      }
+    }
+  };
+
+  const header = document.getElementById("page-header");
+  const clock = document.getElementById("clock");
+  const langSelect = document.getElementById("language-select");
+  const themeSelect = document.getElementById("theme-select");
+
+  const btnInstagram = document.querySelector("#btn-instagram");
+  const btnTelegram = document.querySelector("#btn-telegram");
+  const btnWhatsApp = document.querySelector("#btn-whatsapp");
+  const btnTikTok = document.querySelector("#btn-tiktok");
+  const btnAbout = document.querySelector("#btn-about");
+
+  function updateClock() {
+    const now = new Date();
+    clock.textContent = now.toLocaleTimeString(langSelect.value, {hour: '2-digit', minute: '2-digit', second: '2-digit'});
+    clock.setAttribute('aria-label', translations[langSelect.value].clockLabel + ": " + clock.textContent);
+  }
+
+  function updateTexts() {
+    const lang = langSelect.value;
+    const t = translations[lang];
+
+    header.textContent = t.header;
+    btnInstagram.textContent = "";
+    btnInstagram.insertAdjacentHTML('beforeend', '<i class="fab fa-instagram"></i> ' + t.buttons.instagram);
+
+    btnTelegram.textContent = "";
+    btnTelegram.insertAdjacentHTML('beforeend', '<i class="fab fa-telegram"></i> ' + t.buttons.telegram);
+
+    btnWhatsApp.textContent = "";
+    btnWhatsApp.insertAdjacentHTML('beforeend', '<i class="fab fa-whatsapp"></i> ' + t.buttons.whatsapp);
+
+    btnTikTok.textContent = "";
+    btnTikTok.insertAdjacentHTML('beforeend', '<i class="fab fa-tiktok"></i> ' + t.buttons.tiktok);
+
+    btnAbout.textContent = "";
+    btnAbout.insertAdjacentHTML('beforeend', '<i class="fas fa-user"></i> ' + t.buttons.about);
+
+    // Tema seçeneklerini güncelle
+    [...themeSelect.options].forEach(opt => {
+      opt.textContent = t.themeOptions[opt.value];
+    });
+  }
+
+  // Tema işlemleri
+  function applyTheme(theme) {
+    document.body.className = ""; // Temayı sıfırla
+    document.body.classList.add(theme);
+    localStorage.setItem("theme", theme);
+    themeSelect.value = theme;
+  }
+
+  // Sayfa yüklendiğinde
+  window.addEventListener("load", () => {
+    // Önce dil ayarı
+    const savedLang = localStorage.getItem("language") || "tr";
+    langSelect.value = savedLang;
+    updateTexts();
+
+    // Önce tema ayarı
+    const savedTheme = localStorage.getItem("theme") || "theme-day";
+    applyTheme(savedTheme);
+
+    // Saat güncelle
+    updateClock();
+    setInterval(updateClock, 1000);
+  });
+
+  // Dil seçimi değiştiğinde
+  langSelect.addEventListener("change", () => {
+    localStorage.setItem("language", langSelect.value);
+    updateTexts();
+    updateClock();
+  });
+
+  // Tema seçimi değiştiğinde
+  themeSelect.addEventListener("change", (e) => {
+    applyTheme(e.target.value);
+  });
+</script>
+
+</body>
+</html>

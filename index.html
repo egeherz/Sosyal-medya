@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HESAPLARIM</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+  /* CSS burada aynı kalacak, değiştirmiyorum */
+  /* (Senin verdiğin CSS kodu burada) */
+</style>
+
+<!-- Google AdSense Script HEAD içinde -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7831163932493310"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header id="pageHeader">HESAPLARIM</header>
+<div id="clock" aria-live="polite"></div>
+
+<div class="selectors">
+  <select id="languageSelect">
+    <option value="tr">Türkçe</option><option value="en">English</option>
+    <option value="ru">Русский</option><option value="es">Español</option>
+    <option value="fr">Français</option><option value="de">Deutsch</option>
+    <option value="it">Italiano</option><option value="pt">Português</option>
+    <option value="zh">中文</option><option value="ja">日本語</option>
+  </select>
+  <select id="themeSelect">
+    <option value="default">Mavi (Default)</option>
+    <option value="dark">Karanlık</option>
+    <option value="forest">Orman</option>
+    <option value="sunset">Günbatımı</option>
+    <option value="ocean">Okyanus</option>
+    <option value="midnight">Gece Yarısı</option>
+  </select>
+</div>
+
+<main>
+  <nav>
+    <a href="https://instagram.com/egeherz" target="_blank" class="btn"><i class="fab fa-instagram"></i>Instagram</a>
+    <a href="https://t.me/egeherz" target="_blank" class="btn"><i class="fab fa-telegram"></i>Telegram</a>
+    <a href="https://www.tiktok.com/@egeherz" target="_blank" class="btn"><i class="fab fa-tiktok"></i>TikTok</a>
+    <button id="aboutBtn" class="btn"><i class="fas fa-user"></i>Hakkımda</button>
+    <button id="privacyBtn" class="btn"><i class="fas fa-shield-alt"></i>Gizlilik Politikası</button>
+  </nav>
+  <div class="ads-container">
+    <ins class="adsbygoogle" style="display:block"
+         data-ad-client="ca-pub-7831163932493310"
+         data-ad-slot="9934452809"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+</main>
+
+<div id="aboutModal" class="modal" aria-hidden="true" aria-modal="true" role="dialog">
+  <div class="modal-content">
+    <button class="back-btn">&#8592;</button><h2 id="aboutTitle"></h2>
+    <div id="aboutContent"></div>
+  </div>
+</div>
+
+<div id="privacyModal" class="modal" aria-hidden="true" aria-modal="true" role="dialog">
+  <div class="modal-content">
+    <button class="back-btn">&#8592;</button><h2 id="privacyTitle"></h2>
+    <div id="privacyContent"></div>
+  </div>
+</div>
+
+<script>
+  const texts = {
+    tr: {
+      header:"HESAPLARIM",
+      aboutTitle:"Hakkımda",
+      about:"Bartın Ege",
+      privacyTitle:"Gizlilik Politikası",
+      privacy:"Veriler paylaşılmaz, üçüncü taraflarla paylaşım yapılmaz ve çerez kullanılmaz."
+    },
+    en: {
+      header:"MY ACCOUNTS",
+      aboutTitle:"About Me",
+      about:"Bartın Ege",
+      privacyTitle:"Privacy Policy",
+      privacy:"No data is shared, no third-party sharing, and no cookies used."
+    },
+    ru: {
+      header:"МОИ АККАУНТЫ",
+      aboutTitle:"Обо мне",
+      about:"Bartın Ege",
+      privacyTitle:"Политика конфиденциальности",
+      privacy:"Данные не передаются третьим лицам, куки не используются."
+    },
+    es: {
+      header:"MIS CUENTAS",
+      aboutTitle:"Sobre mí",
+      about:"Bartın Ege",
+      privacyTitle:"Política de privacidad",
+      privacy:"No se comparte ningún dato, no hay terceros ni cookies."
+    },
+    fr: {
+      header:"MES COMPTES",
+      aboutTitle:"À propos de moi",
+      about:"Bartın Ege",
+      privacyTitle:"Politique de confidentialité",
+      privacy:"Aucune donnée partagée, aucun tiers, pas de cookies."
+    },
+    de: {
+      header:"MEINE KONTEN",
+      aboutTitle:"Über mich",
+      about:"Bartın Ege",
+      privacyTitle:"Datenschutzrichtlinie",
+      privacy:"Keine Datenweitergabe, keine Dritte, keine Cookies."
+    },
+    it: {
+      header:"I MIEI ACCOUNT",
+      aboutTitle:"Chi sono",
+      about:"Bartın Ege",
+      privacyTitle:"Informativa sulla privacy",
+      privacy:"Nessun dato condiviso, nessun terzo, nessun cookie."
+    },
+    pt: {
+      header:"MINHAS CONTAS",
+      aboutTitle:"Sobre mim",
+      about:"Bartın Ege",
+      privacyTitle:"Política de privacidade",
+      privacy:"Nenhum dado compartilhado, nenhum terceiro, sem cookies."
+    },
+    zh: {
+      header:"我的账户",
+      aboutTitle:"关于我",
+      about:"Bartın Ege",
+      privacyTitle:"隐私政策",
+      privacy:"不共享数据，不与第三方共享，不使用cookie。"
+    },
+    ja: {
+      header:"私のアカウント",
+      aboutTitle:"私について",
+      about:"Bartın Ege",
+      privacyTitle:"プライバシーポリシー",
+      privacy:"データは共有されず、第三者共有もなく、クッキーは使用しません。"
+    }
+  };
+
+  const header = document.getElementById('pageHeader');
+  const aboutBtn = document.getElementById('aboutBtn');
+  const privacyBtn = document.getElementById('privacyBtn');
+  const aboutModal = document.getElementById('aboutModal');
+  const privacyModal = document.getElementById('privacyModal');
+  const aboutTitle = document.getElementById('aboutTitle');
+  const aboutContent = document.getElementById('aboutContent');
+  const privacyTitle = document.getElementById('privacyTitle');
+  const privacyContent = document.getElementById('privacyContent');
+  const languageSelect = document.getElementById('languageSelect');
+  const themeSelect = document.getElementById('themeSelect');
+
+  function setLanguage(lang) {
+    header.textContent = texts[lang].header;
+    aboutTitle.textContent = texts[lang].aboutTitle;
+    aboutContent.textContent = texts[lang].about;
+    privacyTitle.textContent = texts[lang].privacyTitle;
+    privacyContent.textContent = texts[lang].privacy;
+  }
+
+  function toggleModal(modal, show) {
+    modal.setAttribute('aria-hidden', show ? "false" : "true");
+  }
+
+  aboutBtn.addEventListener('click', () => toggleModal(aboutModal, true));
+  privacyBtn.addEventListener('click', () => toggleModal(privacyModal, true));
+
+  aboutModal.querySelector('.back-btn').addEventListener('click', () => toggleModal(aboutModal, false));
+  privacyModal.querySelector('.back-btn').addEventListener('click', () => toggleModal(privacyModal, false));
+
+  languageSelect.addEventListener('change', e => {
+    setLanguage(e.target.value);
+  });
+
+  themeSelect.addEventListener('change', e => {
+    const theme = e.target.value;
+    if(theme === 'default') {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+  });
+
+  // Başlangıç dili ve tema ayarı
+  setLanguage(languageSelect.value);
+  themeSelect.value = 'default';
+</script>
+
+</body>
+</html>

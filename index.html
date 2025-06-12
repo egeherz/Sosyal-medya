@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bağlantılar - Bartın Ege</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg); color: var(--fg);
+    display: flex; flex-direction: column; align-items: center;
+    min-height: 100vh; transition: background 0.4s, color 0.4s;
+    opacity: 0; /* animasyon başlangıcı */
+  }
+  header { font-size: 2.4rem; margin: 30px 0 10px; font-weight: 700; }
+  #clock { font-size: 1.2rem; margin-bottom: 20px; }
+  .selectors { display: flex; gap: 15px; margin-bottom: 20px; }
+  select {
+    padding: 7px 12px; font-size:1rem; border-radius:6px;
+    border:1.8px solid var(--secondary); background:var(--select-bg);
+    color:var(--fg); transition: border-color .3s;
+  }
+  select:focus { border-color: var(--primary); outline:none; }
+  nav {
+    display: grid; grid-template-columns: repeat(3,160px); gap:14px 20px;
+    justify-content: center; margin-bottom: 30px;
+  }
+  nav a, nav button {
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    width:160px; font-weight:600; font-size:1.1rem;
+    text-decoration:none; color:var(--btn-text);
+    background:var(--primary); border:none; border-radius:10px;
+    padding:13px 0; cursor:pointer; box-shadow:0 5px 12px var(--shadow);
+    transition: background .3s, transform .15s;
+  }
+  nav a:hover, nav button:hover,
+  nav a:focus, nav button:focus {
+    background:var(--primary-dark); outline:none; transform:translateY(-3px);
+  }
+  nav i { font-size:1.7rem; min-width:24px; text-align:center; }
+  .ads-container {
+    width:320px; max-width:90vw;
+    box-shadow:0 4px 15px var(--shadow); border-radius:14px;
+    overflow:hidden; margin-bottom:30px;
+  }
+  .modal {
+    display:none; position:fixed; inset:0; z-index:1050;
+    background:rgba(0,0,0,.5);
+    align-items:center; justify-content:center;
+  }
+  .modal[aria-hidden="false"] { display:flex; }
+  .modal-content {
+    background:var(--bg); color:var(--fg);
+    max-width:460px; max-height:75vh; overflow-y:auto;
+    padding:30px 25px 35px; border-radius:16px;
+    box-shadow:0 10px 28px var(--shadow);
+    font-size:1rem; line-height:1.6; position:relative;
+  }
+  .modal h2 { margin-top:0; font-size:1.8rem; margin-bottom:20px; }
+  .back-btn {
+    position:absolute; top:16px; left:18px;
+    background:none; border:none; font-size:1.5rem;
+    color:var(--primary); cursor:pointer;
+  }
+  .back-btn:hover, .back-btn:focus { color:var(--primary-dark); outline:none; }
+  .modal-content::-webkit-scrollbar {
+    width:7px;
+  }
+  .modal-content::-webkit-scrollbar-thumb {
+    background:var(--primary); border-radius:12px;
+  }
+  .modal-content::-webkit-scrollbar-track { background:transparent; }
+  @media(max-width:520px){
+    nav { grid-template-columns:repeat(2,140px); gap:12px 14px; }
+    nav a, nav button { width:140px; font-size:1rem; padding:12px 0; }
+    nav i { font-size:1.5rem; min-width:22px; }
+    header { font-size:2rem; margin:20px 0 10px; }
+    .modal-content { max-width:90vw; max-height:70vh; font-size:.95rem; padding:24px 20px 30px; }
+    .modal h2 { font-size:1.6rem; margin-bottom:18px; }
+  }
+  :root {
+    --primary:#3b82f6; --primary-dark:#2563eb;
+    --secondary:#6b7280; --shadow:rgba(59,130,246,.4);
+    --bg:#f9fafb; --fg:#111827; --btn-text:#fff; --select-bg:#ffffffdd;
+  }
+  [data-theme="dark"] { --primary:#60a5fa; --primary-dark:#2563eb; --secondary:#9ca3af;
+    --shadow:rgba(96,165,250,.4); --bg:#1f2937; --fg:#f9fafb; --btn-text:#f0f9ff; --select-bg:#374151dd;
+  }
+  [data-theme="forest"] { --primary:#2e7d32; --primary-dark:#1b5e20; --secondary:#4caf50;
+    --shadow:rgba(46,125,50,.4); --bg:#e8f5e9; --fg:#1b5e20; --btn-text:#e8f5e9; --select-bg:#a5d6a7dd;
+  }
+  [data-theme="sunset"] { --primary:#f97316; --primary-dark:#c2410c; --secondary:#fb923c;
+    --shadow:rgba(249,115,22,.4); --bg:#fff7ed; --fg:#7c2d12; --btn-text:#fff7ed; --select-bg:#fed7aaee;
+  }
+  [data-theme="ocean"] { --primary:#0288d1; --primary-dark:#01579b; --secondary:#03a9f4;
+    --shadow:rgba(2,136,209,.4); --bg:#e1f5fe; --fg:#01579b; --btn-text:#e1f5fe; --select-bg:#81d4faee;
+  }
+  [data-theme="midnight"] { --primary:#9c27b0; --primary-dark:#6a1b9a; --secondary:#ba68c8;
+    --shadow:rgba(156,39,176,.4); --bg:#f3e5f5; --fg:#4a148c; --btn-text:#f3e5f5; --select-bg:#ce93d8ee;
+  }
+</style>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7831163932493310"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header id="pageHeader">HESAPLARIM ⬇️</header>
+<div id="clock" aria-live="polite"></div>
+
+<div class="selectors">
+  <select id="languageSelect" aria-label="Dil Seçimi">
+    <option value="tr">Türkçe</option><option value="en">English</option>
+    <option value="ru">Русский</option><option value="es">Español</option>
+    <option value="fr">Français</option><option value="de">Deutsch</option>
+    <option value="it">Italiano</option><option value="pt">Português</option>
+    <option value="zh">中文</option><option value="ja">日本語</option>
+  </select>
+  <select id="themeSelect" aria-label="Tema Seçimi">
+    <option value="default">Mavi (Default)</option>
+    <option value="dark">Karanlık</option>
+    <option value="forest">Orman</option>
+    <option value="sunset">Günbatımı</option>
+    <option value="ocean">Okyanus</option>
+    <option value="midnight">Gece Yarısı</option>
+  </select>
+</div>
+
+<main>
+  <nav>
+    <a href="https://instagram.com/egeherz" target="_blank" class="btn" id="instaBtn"><i class="fab fa-instagram"></i><span>Instagram</span></a>
+    <a href="https://t.me/egeherz" target="_blank" class="btn" id="telegramBtn"><i class="fab fa-telegram"></i><span>Telegram</span></a>
+    <a href="https://www.tiktok.com/@egeherz" target="_blank" class="btn" id="tiktokBtn"><i class="fab fa-tiktok"></i><span>TikTok</span></a>
+    <button id="aboutBtn" class="btn"><i class="fas fa-user"></i><span>Hakkımda</span></button>
+    <button id="privacyBtn" class="btn"><i class="fas fa-shield-alt"></i><span>Gizlilik Politikası</span></button>
+  </nav>
+
+  <div class="ads-container">
+    <ins class="adsbygoogle" style="display:block"
+         data-ad-client="ca-pub-7831163932493310"
+         data-ad-slot="9934452809"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+</main>
+
+<!-- Hakkımda Modal -->
+<div id="aboutModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="aboutTitle" tabindex="-1">
+  <div class="modal-content">
+    <button class="back-btn" aria-label="Geri" onclick="closeModal('aboutModal')"><i class="fas fa-arrow-left"></i></button>
+    <h2 id="aboutTitle">Hakkımda - Bartın Ege'nin Kişisel Bilgileri ve Hedefleri</h2>
+    <p id="aboutText">Bartın Ege, yazılım geliştirici ve çok dilli iletişim uzmanıdır. C++, Python, Node.js ve C# gibi dillerde uzmandır. İngilizce, Rusça ve Türkçe'yi akıcı şekilde konuşabilmektedir. Kişisel web sitesi aracılığıyla dijital kimliğini ve sosyal medya hesaplarını paylaşmaktadır.</p>
+    <p id="aboutText2">Gelecekte teknoloji ve dil becerilerini birleştirerek, küresel projelerde yer almayı ve bilgi paylaşımını artırmayı hedeflemektedir.</p>
+  </div>
+</div>
+
+<!-- Gizlilik Politikası Modal -->
+<div id="privacyModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="privacyTitle" tabindex="-1">
+  <div class="modal-content">
+    <button class="back-btn" aria-label="Geri" onclick="closeModal('privacyModal')"><i class="fas fa-arrow-left"></i></button>
+    <h2 id="privacyTitle">Gizlilik Politikası - Ziyaretçi Verilerinin Kullanımı ve Korunması</h2>
+    <p id="privacyText1">Bu site, ziyaretçilerin gizliliğine büyük önem verir. Kişisel verileriniz kesinlikle üçüncü taraflarla paylaşılmaz. Google AdSense, reklamların gösterimi için çerezler kullanabilir, ancak bu veriler anonimdir ve kimliğiniz açığa çıkarılmaz.</p>
+    <p id="privacyText2">Gizlilik haklarınızı korumak adına gerekli tüm teknik ve idari önlemler alınmıştır. Siteyi kullanmaya devam ederek bu politikayı kabul etmiş sayılırsınız.</p>
+  </div>
+</div>
+
+<script>
+  // Saat güncelleme
+  function updateClock() {
+    const clock = document.getElementById('clock');
+    const now = new Date();
+    clock.textContent = now.toLocaleTimeString();
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // Modal açma/kapatma
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    modal.setAttribute('aria-hidden', 'false');
+    modal.style.display = 'flex';
+  }
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    modal.setAttribute('aria-hidden', 'true');
+    modal.style.display = 'none';
+  }
+  document.getElementById('aboutBtn').addEventListener('click', () => openModal('aboutModal'));
+  document.getElementById('privacyBtn').addEventListener('click', () => openModal('privacyModal'));
+
+  // Tema seçimi
+  const themeSelect = document.getElementById('themeSelect');
+  const savedTheme = localStorage.getItem('theme') || 'default';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  themeSelect.value = savedTheme;
+  themeSelect.addEventListener('change', () => {
+    const theme = themeSelect.value;
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  });
+
+  // Dil ve metinler
+  const languageSelect = document.getElementById('languageSelect');
+  const pageHeader = document.getElementById('pageHeader');
+  const instaBtn = document.getElementById('instaBtn').querySelector('span');
+  const telegramBtn = document.getElementById('telegramBtn').querySelector('span');
+  const tiktokBtn = document.getElementById('tiktokBtn').querySelector('span');
+  const aboutBtn = document.getElementById('aboutBtn').querySelector('span');
+  const privacyBtn = document.getElementById('privacyBtn').querySelector('span');
+
+  const aboutTitle = document.getElementById('aboutTitle');
+  const aboutText = document.getElementById('aboutText');
+  const aboutText2 = document.getElementById('aboutText2');
+  const privacyTitle = document.getElementById('privacyTitle');
+  const privacyText1 = document.getElementById('privacyText1');
+  const privacyText2 = document.getElementById('privacyText2');
+
+  // Metinlerin diller bazlı çeviri sözlüğü
+  const texts = {
+    tr: {
+      header: 'HESAPLARIM ⬇️',
+      insta: 'Instagram',
+      telegram: 'Telegram',
+      tiktok: 'TikTok',
+      aboutBtn: 'Hakkımda',
+      privacyBtn: 'Gizlilik Politikası',
+      aboutTitle: "Hakkımda - Bartın Ege'nin Kişisel Bilgileri ve Hedefleri",
+      aboutText: "Bartın Ege, yazılım geliştirici ve çok dilli iletişim uzmanıdır. C++, Python, Node.js ve C# gibi dillerde uzmandır. İngilizce, Rusça ve Türkçe'yi akıcı şekilde konuşabilmektedir. Kişisel web sitesi aracılığıyla dijital kimliğini ve sosyal medya hesaplarını paylaşmaktadır.",
+      aboutText2: "Gelecekte teknoloji ve dil becerilerini birleştirerek, küresel projelerde yer almayı ve bilgi paylaşımını artırmayı hedeflemektedir.",
+      privacyTitle: "Gizlilik Politikası - Ziyaretçi Verilerinin Kullanımı ve Korunması",
+      privacyText1: "Bu site, ziyaretçilerin gizliliğine büyük önem verir. Kişisel verileriniz kesinlikle üçüncü taraflarla paylaşılmaz. Google AdSense, reklamların gösterimi için çerezler kullanabilir, ancak bu veriler anonimdir ve kimliğiniz açığa çıkarılmaz.",
+      privacyText2: "Gizlilik haklarınızı korumak adına gerekli tüm teknik ve idari önlemler alınmıştır. Siteyi kullanmaya devam ederek bu politikayı kabul etmiş sayılırsınız."
+    },
+    en: {
+      header: 'MY ACCOUNTS ⬇️',
+      insta: 'Instagram',
+      telegram: 'Telegram',
+      tiktok: 'TikTok',
+      aboutBtn: 'About Me',
+      privacyBtn: 'Privacy Policy',
+      aboutTitle: "About Me - Personal Information and Goals of Bartın Ege",
+      aboutText: "Bartın Ege is a software developer and multilingual communication expert. Skilled in C++, Python, Node.js, and C#. Fluent in English, Russian, and Turkish. Shares his digital identity and social media accounts via this personal website.",
+      aboutText2: "In the future, he aims to combine technology and language skills, participate in global projects, and increase knowledge sharing.",
+      privacyTitle: "Privacy Policy - Visitor Data Usage and Protection",
+      privacyText1: "This site highly values visitors' privacy. Your personal data is never shared with third parties. Google AdSense may use cookies to display ads, but this data is anonymous and does not reveal your identity.",
+      privacyText2: "All necessary technical and administrative measures have been taken to protect your privacy rights. By continuing to use the site, you accept this policy."
+    },
+    ru: {
+      header: 'МОИ АККАУНТЫ ⬇️',
+      insta: 'Инстаграм',
+      telegram: 'Телеграм',
+      tiktok: 'ТикТок',
+      aboutBtn: 'Обо мне',
+      privacyBtn: 'Политика конфиденциальности',
+      aboutTitle: "Обо мне - Личная информация и цели Bartın Ege",
+      aboutText: "Bartın Ege — разработчик программного обеспечения и эксперт по многоязычной коммуникации. Владеет C++, Python, Node.js и C#. Свободно говорит на английском, русском и турецком языках. Делится своей цифровой личностью и аккаунтами в соцсетях через этот сайт.",
+      aboutText2: "В будущем он стремится объединить технологические и языковые навыки, участвовать в глобальных проектах и расширять обмен знаниями.",
+      privacyTitle: "Политика конфиденциальности - Использование и защита данных посетителей",
+      privacyText1: "Этот сайт очень серьезно относится к конфиденциальности посетителей. Ваши личные данные никогда не передаются третьим лицам. Google AdSense может использовать файлы cookie для показа рекламы, но эти данные анонимны и не раскрывают вашу личность.",
+      privacyText2: "Для защиты ваших прав на конфиденциальность приняты все необходимые технические и административные меры. Продолжая использовать сайт, вы принимаете эту политику."
+    },
+    es: {
+      header: 'MIS CUENTAS ⬇️',
+      insta: 'Instagram',
+      telegram: 'Telegram',
+      tiktok: 'TikTok',
+      aboutBtn: 'Acerca de mí',
+      privacyBtn: 'Política de privacidad',
+      aboutTitle: "Acerca de mí - Información personal y objetivos de Bartın Ege",
+      aboutText: "Bartın Ege es un desarrollador de software y experto en comunicación multilingüe. Experto en C++, Python, Node.js y C#. Habla inglés, ruso y turco con fluidez. Comparte su identidad digital y cuentas de redes sociales a través de este sitio personal.",
+      aboutText2: "En el futuro, tiene como objetivo combinar tecnología y habilidades lingüísticas, participar en proyectos globales y aumentar el intercambio de conocimientos.",
+      privacyTitle: "Política de privacidad - Uso y protección de datos de visitantes",
+      privacyText1: "Este sitio valora mucho la privacidad de los visitantes. Sus datos personales nunca se comparten con terceros. Google AdSense puede usar cookies para mostrar anuncios, pero estos datos son anónimos y no revelan su identidad.",
+      privacyText2: "Se han tomado todas las medidas técnicas y administrativas necesarias para proteger sus derechos de privacidad. Al continuar usando el sitio, acepta esta política."
+    },
+    fr: {
+      header: 'MES COMPTES ⬇️',
+      insta: 'Instagram',
+      telegram: 'Telegram',
+      tiktok: 'TikTok',
+      aboutBtn: 'À propos',
+      privacyBtn: 'Politique de confidentialité',
+      aboutTitle: "À propos - Informations personnelles et objectifs de Bartın Ege",
+      aboutText: "Bartın Ege est un développeur logiciel et un expert en communication multilingue. Compétent en C++, Python, Node.js et C#. Parle couramment l'anglais, le russe et le turc. Partage son identité numérique et ses comptes de réseaux sociaux via ce site personnel.",
+      aboutText2: "À l'avenir, il vise à combiner les compétences technologiques et linguistiques, à participer à des projets mondiaux et à accroître le partage des connaissances.",
+      privacyTitle: "Politique de confidentialité - Utilisation et protection des données des visiteurs",
+      privacyText1: "Ce site accorde une grande importance à la confidentialité des visiteurs. Vos données personnelles ne sont jamais partagées avec des tiers. Google AdSense peut utiliser des cookies pour afficher des annonces, mais ces données sont anonymes et ne révèlent pas votre identité.",
+      privacyText2: "Toutes les mesures techniques et administratives nécessaires ont été prises pour protéger vos droits en matière de confidentialité. En continuant à utiliser le site, vous acceptez cette politique."
+    }
+  };
+
+  function updateTexts(lang) {
+    const t = texts[lang] || texts['tr'];
+    pageHeader.textContent = t.header;
+    instaBtn.textContent = t.insta;
+    telegramBtn.textContent = t.telegram;
+    tiktokBtn.textContent = t.tiktok;
+    aboutBtn.textContent = t.aboutBtn;
+    privacyBtn.textContent = t.privacyBtn;
+    aboutTitle.textContent = t.aboutTitle;
+    aboutText.textContent = t.aboutText;
+    aboutText2.textContent = t.aboutText2;
+    privacyTitle.textContent = t.privacyTitle;
+    privacyText1.textContent = t.privacyText1;
+    privacyText2.textContent = t.privacyText2;
+  }
+
+  languageSelect.addEventListener('change', () => {
+    const lang = languageSelect.value;
+    updateTexts(lang);
+  });
+
+  // Sayfa yüklendiğinde seçili dili uygula
+  window.addEventListener('DOMContentLoaded', () => {
+    updateTexts(languageSelect.value);
+  });
+</script>
+</body>
+</html>

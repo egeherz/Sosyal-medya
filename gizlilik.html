@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gizlilik Politikası - Ege Herz</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 20px; color: #222; }
+  #lang-select { margin-bottom: 20px; }
+  #content { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
+  h1 { font-size: 1.8em; margin-bottom: 10px; }
+  p { line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<select id="lang-select" aria-label="Dil Seçimi">
+  <option value="tr">Türkçe</option>
+  <option value="en">English</option>
+  <option value="ru">Русский</option>
+</select>
+
+<div id="content">
+  <!-- Gizlilik politikası metni buraya gelecek -->
+</div>
+
+<script>
+  const contentDiv = document.getElementById('content');
+  const langSelect = document.getElementById('lang-select');
+
+  const policies = {
+    tr: `
+      <h1>Gizlilik Politikası - Ziyaretçi Verilerinin Kullanımı ve Korunması</h1>
+      <p><strong>Ege Herz</strong> olarak, ziyaretçilerimizin kişisel verilerini en üst düzeyde koruma sorumluluğumuzun bilincindeyiz. Bu gizlilik politikası, hangi verileri topladığımızı, nasıl kullandığımızı ve koruduğumuzu açıklar.</p>
+      <h2>Toplanan Veriler</h2>
+      <p>Siteyi ziyaret ettiğinizde IP adresiniz, cihaz bilgileri ve erişim zamanları gibi teknik veriler otomatik olarak toplanır. Kişisel bilgilerinizi talep etmediğimiz sürece kaydetmiyoruz.</p>
+      <h2>Veri Kullanımı</h2>
+      <p>Toplanan veriler, hizmet kalitesini artırmak, güvenlik önlemleri almak ve yasal zorunlulukları yerine getirmek için kullanılır. Verileriniz üçüncü taraflarla paylaşılmaz, satılmaz veya kiralanmaz.</p>
+      <h2>Veri Güvenliği</h2>
+      <p>Verilerinizi korumak için güçlü teknik ve idari tedbirler uyguluyoruz. Herhangi bir yetkisiz erişim, değişiklik veya ifşa durumunda derhal müdahale ederiz.</p>
+      <h2>Kullanıcı Hakları</h2>
+      <p>İstediğiniz zaman verilerinizin silinmesini veya güncellenmesini talep edebilirsiniz. Bunun için bizimle iletişime geçmeniz yeterlidir.</p>
+      <h2>İletişim</h2>
+      <p>Gizlilik politikamız hakkında sorularınız için <a href="mailto:contact@egeherz.com">contact@egeherz.com</a> adresinden bize ulaşabilirsiniz.</p>
+    `,
+    en: `
+      <h1>Privacy Policy - Use and Protection of Visitor Data</h1>
+      <p>At <strong>Ege Herz</strong>, we recognize our responsibility to protect visitors' personal data at the highest level. This privacy policy explains what data we collect, how we use it, and how we protect it.</p>
+      <h2>Data Collected</h2>
+      <p>When you visit the site, technical data such as your IP address, device information, and access times are collected automatically. We do not store your personal information unless requested.</p>
+      <h2>Use of Data</h2>
+      <p>Collected data is used to improve service quality, implement security measures, and comply with legal obligations. Your data is never shared, sold, or rented to third parties.</p>
+      <h2>Data Security</h2>
+      <p>We apply strong technical and administrative measures to protect your data. Any unauthorized access, alteration, or disclosure is promptly addressed.</p>
+      <h2>User Rights</h2>
+      <p>You can request deletion or update of your data at any time by contacting us.</p>
+      <h2>Contact</h2>
+      <p>For questions about our privacy policy, reach out to us at <a href="mailto:contact@egeherz.com">contact@egeherz.com</a>.</p>
+    `,
+    ru: `
+      <h1>Политика конфиденциальности - Использование и защита данных посетителей</h1>
+      <p>В <strong>Ege Herz</strong> мы осознаем нашу ответственность по защите персональных данных посетителей на самом высоком уровне. Эта политика конфиденциальности объясняет, какие данные мы собираем, как мы их используем и как защищаем.</p>
+      <h2>Собираемые данные</h2>
+      <p>При посещении сайта автоматически собираются технические данные, такие как IP-адрес, информация об устройстве и время доступа. Мы не храним вашу личную информацию без вашего запроса.</p>
+      <h2>Использование данных</h2>
+      <p>Собранные данные используются для повышения качества услуг, обеспечения безопасности и выполнения юридических обязательств. Ваши данные не передаются, не продаются и не сдаются в аренду третьим лицам.</p>
+      <h2>Безопасность данных</h2>
+      <p>Мы применяем сильные технические и административные меры для защиты ваших данных. Любой несанкционированный доступ, изменение или раскрытие будет немедленно устранено.</p>
+      <h2>Права пользователя</h2>
+      <p>Вы можете запросить удаление или обновление ваших данных в любое время, связавшись с нами.</p>
+      <h2>Контакты</h2>
+      <p>По вопросам политики конфиденциальности обращайтесь по адресу <a href="mailto:contact@egeherz.com">contact@egeherz.com</a>.</p>
+    `
+  };
+
+  // Başlangıçta localStorage'deki dili al, yoksa 'tr'
+  let currentLang = localStorage.getItem('site_lang') || 'tr';
+  langSelect.value = currentLang;
+  contentDiv.innerHTML = policies[currentLang];
+
+  langSelect.addEventListener('change', () => {
+    currentLang = langSelect.value;
+    localStorage.setItem('site_lang', currentLang);
+    contentDiv.innerHTML = policies[currentLang];
+  });
+</script>
+
+</body>
+</html>

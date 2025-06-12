@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bağlantılar - Bartın Ege Karahanlı</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+  /* Senin tüm CSS'in burada olduğu gibi duruyor */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg); color: var(--fg);
+    display: flex; flex-direction: column; align-items: center;
+    min-height: 100vh; transition: background 0.4s, color 0.4s;
+  }
+  header { font-size: 2.4rem; margin: 30px 0 10px; font-weight: 700; }
+  #clock { font-size: 1.2rem; margin-bottom: 20px; }
+  .selectors { display: flex; gap: 15px; margin-bottom: 20px; }
+  select {
+    padding: 7px 12px; font-size:1rem; border-radius:6px;
+    border:1.8px solid var(--secondary); background:var(--select-bg);
+    color:var(--fg); transition: border-color .3s;
+  }
+  select:focus { border-color: var(--primary); outline:none; }
+  nav {
+    display: grid; grid-template-columns: repeat(3,160px); gap:14px 20px;
+    justify-content: center; margin-bottom: 30px;
+  }
+  nav a, nav button {
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    width:160px; font-weight:600; font-size:1.1rem;
+    text-decoration:none; color:var(--btn-text);
+    background:var(--primary); border:none; border-radius:10px;
+    padding:13px 0; cursor:pointer; box-shadow:0 5px 12px var(--shadow);
+    transition: background .3s, transform .15s;
+  }
+  nav a:hover, nav button:hover,
+  nav a:focus, nav button:focus {
+    background:var(--primary-dark); outline:none; transform:translateY(-3px);
+  }
+  nav i { font-size:1.7rem; min-width:24px; text-align:center; }
+  .ads-container {
+    width:320px; max-width:90vw;
+    box-shadow:0 4px 15px var(--shadow); border-radius:14px;
+    overflow:hidden; margin-bottom:30px;
+  }
+  .modal {
+    display:none; position:fixed; inset:0; z-index:1050;
+    background:rgba(0,0,0,.5);
+    align-items:center; justify-content:center;
+  }
+  .modal[aria-hidden="false"] { display:flex; }
+  .modal-content {
+    background:var(--bg); color:var(--fg);
+    max-width:460px; max-height:75vh; overflow-y:auto;
+    padding:30px 25px 35px; border-radius:16px;
+    box-shadow:0 10px 28px var(--shadow);
+    font-size:1rem; line-height:1.6; position:relative;
+  }
+  .modal h2 { margin-top:0; font-size:1.8rem; margin-bottom:20px; }
+  .back-btn {
+    position:absolute; top:16px; left:18px;
+    background:none; border:none; font-size:1.5rem;
+    color:var(--primary); cursor:pointer;
+  }
+  .back-btn:hover, .back-btn:focus { color:var(--primary-dark); outline:none; }
+  .modal-content::-webkit-scrollbar {
+    width:7px;
+  }
+  .modal-content::-webkit-scrollbar-thumb {
+    background:var(--primary); border-radius:12px;
+  }
+  .modal-content::-webkit-scrollbar-track { background:transparent; }
+  @media(max-width:520px){
+    nav { grid-template-columns:repeat(2,140px); gap:12px 14px; }
+    nav a, nav button { width:140px; font-size:1rem; padding:12px 0; }
+    nav i { font-size:1.5rem; min-width:22px; }
+    header { font-size:2rem; margin:20px 0 10px; }
+    .modal-content { max-width:90vw; max-height:70vh; font-size:.95rem; padding:24px 20px 30px; }
+    .modal h2 { font-size:1.6rem; margin-bottom:18px; }
+  }
+  :root {
+    --primary:#3b82f6; --primary-dark:#2563eb;
+    --secondary:#6b7280; --shadow:rgba(59,130,246,.4);
+    --bg:#f9fafb; --fg:#111827; --btn-text:#fff; --select-bg:#ffffffdd;
+  }
+  [data-theme="dark"] { --primary:#60a5fa; --primary-dark:#2563eb; --secondary:#9ca3af;
+    --shadow:rgba(96,165,250,.4); --bg:#1f2937; --fg:#f9fafb; --btn-text:#f0f9ff; --select-bg:#374151dd;
+  }
+  [data-theme="forest"] { --primary:#2e7d32; --primary-dark:#1b5e20; --secondary:#4caf50;
+    --shadow:rgba(46,125,50,.4); --bg:#e8f5e9; --fg:#1b5e20; --btn-text:#e8f5e9; --select-bg:#a5d6a7dd;
+  }
+  [data-theme="sunset"] { --primary:#f97316; --primary-dark:#c2410c; --secondary:#fb923c;
+    --shadow:rgba(249,115,22,.4); --bg:#fff7ed; --fg:#7c2d12; --btn-text:#fff7ed; --select-bg:#fed7aaee;
+  }
+  [data-theme="ocean"] { --primary:#0288d1; --primary-dark:#01579b; --secondary:#03a9f4;
+    --shadow:rgba(2,136,209,.4); --bg:#e1f5fe; --fg:#01579b; --btn-text:#e1f5fe; --select-bg:#81d4faee;
+  }
+  [data-theme="midnight"] { --primary:#9c27b0; --primary-dark:#6a1b9a; --secondary:#ba68c8;
+    --shadow:rgba(156,39,176,.4); --bg:#f3e5f5; --fg:#4a148c; --btn-text:#f3e5f5; --select-bg:#ce93d8ee;
+  }
+</style>
+
+<!-- Google AdSense Script HEAD içinde -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7831163932493310"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header id="pageHeader">HESAPLARIM ⬇️</header>
+<div id="clock" aria-live="polite"></div>
+
+<div class="selectors">
+  <select id="languageSelect">
+    <option value="tr">Türkçe</option><option value="en">English</option>
+    <option value="ru">Русский</option><option value="es">Español</option>
+    <option value="fr">Français</option><option value="de">Deutsch</option>
+    <option value="it">Italiano</option><option value="pt">Português</option>
+    <option value="zh">中文</option><option value="ja">日本語</option>
+  </select>
+  <select id="themeSelect">
+    <option value="default">Mavi (Default)</option>
+    <option value="dark">Karanlık</option>
+    <option value="forest">Orman</option>
+    <option value="sunset">Günbatımı</option>
+    <option value="ocean">Okyanus</option>
+    <option value="midnight">Gece Yarısı</option>
+  </select>
+</div>
+
+<main>
+  <nav>
+    <a href="https://instagram.com/egeherz" target="_blank" class="btn"><i class="fab fa-instagram"></i>Instagram</a>
+    <a href="https://t.me/egeherz" target="_blank" class="btn"><i class="fab fa-telegram"></i>Telegram</a>
+    <!-- WhatsApp butonu kaldırıldı -->
+    <a href="https://www.tiktok.com/@egeherz" target="_blank" class="btn"><i class="fab fa-tiktok"></i>TikTok</a>
+    <button id="aboutBtn" class="btn"><i class="fas fa-user"></i>Hakkımda</button>
+    <button id="privacyBtn" class="btn"><i class="fas fa-shield-alt"></i>Gizlilik Politikası</button>
+  </nav>
+
+  <div class="ads-container">
+    <ins class="adsbygoogle" style="display:block"
+         data-ad-client="ca-pub-7831163932493310"
+         data-ad-slot="9934452809"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+</main>
+
+<!-- Hakkımda Modal -->
+<div id="aboutModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="aboutTitle" tabindex="-1">
+  <div class="modal-content">
+    <button class="back-btn" aria-label="Geri" onclick="closeModal('aboutModal')"><i class="fas fa-arrow-left"></i></button>
+    <h2 id="aboutTitle">Hakkımda - Bartın Ege Karahanlı'nın Kişisel Bilgileri ve Hedefleri</h2>
+    <p>Bartın Ege Karahanlı, yazılım geliştirici ve çok dilli iletişim uzmanıdır. C++, Python, Node.js ve C# gibi dillerde uzmandır. İngilizce, Rusça ve Türkçe'yi akıcı şekilde konuşabilmektedir. Kişisel web sitesi aracılığıyla dijital kimliğini ve sosyal medya hesaplarını paylaşmaktadır.</p>
+    <p>Gelecekte teknoloji ve dil becerilerini birleştirerek, küresel projelerde yer almayı ve bilgi paylaşımını artırmayı hedeflemektedir.</p>
+  </div>
+</div>
+
+<!-- Gizlilik Politikası Modal -->
+<div id="privacyModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="privacyTitle" tabindex="-1">
+  <div class="modal-content">
+    <button class="back-btn" aria-label="Geri" onclick="closeModal('privacyModal')"><i class="fas fa-arrow-left"></i></button>
+    <h2 id="privacyTitle">Gizlilik Politikası - Ziyaretçi Verilerinin Kullanımı ve Korunması</h2>
+    <p>Bu site, ziyaretçilerin gizliliğine büyük önem verir. Kişisel verileriniz kesinlikle üçüncü taraflarla paylaşılmaz. Google AdSense, reklamların gösterimi için çerezler kullanabilir, ancak bu veriler anonimdir ve kimliğiniz açığa çıkarılmaz.</p>
+    <p>Gizlilik haklarınızı korumak adına gerekli tüm teknik ve idari önlemler alınmıştır. Siteyi kullanmaya devam ederek bu politikayı kabul etmiş sayılırsınız.</p>
+  </div>
+</div>
+
+<script>
+  // Saat güncelleme fonksiyonu
+  function updateClock() {
+    const clock = document.getElementById('clock');
+    const now = new Date();
+    const timeString = now.toLocaleTimeString();
+    clock.textContent = timeString;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // Modal açma/kapatma fonksiyonları
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    modal.setAttribute('aria-hidden', 'false');
+    modal.style.display = 'flex';
+  }
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    modal.setAttribute('aria-hidden', 'true');
+    modal.style.display = 'none';
+  }
+
+  document.getElementById('aboutBtn').addEventListener('click', () => openModal('aboutModal'));
+  document.getElementById('privacyBtn').addEventListener('click', () => openModal('privacyModal'));
+
+  // Tema seçimi ve saklama
+  const themeSelect = document.getElementById('themeSelect');
+  const savedTheme = localStorage.getItem('theme') || 'default';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  themeSelect.value = savedTheme;
+  themeSelect.addEventListener('change', () => {
+    const theme = themeSelect.value;
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  });
+
+  // Dil seçimi - burada sadece başlıkları değiştiren basit örnek (daha gelişmiş çeviri için ek yapı gerekir)
+  const languageSelect = document.getElementById('languageSelect');
+  languageSelect.value = 'tr'; // Varsayılan Türkçe
+
+  languageSelect.addEventListener('change', () => {
+    const lang = languageSelect.value;
+    const header = document.getElementById('pageHeader');
+    switch(lang) {
+      case 'tr': header.textContent = 'HESAPLARIM ⬇️'; break;
+      case 'en': header.textContent = 'MY ACCOUNTS ⬇️'; break;
+      case 'ru': header.textContent = 'МОИ АККАУНТЫ ⬇️'; break;
+      case 'es': header.textContent = 'MIS CUENTAS ⬇️'; break;
+      case 'fr': header.textContent = 'MES COMPTES ⬇️'; break;
+      case 'de': header.textContent = 'MEINE KONTEN ⬇️'; break;
+      case 'it': header.textContent = 'I MIEI ACCOUNT ⬇️'; break;
+      case 'pt': header.textContent = 'MINHAS CONTAS ⬇️'; break;
+      case 'zh': header.textContent = '我的账户 ⬇️'; break;
+      case 'ja': header.textContent = '私のアカウント ⬇️'; break;
+      default: header.textContent = 'HESAPLARIM ⬇️';
+    }
+  });
+
+  // Sayfa yüklenme animasyonu
+  window.onload = () => {
+    document.body.style.opacity = 0;
+    let opacity = 0;
+    const fadeIn = setInterval(() => {
+      opacity += 0.05;
+      document.body.style.opacity = opacity;
+      if (opacity >= 1) clearInterval(fadeIn);
+    }, 40);
+  };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+/* Giriş Animasyonu */
+.fade-in {
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Temel Stil */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+  transition: background-color 0.4s, color 0.4s;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 30px auto;
+  max-width: 900px;
+  padding: 10px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  margin: 15px;
+  padding: 20px;
+  text-align: center;
+  flex: 1 1 200px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+}
+
+.card a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 600;
+}
+
+/* Dil seçici */
+.language-select {
+  text-align: center;
+  margin: 20px auto 0;
+}
+
+/* Karanlık Mod */
+.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.dark-mode .card {
+  background: #1e1e1e;
+  color: #f0f0f0;
+}
+
+.dark-mode .card:hover {
+  box-shadow: 0 6px 24px rgba(255, 255, 255, 0.1);
+}
+
+/* Karanlık mod butonu */
+.toggle-dark {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: #333;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 1000;
+}
+
+.toggle-dark:hover {
+  background: #555;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+}

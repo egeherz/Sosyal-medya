@@ -1,58 +1,38 @@
-# Kişisel Sosyal Medya Bağlantı Sayfası - Bartın Ege Karahanlı
+# Diğer Hesaplar - Ege Deniz
 
-Bu proje, Bartın Ege Karahanlı'nın kişisel sosyal medya hesaplarının listelendiği, modern, şık ve tamamen özelleştirilebilir bir bağlantı sayfasıdır.  
-Google AdSense entegrasyonu, çoklu dil desteği (Türkçe, İngilizce, Rusça), açık/koyu tema seçeneği ve gelişmiş kullanıcı deneyimi özellikleri içerir.
-
----
+Bu proje, Ege Deniz’in sosyal medya ve iletişim bağlantılarını içeren modern, şık ve tamamen mobil uyumlu bir bağlantılar sayfasıdır.
 
 ## Özellikler
 
-- **Modern ve premium tasarım:** Minimalist, kullanıcı dostu ve tamamen mobil uyumlu.
-- **Google AdSense destekli:** Reklam alanları optimize edilmiş ve reklam kodları korunmuştur.
-- **Çoklu dil desteği:** Türkçe, İngilizce ve Rusça dillerinde içerik görüntüleme.
-- **Tema seçimi:** Açık ve koyu mod arasında geçiş yapabilme.
-- **Sosyal medya bağlantıları:** Instagram, Telegram, WhatsApp, TikTok ve özel sayfalar (Hakkımda, Gizlilik Politikası).
-- **Modal pencereler:** Hakkımda ve Gizlilik Politikası sayfaları, dil ve tema uyumlu modaller ile görüntülenir.
-- **Sayfa yüklenme animasyonu:** Sayfa açılırken hoş bir animasyon.
-- **Buton hover efektleri:** Butonlar üzerinde gelişmiş animasyonlar ve etkileşimler.
-- **Canlı saat göstergesi:** Sayfanın üst kısmında gerçek zamanlı saat.
-- **Kolay kullanım:** Dil ve tema tercihi tarayıcıda saklanır.
-- **Erişilebilirlik:** ARIA etiketleri ve klavye navigasyonuna uygun.
+- Ultra modern, parlak ve göze hoş gelen buton tasarımları
+- Responsive (mobil uyumlu) grid yapısı
+- Güçlü CSS ışık ve shine efektleri
+- Minimal ve temiz HTML yapısı
+- Tüm büyük tarayıcılarda uyumlu
+- İhtiyaç duyulursa kolayca yeni bağlantılar eklenebilir
+- Google AdSense reklam scripti entegre edildi (kodu bozmadan)
 
----
+## Kullanılan Teknolojiler
 
-## Kurulum ve Kullanım
+- HTML5
+- CSS3 (Grid, Animasyonlar, Efektler)
+- Font Awesome 6.4 (Sosyal ikonlar)
+- Google Fonts (Poppins)
 
-1. Depoyu klonlayın veya ZIP olarak indirin.
-2. `index.html` dosyasını düzenleyerek kendi sosyal medya hesaplarınızı ve kişisel bilgilerinizi ekleyin.
-3. Google AdSense reklam kodlarınızı `<!-- Google AdSense Reklam Alanı -->` alanına yerleştirin.
-4. Dili, temayı ve diğer ayarları kullanıcı tercihlerine göre koruyan yapı hazırdır.
-5. Dosyalarınızı GitHub Pages veya tercih ettiğiniz herhangi bir statik hosting servisine yükleyerek canlıya alın.
+## Kullanım
 
----
-
-## Özelleştirme
-
-- Sosyal medya linklerini `data-socials` dizisinde güncelleyebilirsiniz.
-- Hakkımda ve Gizlilik Politikası içeriklerini ilgili modal içeriğinde düzenleyebilirsiniz.
-- Tema renkleri ve buton stilleri CSS üzerinden kolayca değiştirilebilir.
-- Dil dosyaları JSON olarak ayrı tutulduğundan, yeni diller eklemek veya metinleri değiştirmek kolaydır.
-
----
-
-## Lisans
-
-Bu proje MIT Lisansı altında lisanslanmıştır. Daha fazla bilgi için LICENSE dosyasına bakabilirsiniz.
-
----
+1. `index.html` dosyasını kendi web sunucuna yükle.
+2. İçerikteki linkleri kendi sosyal medya veya iletişim adreslerinle değiştir.
+3. Reklam scripti varsa, gerekli kodu güncelleyebilirsin.
+4. Tarayıcıda aç ve kullan!
 
 ## İletişim
 
-Bartın Ege Karahanlı  
-E-posta: ege@egeherz.com  
+**Ege Deniz**  
+E-posta: [ege@egeherz.com](mailto:ege@egeherz.com)  
 Web: [egeherz.com](https://egeherz.com)
 
 ---
 
-Teşekkürler!  
-Modern, hızlı ve şık bir sosyal medya bağlantı sayfası arıyorsanız, bu proje tam size göre.
+Eğer soruların veya önerilerin varsa çekinmeden iletişime geçebilirsin.  
+Keyifli kullanımlar! 🚀

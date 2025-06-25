@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HESAPLARIM - EGE DENİZ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: black;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    main {
+      max-width: 460px;
+      width: 90%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 24px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(22px);
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 0 40px rgba(0,255,255,0.25);
+      padding: 36px 26px;
+      z-index: 2;
+      animation: fadeInUp 1.2s ease forwards;
+      transform: translateY(40px);
+      opacity: 0;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    main a {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      color: white;
+      padding: 18px 0;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ff004f, #6600ff);
+      box-shadow:
+        0 0 12px #ff004f,
+        0 0 24px #6600ff,
+        0 0 36px #ff004f,
+        inset 0 0 10px #6600ff;
+      transition: all 0.25s ease;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    main a i {
+      font-size: 1.8rem;
+      text-shadow: 0 0 6px #fff;
+      min-width: 26px;
+      text-align: center;
+    }
+
+    main a:hover {
+      transform: scale(1.07);
+      box-shadow:
+        0 0 20px #ff005f,
+        0 0 40px #7700ff,
+        0 0 60px #ff0070,
+        inset 0 0 20px #7700ff;
+      text-shadow: 0 0 20px #fff;
+    }
+
+    main a::after {
+      content: '';
+      position: absolute;
+      top: -60%;
+      left: -60%;
+      width: 220%;
+      height: 220%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.12), transparent);
+      transform: rotate(25deg);
+      animation: shine 3s infinite linear;
+      pointer-events: none;
+    }
+
+    @keyframes shine {
+      0% { transform: translate(-100%, -100%) rotate(25deg); }
+      100% { transform: translate(100%, 100%) rotate(25deg); }
+    }
+
+    @media (max-width: 520px) {
+      main {
+        padding: 24px 14px;
+        gap: 18px;
+      }
+      main a {
+        font-size: 1rem;
+        padding: 14px 0;
+      }
+      main a i {
+        font-size: 1.4rem;
+        min-width: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<main>
+  <a href="https://instagram.com/10110310132100101110105l22" target="_blank" title="Instagram">
+    <i class="fab fa-instagram"></i>Instagram
+  </a>
+  <a href="https://t.me/l0110310132100101110105122" target="_blank" title="Telegram">
+    <i class="fab fa-telegram"></i>Telegram
+  </a>
+  <a href="https://wa.me/447846848820?text=Selam%20👌🏻" target="_blank" title="WhatsApp">
+    <i class="fab fa-whatsapp"></i>WhatsApp
+  </a>
+  <a href="https://www.tiktok.com/@010169716901l7" target="_blank" title="TikTok">
+    <i class="fab fa-tiktok"></i>TikTok
+  </a>
+</main>
+
+<script>
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    stars = [];
+    for (let i = 0; i < 250; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.8 + 0.5,
+        dx: (Math.random() - 0.5) * 0.6,
+        dy: (Math.random() - 0.5) * 0.6
+      });
+    }
+  }
+
+  function animateStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white";
+    stars.forEach(star => {
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      star.x += star.dx;
+      star.y += star.dy;
+
+      if (star.x < 0 || star.x > canvas.width) star.x = Math.random() * canvas.width;
+      if (star.y < 0 || star.y > canvas.height) star.y = Math.random() * canvas.height;
+    });
+    requestAnimationFrame(animateStars);
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  animateStars();
+</script>
+
+</body>
+</html>

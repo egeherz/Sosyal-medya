@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bağlantılar - Bartın Ege Karahanlı</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;width:100%;}
+    body{
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      background:#e1f5fe;color:#01579b;
+      display:flex;justify-content:center;align-items:center;
+    }
+
+    /* --- GİRİŞ ANİMASYONU --- */
+    @keyframes fadeInUp{
+      0%   {opacity:0;transform:translateY(30px);}
+      100% {opacity:1;transform:translateY(0);}
+    }
+
+    nav{
+      display:grid;grid-template-columns:repeat(2,160px);gap:14px 20px;
+      justify-content:center;
+    }
+    nav a{
+      display:flex;align-items:center;justify-content:center;gap:10px;
+      width:160px;font-weight:600;font-size:1.1rem;
+      text-decoration:none;color:#e1f5fe;
+      background:#0288d1;border:none;border-radius:10px;
+      padding:13px 0;cursor:pointer;
+      box-shadow:0 5px 12px rgba(2,136,209,.4);
+      transition:background .3s,transform .25s,box-shadow .25s;
+      /* Animasyon başlangıcı */
+      opacity:0;animation:fadeInUp .6s forwards;
+    }
+    /* Her butona artan gecikme vererek sırayla gelmesini sağla */
+    nav a:nth-child(1){animation-delay:.1s;}
+    nav a:nth-child(2){animation-delay:.25s;}
+    nav a:nth-child(3){animation-delay:.4s;}
+    nav a:nth-child(4){animation-delay:.55s;}
+
+    nav a:hover,nav a:focus{
+      background:#01579b;
+      transform:translateY(-4px) scale(1.05);
+      box-shadow:0 8px 16px rgba(2,136,209,.4);
+    }
+    nav i{font-size:1.7rem;min-width:24px;text-align:center;}
+
+    /* --- Mobil düzen --- */
+    @media(max-width:520px){
+      nav{grid-template-columns:repeat(2,140px);gap:12px 14px;}
+      nav a{width:140px;font-size:1rem;padding:12px 0;}
+      nav i{font-size:1.5rem;min-width:22px;}
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <nav>
+    <a href="https://instagram.com/10110310132100101110105l22" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
+    <a href="https://t.me/l0110310132100101110105122" target="_blank"><i class="fab fa-telegram"></i>Telegram</a>
+    <a href="https://wa.me/447846848820?text=Selam%20%F0%9F%99%8C%F0%9F%8F%BC" target="_blank"><i class="fab fa-whatsapp"></i>WhatsApp</a>
+    <a href="https://www.tiktok.com/@egeherz" target="_blank"><i class="fab fa-tiktok"></i>TikTok</a>
+  </nav>
+</main>
+
+</body>
+</html>

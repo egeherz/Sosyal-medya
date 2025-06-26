@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HESAPLARIM VE ŞARKILARIM - EGE DENİZ</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('https://i.imgur.com/yslsfnW.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 80px;
+      min-height: 100vh;
+    }
+
+    main {
+      margin-top: 40px;
+      max-width: 480px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    main a, #showPlaylistBtn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.15rem;
+      padding: 20px 0;
+      border-radius: 20px;
+      background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff, #ff004f);
+      background-size: 320% 320%;
+      animation: gradientShift 7s ease infinite;
+      box-shadow: 0 0 10px #ff004f;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #playlistModal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.95);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    #playlistContent {
+      background: rgba(0, 15, 30, 0.95);
+      border-radius: 24px;
+      max-width: 480px;
+      width: 90%;
+      max-height: 75vh;
+      overflow-y: auto;
+      padding: 28px 36px 52px;
+      color: #00e5ff;
+      font-weight: 600;
+    }
+
+    #playlistContent h2 {
+      margin-bottom: 16px;
+      font-size: 1.6rem;
+      text-align: center;
+    }
+
+    #playlistContent ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    #playlistContent ul li button {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      background: #005577;
+      border: none;
+      color: #ccf8ff;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #closePlaylistBtn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      font-weight: bold;
+      background: #0077aa;
+      border: none;
+      border-radius: 16px;
+      color: white;
+      cursor: pointer;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 14px 0;
+      text-align: center;
+      font-weight: bold;
+      background: transparent;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <a href="https://instagram.com/10110310132100101110105l22" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+  <a href="https://t.me/l0110310132100101110105122" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+  <a href="https://www.tiktok.com/@010169716901l7" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+  <button id="showPlaylistBtn"><i class="fas fa-music"></i> Şarkı Listesi</button>
+</main>
+
+<audio id="audioPlayer" preload="auto">
+  <source src="" type="audio/mpeg" />
+  Tarayıcınız ses dosyasını desteklemiyor.
+</audio>
+
+<div id="playlistModal">
+  <div id="playlistContent">
+    <h2>Şarkı Listesi</h2>
+    <ul>
+      <li><button data-src="Juice WRLD Let Me Know (I Wonder Why Freestyle) (Official Audio).mp3">Juice WRLD - Let Me Know</button></li>
+      <li><button data-src="Doja Cat - Streets (Official Audio).mp3">Doja Cat - Streets</button></li>
+      <li><button data-src="lliinnee.mp3">lliinnee</button></li>
+      <li><button data-src="Lana Del Rey - Summertime Sadness (Official Music Video).mp3">Lana Del Rey - Summertime Sadness</button></li>
+      <li><button data-src="22. Hasta el Amanecer - Nicky Jam  Video Oficial.mp3">Nicky Jam - Hasta el Amanecer</button></li>
+      <li><button data-src="Amor Na Praia.mp3">Amor Na Praia</button></li>
+      <li><button data-src="smezir 2 (Super Slowed).mp3">Smezir 2 (Slowed)</button></li>
+      <li><button data-src="Djo - End Of Beginning (Official Audio).mp3">Djo - End Of Beginning</button></li>
+      <li><button data-src="twenty-one-pilots-Doubt-_Official-Audio_.mp3">Twenty One Pilots - Doubt</button></li>
+    </ul>
+    <button id="closePlaylistBtn">Kapat</button>
+  </div>
+</div>
+
+<footer>
+  © 2025 Ege Deniz. All rights reserved.
+</footer>
+
+<script>
+  const audio = document.getElementById('audioPlayer');
+  const showPlaylistBtn = document.getElementById('showPlaylistBtn');
+  const playlistModal = document.getElementById('playlistModal');
+  const closePlaylistBtn = document.getElementById('closePlaylistBtn');
+
+  const songs = [
+    "Juice WRLD Let Me Know (I Wonder Why Freestyle) (Official Audio).mp3",
+    "Doja Cat - Streets (Official Audio).mp3",
+    "lliinnee.mp3",
+    "Lana Del Rey - Summertime Sadness (Official Music Video).mp3",
+    "22. Hasta el Amanecer - Nicky Jam  Video Oficial.mp3",
+    "Amor Na Praia.mp3",
+    "smezir 2 (Super Slowed).mp3",
+    "Djo - End Of Beginning (Official Audio).mp3",
+    "twenty-one-pilots-Doubt-_Official-Audio_.mp3"
+  ];
+
+  let currentSongIndex = 0;
+
+  function playSong(index) {
+    currentSongIndex = index;
+    audio.src = songs[index];
+    audio.play();
+    const title = songs[index].replace(/\(.+?\)/g, '').replace(/Official Audio|Official Music Video|Video Oficial/gi, '').trim();
+    showPlaylistBtn.innerHTML = `<i class="fas fa-music"></i> Çalıyor: ${title}`;
+  }
+
+  document.querySelectorAll('#playlistContent button[data-src]').forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+      playSong(index);
+      playlistModal.style.display = 'none';
+    });
+  });
+
+  showPlaylistBtn.addEventListener('click', () => {
+    playlistModal.style.display = 'flex';
+  });
+
+  closePlaylistBtn.addEventListener('click', () => {
+    playlistModal.style.display = 'none';
+  });
+
+  audio.addEventListener('ended', () => {
+    let next = (currentSongIndex + 1) % songs.length;
+    playSong(next);
+  });
+
+  window.addEventListener('load', () => {
+    audio.src = songs[0];
+  });
+</script>
+
+</body>
+</html>

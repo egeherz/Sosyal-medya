@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HESAPLARIM VE ŞARKILARIM - EGE DENİZ</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('https://i.imgur.com/yslsfnW.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      padding: 40px 20px 100px;
+      margin: 0;
+    }
+    main {
+      max-width: 500px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    main a, #showPlaylistBtn {
+      padding: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff, #ff004f);
+      background-size: 300% 300%;
+      animation: gradientShift 6s ease infinite;
+      box-shadow: 0 0 10px #00e5ff;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    #playlistModal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.95);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    #playlistContent {
+      background: #001a2e;
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 0 20px #00e5ff;
+    }
+    #playlistContent ul {
+      list-style: none;
+      padding: 0;
+    }
+    #playlistContent ul li button {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 12px;
+      border: none;
+      border-radius: 14px;
+      background: #00aaff;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00e5ff;
+    }
+    #volumeControl {
+      margin: 30px auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    #volumeControl input[type="range"] {
+      width: 200px;
+    }
+    footer {
+      text-align: center;
+      color: #fff;
+      font-weight: bold;
+      padding: 12px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
+  <a href="https://t.me" target="_blank"><i class="fab fa-telegram"></i>Telegram</a>
+  <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i>TikTok</a>
+  <button id="showPlaylistBtn"><i class="fas fa-music"></i> Şarkı Listesi</button>
+</main>
+
+<div id="volumeControl">
+  <i class="fas fa-volume-down"></i>
+  <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8">
+  <i class="fas fa-volume-up"></i>
+</div>
+
+<audio id="audioPlayer" preload="auto"></audio>
+
+<div id="playlistModal">
+  <div id="playlistContent">
+    <ul>
+      <li><button data-src="Juice WRLD Let Me Know (I Wonder Why Freestyle) (Official Audio).mp3">Juice WRLD - Let Me Know</button></li>
+      <li><button data-src="Doja Cat - Streets (Official Audio).mp3">Doja Cat - Streets</button></li>
+      <li><button data-src="lliinnee.mp3">lliinnee</button></li>
+      <li><button data-src="Lana Del Rey - Summertime Sadness (Official Music Video).mp3">Lana - Summertime Sadness</button></li>
+      <li><button data-src="Hasta el Amanecer - Nicky Jam.mp3">Nicky Jam - Hasta el Amanecer</button></li>
+      <li><button data-src="Amor Na Praia.mp3">Amor Na Praia</button></li>
+      <li><button data-src="smezir 2 (Super Slowed).mp3">Smezir 2</button></li>
+      <li><button data-src="Djo - End Of Beginning (Official Audio).mp3">Djo - End Of Beginning</button></li>
+      <li><button data-src="twenty-one-pilots-Doubt-_Official-Audio_.mp3">Twenty One Pilots - Doubt</button></li>
+    </ul>
+    <button onclick="document.getElementById('playlistModal').style.display='none'">Kapat</button>
+  </div>
+</div>
+
+<footer>© 2025 Ege Deniz. All rights reserved.</footer>
+
+<script>
+  const audio = document.getElementById("audioPlayer");
+  const showPlaylistBtn = document.getElementById("showPlaylistBtn");
+  const volumeSlider = document.getElementById("volumeSlider");
+  const buttons = document.querySelectorAll("#playlistContent button[data-src]");
+  const modal = document.getElementById("playlistModal");
+
+  const songs = Array.from(buttons).map(btn => btn.getAttribute("data-src"));
+  const themes = [
+    "linear-gradient(45deg, #ff004f, #6600ff, #00e5ff, #ff004f)",
+    "linear-gradient(45deg, #00ff88, #006633, #00ffaa, #00ff88)",
+    "linear-gradient(45deg, #ff8800, #cc5500, #ffaa33, #ff8800)",
+    "linear-gradient(45deg, #aa00ff, #550099, #bb33ff, #aa00ff)",
+    "linear-gradient(45deg, #00aaff, #006699, #33bbff, #00aaff)",
+    "linear-gradient(45deg, #ff00aa, #990066, #ff33bb, #ff00aa)",
+    "linear-gradient(45deg, #00ffff, #009999, #33ffff, #00ffff)",
+    "linear-gradient(45deg, #ff4400, #cc3300, #ff6633, #ff4400)",
+    "linear-gradient(45deg, #ffaa00, #cc8800, #ffbb33, #ffaa00)"
+  ];
+  let currentIndex = 0;
+
+  function playSong(index) {
+    currentIndex = index;
+    audio.src = songs[index];
+    audio.play();
+    updateButton(index);
+    updateTheme(index);
+  }
+
+  function updateButton(index) {
+    const title = songs[index].replace(/\(.+?\)|Official Audio|Video|\.mp3/gi, "").trim();
+    showPlaylistBtn.innerHTML = `<i class="fas fa-music"></i> Çalıyor: ${title}`;
+  }
+
+  function updateTheme(index) {
+    const bg = themes[index % themes.length];
+    showPlaylistBtn.style.background = bg;
+    showPlaylistBtn.style.boxShadow = `0 0 12px ${bg.match(/#\w{6}/)[0]}`;
+  }
+
+  buttons.forEach((btn, i) => {
+    btn.addEventListener("click", () => {
+      playSong(i);
+      modal.style.display = "none";
+    });
+  });
+
+  audio.addEventListener("ended", () => {
+    const next = (currentIndex + 1) % songs.length;
+    playSong(next);
+  });
+
+  showPlaylistBtn.addEventListener("click", () => {
+    modal.style.display = "flex";
+  });
+
+  volumeSlider.addEventListener("input", () => {
+    audio.volume = volumeSlider.value;
+  });
+
+  // Sayfa yüklenince ilk şarkıyı hazırla
+  window.addEventListener("DOMContentLoaded", () => {
+    audio.src = songs[0];
+    audio.volume = volumeSlider.value;
+    updateTheme(0);
+    updateButton(0);
+  });
+</script>
+
+</body>
+</html>

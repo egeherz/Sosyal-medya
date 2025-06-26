@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+  <title>HESAPLARIM VE ŞARKILARIM - EGE DENİZ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      text-decoration: none !important;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('https://i.imgur.com/yslsfnW.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      padding: 40px 20px 100px;
+      color: #fff;
+      overflow-x: hidden;
+    }
+    main {
+      max-width: 480px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    main a, #showPlaylistBtn {
+      background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff, #ff004f);
+      background-size: 300% 300%;
+      animation: gradientShift 6s ease infinite;
+      color: white;
+      padding: 18px;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 0 10px #00e5ff, inset 0 0 10px #6600ff;
+      transition: 0.3s ease;
+    }
+    main a:hover, #showPlaylistBtn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00ffff;
+    }
+    main i {
+      font-size: 1.4rem;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #playlistModal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    #playlistContent {
+      background: rgba(0, 20, 40, 0.9);
+      padding: 30px 20px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 460px;
+      box-shadow: 0 0 30px #00e5ff;
+      text-align: center;
+    }
+    #playlistContent h2 {
+      font-size: 1.6rem;
+      color: #00e5ff;
+      margin-bottom: 20px;
+    }
+    #playlistContent ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+    #playlistContent ul li {
+      margin-bottom: 14px;
+    }
+    #playlistContent ul li button {
+      width: 100%;
+      padding: 14px;
+      border-radius: 20px;
+      background: #003344;
+      color: #ccf8ff;
+      font-weight: 700;
+      border: none;
+      font-size: 1.05rem;
+      box-shadow: 0 0 14px #00e5ff;
+      transition: 0.4s ease;
+    }
+    #playlistContent ul li button:hover {
+      background: #005577;
+      box-shadow: 0 0 28px #00ffff;
+      transform: scale(1.03);
+    }
+    #closePlaylistBtn, #reportBtn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 18px;
+      margin-top: 10px;
+      font-weight: 700;
+      border: none;
+      background: #0066aa;
+      color: #fff;
+    }
+    #progressContainer {
+      width: 80%;
+      margin: 20px auto 0;
+      background: #005577;
+      height: 10px;
+      border-radius: 10px;
+      overflow: hidden;
+      display: none;
+    }
+    #progressBar {
+      height: 100%;
+      background: #00ffff;
+      width: 0%;
+    }
+    #playPauseBtn {
+      margin: 20px auto 0;
+      display: none;
+      width: 180px;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 20px;
+      background: #00aaff;
+      color: white;
+      border: none;
+      box-shadow: 0 0 14px #00e5ff;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: 14px;
+      background: transparent;
+      backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <a href="https://instagram.com/10110310132100101110105l22" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
+  <a href="https://t.me/l0110310132100101110105122" target="_blank"><i class="fab fa-telegram"></i>Telegram</a>
+  <a href="https://www.tiktok.com/@010169716901l7" target="_blank"><i class="fab fa-tiktok"></i>TikTok</a>
+  <button id="showPlaylistBtn"><i class="fas fa-music"></i> Şarkı Listesi</button>
+</main>
+
+<div id="playlistModal">
+  <div id="playlistContent">
+    <h2>Şarkı Listesi</h2>
+    <ul id="playlist"></ul>
+    <button id="closePlaylistBtn">Kapat</button>
+    <button id="reportBtn">Sorun Bildir</button>
+  </div>
+</div>
+
+<audio id="audioPlayer"></audio>
+<div id="progressContainer"><div id="progressBar"></div></div>
+<button id="playPauseBtn"><i class="fas fa-play"></i> Oynat</button>
+
+<footer>© 2025 Ege Deniz. All rights reserved.</footer>
+
+<script>
+  const songs = [
+    { name: "Juice WRLD - Let Me Know", file: "Juice WRLD Let Me Know (I Wonder Why Freestyle) (Official Audio).mp3" },
+    { name: "Doja Cat - Streets", file: "Doja Cat - Streets (Official Audio).mp3" },
+    { name: "lliinnee", file: "lliinnee.mp3" },
+    { name: "Lana Del Rey - Summertime Sadness", file: "Lana Del Rey - Summertime Sadness (Official Music Video).mp3" },
+    { name: "Nicky Jam - Hasta el Amanecer", file: "22. Hasta el Amanecer - Nicky Jam  Video Oficial.mp3" },
+    { name: "Amor Na Praia", file: "Amor Na Praia.mp3" },
+    { name: "Smezir 2 (Slowed)", file: "smezir 2 (Super Slowed).mp3" },
+    { name: "Djo - End Of Beginning", file: "Djo - End Of Beginning (Official Audio).mp3" },
+    { name: "Twenty One Pilots - Doubt", file: "twenty-one-pilots-Doubt-_Official-Audio_.mp3" },
+    { name: "lil 17th - Mary Jane", file: "lil 17th - Mary Jane.mp3" },
+    { name: "XXXTENTACION - MOONLIGHT", file: "XXXTENTACION - MOONLIGHT (OFFICIAL MUSIC VIDEO).mp3" },
+    { name: "t.A.T.u. - All The Things She Said", file: "t.A.T.u. - All The Things She Said (Official Music Video).mp3" }
+  ];
+
+  const playlist = document.getElementById("playlist");
+  const audio = document.getElementById("audioPlayer");
+  const progressContainer = document.getElementById("progressContainer");
+  const progressBar = document.getElementById("progressBar");
+  const playPauseBtn = document.getElementById("playPauseBtn");
+  const showPlaylistBtn = document.getElementById("showPlaylistBtn");
+  const playlistModal = document.getElementById("playlistModal");
+  const closePlaylistBtn = document.getElementById("closePlaylistBtn");
+  const reportBtn = document.getElementById("reportBtn");
+
+  let currentIndex = -1;
+  let isPlaying = false;
+
+  songs.forEach((song, i) => {
+    const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.textContent = song.name;
+    btn.addEventListener("click", () => playSong(i));
+    li.appendChild(btn);
+    playlist.appendChild(li);
+  });
+
+  function playSong(index) {
+    if (index === currentIndex) return;
+    currentIndex = index;
+    audio.src = songs[index].file;
+    audio.play();
+    isPlaying = true;
+    playPauseBtn.style.display = "block";
+    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i> Durdur';
+    playlistModal.style.display = "none";
+    progressContainer.style.display = "block";
+    flashButtons();
+    colorChange();
+  }
+
+  playPauseBtn.addEventListener("click", () => {
+    if (!audio.src) return;
+    if (isPlaying) {
+      audio.pause();
+      isPlaying = false;
+      playPauseBtn.innerHTML = '<i class="fas fa-play"></i> Oynat';
+    } else {
+      audio.play();
+      isPlaying = true;
+      playPauseBtn.innerHTML = '<i class="fas fa-pause"></i> Durdur';
+    }
+  });
+
+  audio.addEventListener("ended", () => {
+    let next = (currentIndex + 1) % songs.length;
+    playSong(next);
+  });
+
+  audio.addEventListener("timeupdate", () => {
+    const percent = (audio.currentTime / audio.duration) * 100;
+    progressBar.style.width = percent + "%";
+  });
+
+  showPlaylistBtn.addEventListener("click", () => playlistModal.style.display = "flex");
+  closePlaylistBtn.addEventListener("click", () => playlistModal.style.display = "none");
+  reportBtn.addEventListener("click", () => {
+    window.location.href = "mailto:ege@egeherz.com?subject=Sorun Bildir&body=Şarkı%20çalınmıyor.";
+  });
+
+  function flashButtons() {
+    const buttons = document.querySelectorAll("main a, #showPlaylistBtn");
+    buttons.forEach(btn => {
+      btn.style.boxShadow = "0 0 20px #fff, 0 0 40px #00f, 0 0 60px #0ff";
+      setTimeout(() => {
+        btn.style.boxShadow = "";
+      }, 5000);
+    });
+  }
+
+  function colorChange() {
+    const colors = [
+      "#ff004f", "#00ffaa", "#ffaa00",
+      "#cc00ff", "#00ccff", "#ff00aa"
+    ];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    document.querySelectorAll("main a, #showPlaylistBtn").forEach(btn => {
+      btn.style.background = `linear-gradient(45deg, ${color}, #000, ${color})`;
+    });
+  }
+</script>
+
+</body>
+</html>

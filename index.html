@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HESAPLARIM VE ŞARKILARIM - EGE DENİZ</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* Temel stiller */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('https://i.imgur.com/yslsfnW.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 80px;
+    }
+
+    main {
+      margin-top: 40px;
+      max-width: 420px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 18px;
+      background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff, #ff004f);
+      background-size: 300% 300%;
+      animation: gradientShift 6s ease infinite;
+      box-shadow:
+        0 0 8px #ff004f,
+        0 0 16px #6600ff,
+        0 0 24px #00e5ff,
+        inset 0 0 8px #6600ff;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      transform: scale(1.07);
+      box-shadow:
+        0 0 15px #ff005f,
+        0 0 32px #7700ff,
+        0 0 44px #00e5ff,
+        inset 0 0 15px #7700ff;
+    }
+
+    .button i {
+      font-size: 1.4rem;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Modal stilleri */
+    #playlistModal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    #playlistContent {
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 16px;
+      max-width: 420px;
+      width: 100%;
+      padding: 24px;
+      box-shadow: 0 0 20px #00e5ff;
+    }
+
+    #playlistContent h2 {
+      color: #0ff;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 1.4rem;
+    }
+
+    .beta-warning {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #ff0;
+      margin-bottom: 20px;
+    }
+
+    #playlistContent ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    #playlistContent ul li button {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 1rem;
+      background: linear-gradient(45deg, #00e5ff, #6600ff);
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #playlistContent ul li button:hover {
+      background: linear-gradient(45deg, #6600ff, #00e5ff);
+    }
+
+    #closePlaylistBtn, #reportBtn {
+      margin-top: 14px;
+      width: 100%;
+      background: #0ff;
+      color: #000;
+      font-weight: bold;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+    }
+
+    #reportForm {
+      margin-top: 12px;
+      display: none;
+    }
+
+    #reportForm textarea {
+      width: 100%;
+      height: 80px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #0ff;
+      background: #111;
+      color: #0ff;
+    }
+
+    #reportForm button {
+      margin-top: 8px;
+      background: #0ff;
+      color: #000;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #moreText {
+      margin-top: 12px;
+      color: #0ff;
+      text-align: center;
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <a href="https://instagram.com/10110310132100101110105l22" target="_blank" class="button"><i class="fab fa-instagram"></i>Instagram</a>
+  <a href="https://t.me/l0110310132100101110105122" target="_blank" class="button"><i class="fab fa-telegram"></i>Telegram</a>
+  <a href="https://www.tiktok.com/@010169716901l7" target="_blank" class="button"><i class="fab fa-tiktok"></i>TikTok</a>
+  <button class="button" id="showPlaylistBtn"><i class="fas fa-music"></i>Şarkı Listesi</button>
+</main>
+
+<audio id="audioPlayer" loop>
+  <source src="Djo - End Of Beginning (Official Audio).mp3" type="audio/mpeg" />
+</audio>
+
+<!-- Modal -->
+<div id="playlistModal">
+  <div id="playlistContent">
+    <h2>Şarkı Listesi</h2>
+    <div class="beta-warning">Bu özellik beta sürecindedir. Geliştirme devam etmektedir.</div>
+    <ul>
+      <li><button data-src="Djo - End Of Beginning (Official Audio).mp3">Djo - End Of Beginning</button></li>
+      <li><button data-src="smezir 2 (Super Slowed).mp3">Smezir 2 (Super Slowed)</button></li>
+      <li><button data-src="twenty-one-pilots-Doubt-_Official-Audio_.mp3">Twenty One Pilots - Doubt</button></li>
+    </ul>
+    <button id="closePlaylistBtn">Kapat</button>
+    <button id="reportBtn">Şarkı oynatma ile ilgili sorun bildir</button>
+
+    <form id="reportForm" action="mailto:ege@egeherz.com?subject=Şarkı Sorunu" method="POST" enctype="text/plain">
+      <textarea name="message" id="reportMessage" required></textarea>
+      <button type="submit">Gönder</button>
+    </form>
+    <div id="moreText">Daha fazla şarkı eklenecektir.</div>
+  </div>
+</div>
+
+<footer>
+  © 2025 Ege Deniz. All rights reserved.
+</footer>
+
+<script>
+  const audio = document.getElementById('audioPlayer');
+  const playlistBtn = document.getElementById('showPlaylistBtn');
+  const modal = document.getElementById('playlistModal');
+  const closeBtn = document.getElementById('closePlaylistBtn');
+  const reportBtn = document.getElementById('reportBtn');
+  const reportForm = document.getElementById('reportForm');
+  const reportMessage = document.getElementById('reportMessage');
+
+  // Modal aç
+  playlistBtn.addEventListener('click', () => {
+    modal.style.display = 'flex';
+    if (audio.paused) {
+      audio.play();
+    }
+  });
+
+  // Modal kapat
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  // Şarkı seçimi
+  document.querySelectorAll('#playlistContent ul button').forEach(button => {
+    button.addEventListener('click', () => {
+      const src = button.getAttribute('data-src');
+      audio.src = src;
+      audio.play();
+      modal.style.display = 'none';
+    });
+  });
+
+  // Sorun bildir aç
+  reportBtn.addEventListener('click', () => {
+    reportForm.style.display = reportForm.style.display === 'block' ? 'none' : 'block';
+    const ip = 'IP alınamıyor (client-side HTML).';
+    reportMessage.value = `Şarkı oynatma sırasında bir hata oluştu.\nIP adresi: ${ip}\nLütfen sorunu inceleyin.`;
+  });
+</script>
+
+</body>
+</html>

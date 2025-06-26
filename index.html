@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HESAPLARIM VE ŞARKILARIM - EGE DENİZ</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%; width: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: url('https://i.imgur.com/yslsfnW.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 40px 20px 80px;
+      overflow-x: hidden;
+    }
+
+    main {
+      margin-top: 40px;
+      max-width: 420px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 0 25px rgba(0,255,255,0.15);
+      padding: 32px 24px;
+      animation: slideFadeIn 1.2s ease-out;
+    }
+
+    @keyframes slideFadeIn {
+      from { opacity: 0; transform: translateY(60px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    main a, #showPlaylistBtn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      color: white;
+      padding: 18px 0;
+      border-radius: 18px;
+      background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff, #ff004f);
+      background-size: 300% 300%;
+      animation: gradientShift 6s ease infinite;
+      box-shadow:
+        0 0 8px #ff004f,
+        0 0 16px #6600ff,
+        0 0 24px #00e5ff,
+        inset 0 0 8px #6600ff;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    main a i, #showPlaylistBtn i {
+      font-size: 1.6rem;
+      text-shadow: 0 0 8px #fff;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    main a:hover, #showPlaylistBtn:hover {
+      transform: scale(1.07) rotateZ(2deg);
+      text-shadow: 0 0 20px #fff;
+    }
+
+    #tiktokWrapper {
+      grid-column: 1 / 3;
+      justify-self: center;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+    }
+
+    #showPlaylistBtn {
+      width: 100%;
+    }
+
+    #playlistModal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      padding: 20px;
+    }
+
+    #playlistContent {
+      background: #111;
+      border-radius: 16px;
+      max-width: 420px;
+      width: 100%;
+      max-height: 70vh;
+      overflow-y: auto;
+      box-shadow: 0 0 20px #0ff;
+      padding: 20px 24px 20px;
+      color: #0ff;
+    }
+
+    #playlistContent h2 {
+      margin-bottom: 16px;
+      text-align: center;
+      font-size: 1.6rem;
+      color: #00e5ff;
+    }
+
+    #playlistContent ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #playlistContent ul li button {
+      width: 100%;
+      background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff, #ff004f);
+      background-size: 300% 300%;
+      animation: gradientShift 6s ease infinite;
+      border: none;
+      border-radius: 14px;
+      padding: 12px;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    #playlistContent button:hover {
+      transform: scale(1.05);
+    }
+
+    #closePlaylistBtn {
+      width: 100%;
+      background: #0ff;
+      color: #000;
+      font-weight: 700;
+      padding: 12px;
+      border-radius: 14px;
+      border: none;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    #moreText {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: #0ff;
+      font-style: italic;
+      text-align: center;
+    }
+
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      text-shadow: 0 0 4px #000;
+    }
+
+    @media (max-width: 520px) {
+      main { grid-template-columns: 1fr 1fr; gap: 16px; }
+      main a, #showPlaylistBtn { font-size: 1rem; padding: 14px 0; }
+      main a i, #showPlaylistBtn i { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <a href="https://instagram.com/10110310132100101110105l22" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
+  <a href="https://t.me/l0110310132100101110105122" target="_blank"><i class="fab fa-telegram"></i>Telegram</a>
+
+  <div id="tiktokWrapper">
+    <a href="https://www.tiktok.com/@010169716901l7" target="_blank">
+      <i class="fab fa-tiktok"></i>TikTok
+    </a>
+    <button id="showPlaylistBtn"><i class="fas fa-music"></i> Şarkı Listesi</button>
+  </div>
+</main>
+
+<audio id="audioPlayer" preload="auto">
+  <source src="twenty-one-pilots-Doubt-_Official-Audio_.mp3" type="audio/mpeg">
+  Tarayıcınız ses dosyasını desteklemiyor.
+</audio>
+
+<!-- Modal -->
+<div id="playlistModal">
+  <div id="playlistContent">
+    <h2>Şarkı Listesi</h2>
+    <ul>
+      <li><button data-src="smezir 2 (Super Slowed).mp3">Smezir 2 (Super Slowed)</button></li>
+      <li><button data-src="Djo - End Of Beginning (Official Audio).mp3">Djo - End Of Beginning</button></li>
+      <li><button data-src="twenty-one-pilots-Doubt-_Official-Audio_.mp3">Twenty One Pilots - Doubt</button></li>
+    </ul>
+    <button id="closePlaylistBtn">Kapat</button>
+  </div>
+</div>
+
+<div id="moreText">Daha fazlası eklenecektir.</div>
+
+<footer>
+  © 2025 Ege Deniz. All rights reserved.
+</footer>
+
+<script>
+  const audio = document.getElementById("audioPlayer");
+  const showPlaylistBtn = document.getElementById("showPlaylistBtn");
+  const playlistModal = document.getElementById("playlistModal");
+  const closePlaylistBtn = document.getElementById("closePlaylistBtn");
+
+  showPlaylistBtn.onclick = () => {
+    playlistModal.style.display = "flex";
+  };
+
+  closePlaylistBtn.onclick = () => {
+    playlistModal.style.display = "none";
+  };
+
+  document.querySelectorAll('#playlistContent ul li button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const src = btn.getAttribute('data-src');
+      if (src) {
+        audio.src = src;
+        audio.play().catch(() => alert("Oynatma engellendi."));
+        playlistModal.style.display = "none";
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

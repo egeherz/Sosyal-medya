@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HESAPLARIM - EGE DENİZ</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+    }
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: url('https://i.imgur.com/yslsfnW.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 40px 20px 100px;
+      overflow-x: hidden;
+      transition: background-image 0.6s ease;
+      position: relative;
+    }
+    body.theme2 {
+      background-image: url('https://i.imgur.com/0R4Zsdr.jpeg');
+    }
+
+    main {
+      margin-top: 40px;
+      max-width: 420px;
+      width: 100%;
+      background: rgba(0,0,0,0.2);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 0 25px rgba(0,255,255,0.15);
+      padding: 20px;
+      display: flex;
+      gap: 16px;
+      justify-content: space-between;
+      z-index: 2;
+    }
+
+    /* 4 Buton eşit genişlik */
+    main button, main a {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      color: white;
+      padding: 14px 0;
+      border-radius: 18px;
+      background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff, #ff004f);
+      background-size: 300% 300%;
+      animation: gradientShift 6s ease infinite;
+      box-shadow:
+        0 0 8px #ff004f,
+        0 0 16px #6600ff,
+        0 0 24px #00e5ff,
+        inset 0 0 8px #6600ff;
+      border: none;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.3s ease;
+    }
+    main button i, main a i {
+      font-size: 1.6rem;
+      text-shadow: 0 0 8px #fff;
+      min-width: 24px;
+      text-align: center;
+    }
+    main button:hover, main a:hover {
+      transform: scale(1.07) rotateZ(2deg);
+      box-shadow:
+        0 0 15px #ff005f,
+        0 0 32px #7700ff,
+        0 0 44px #00e5ff,
+        inset 0 0 15px #7700ff;
+      text-shadow: 0 0 20px #fff;
+    }
+
+    /* Kontrol butonları (durdur, ileri, geri) */
+    #controls {
+      margin-top: 30px;
+      display: none; /* Başta gizli */
+      justify-content: center;
+      gap: 28px;
+      width: 420px;
+      max-width: 100%;
+      z-index: 3;
+    }
+    #controls button {
+      background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff, #ff004f);
+      background-size: 300% 300%;
+      animation: gradientShift 6s ease infinite;
+      border: none;
+      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      color: white;
+      font-size: 1.6rem;
+      cursor: pointer;
+      box-shadow:
+        0 0 8px #ff004f,
+        0 0 16px #6600ff,
+        0 0 24px #00e5ff,
+        inset 0 0 8px #6600ff;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+    #controls button:hover {
+      transform: scale(1.1) rotateZ(5deg);
+      box-shadow:
+        0 0 15px #ff005f,
+        0 0 32px #7700ff,
+        0 0 44px #00e5ff,
+        inset 0 0 15px #7700ff;
+      text-shadow: 0 0 20px #fff;
+    }
+
+    /* Şarkı adı */
+    #currentTrackName {
+      margin-top: 20px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 10px #000;
+      display: none;
+      user-select: none;
+    }
+
+    /* İlerleme çubuğu */
+    #progressContainer {
+      margin-top: 12px;
+      width: 420px;
+      max-width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.3);
+      display: none;
+      user-select: none;
+      position: relative;
+    }
+    #progress {
+      height: 8px;
+      background: linear-gradient(90deg, #ff004f, #6600ff, #00e5ff);
+      border-radius: 8px;
+      width: 0%;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 12px #00e5ff;
+      position: absolute;
+      top: 0; left: 0;
+    }
+
+    /* Şarkı listesi modal */
+    #playlistModal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 50;
+    }
+    #playlistModal.visible {
+      display: flex;
+    }
+
+    #playlistContent {
+      background: rgba(0,0,0,0.7);
+      border-radius: 20px;
+      max-width: 420px;
+      width: 90%;
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 24px 16px;
+      box-shadow: 0 0 30px #00e5ff;
+      position: relative;
+      user-select: none;
+    }
+
+    /* Beta etiketi modal başlığında */
+    #betaTag {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: #ff004f;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 4px 12px;
+      border-radius: 14px;
+      user-select: none;
+      text-shadow: 0 0 5px #000;
+      pointer-events: none;
+    }
+
+    #playlistContent button {
+      width: 100%;
+      padding: 16px 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: white;
+      background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff, #ff004f);
+      background-size: 300% 300%;
+      animation: gradientShift 6s ease infinite;
+      border-radius: 18px;
+      border: none;
+      margin-bottom: 12px;
+      cursor: pointer;
+      box-shadow:
+        0 0 8px #ff004f,
+        0 0 16px #6600ff,
+        0 0 24px #00e5ff,
+        inset 0 0 8px #6600ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s ease;
+      user-select: none;
+      position: relative;
+    }
+    #playlistContent button:hover {
+      transform: scale(1.07) rotateZ(2deg);
+      box-shadow:
+        0 0 15px #ff005f,
+        0 0 32px #7700ff,
+        0 0 44px #00e5ff,
+        inset 0 0 15px #7700ff;
+      text-shadow: 0 0 20px #fff;
+    }
+
+    #closeModalBtn {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      background: transparent;
+      border: none;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.3s ease;
+      z-index: 60;
+    }
+    #closeModalBtn:hover {
+      color: #ff004f;
+    }
+
+    /* Animasyonlar */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Responsive */
+    @media (max-width: 520px) {
+      main {
+        max-width: 100%;
+        padding: 20px 10px;
+        gap: 12px;
+      }
+      main button, main a {
+        font-size: 1rem;
+        padding: 12px 0;
+      }
+      main button i, main a i {
+        font-size: 1.3rem;
+        min-width: 20px;
+      }
+      #controls {
+        width: 100%;
+        gap: 16px;
+      }
+      #controls button {
+        width: 44px;
+        height: 44px;
+        font-size: 1.3rem;
+      }
+      #progressContainer {
+        width: 100%;
+      }
+      #playlistContent {
+        max-height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <a href="https://instagram.com/10110310132100101110105l22" target="_blank" aria-label="Instagram">
+    <i class="fab fa-instagram"></i>Instagram
+  </a>
+  <a href="https://t.me/l0110310132100101110105122" target="_blank" aria-label="Telegram">
+    <i class="fab fa-telegram"></i>Telegram
+  </a>
+  <a href="https://www.tiktok.com/@010169716901l7" target="_blank" aria-label="TikTok">
+    <i class="fab fa-tiktok"></i>TikTok
+  </a>
+  <button id="openPlaylistBtn" aria-haspopup="dialog" aria-controls="playlistModal" aria-label="Şarkı Listesi">
+    <i class="fas fa-list"></i>Şarkı Listesi
+  </button>
+</main>
+
+<div id="controls" role="group" aria-label="Müzik kontrol butonları">
+  <button id="rewindBtn" title="5 saniye geri" aria-label="5 saniye geri"><i class="fas fa-backward"></i></button>
+  <button id="musicBtn" title="Oynat / Durdur" aria-label="Oynat veya durdur"><i class="fas fa-music"></i>Şarkıyı Aç</button>
+  <button id="forwardBtn" title="5 saniye ileri" aria-label="5 saniye ileri"><i class="fas fa-forward"></i></button>
+</div>
+
+<div id="currentTrackName" aria-live="polite">Şarkı seçilmedi</div>
+
+<div id="progressContainer" aria-label="Şarkı ilerleme çubuğu" role="progressbar" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+  <div id="progress"></div>
+</div>
+
+<footer>
+  © 2025 Ege Deniz. All rights reserved.
+</footer>
+
+<button id="themeToggle" aria-label="Tema değiştir" title="Tema değiştir"></button>
+
+<!-- Şarkı Listesi Modal -->
+<div id="playlistModal" role="dialog" aria-modal="true" aria-labelledby="playlistTitle">
+  <div id="playlistContent">
+    <button id="closeModalBtn" aria-label="Kapat">&times;</button>
+    <h2 id="playlistTitle" style="text-align:center; margin-bottom: 20px; user-select:none;">
+      Şarkı Listesi <span id="betaTag">BETA</span>
+    </h2>
+    <button data-src="Juice WRLD Let Me Know (I Wonder Why Freestyle) (Official Audio).mp3">Juice WRLD - Let Me Know</button>
+    <button data-src="Doja Cat - Streets (Official Audio).mp3">Doja Cat - Streets</button>
+    <button data-src="lliinnee.mp3">lliinnee</button>
+    <button data-src="Lana Del Rey - Summertime Sadness (Official Music Video).mp3">Lana Del Rey - Summertime Sadness</button>
+    <button data-src="22. Hasta el Amanecer - Nicky Jam  Video Oficial.mp3">Nicky Jam - Hasta el Amanecer</button>
+    <button data-src="Amor Na Praia.mp3">Amor Na Praia</button>
+    <button data-src="smezir 2 (Super Slowed).mp3">Smezir 2 (Slowed)</button>
+    <button data-src="Djo - End Of Beginning (Official Audio).mp3">Djo - End Of Beginning</button>
+    <button data-src="twenty-one-pilots-Doubt-_Official-Audio_.mp3">Twenty One Pilots - Doubt</button>
+    <button data-src="lil 17th - Mary Jane.mp3">lil 17th - Mary Jane</button>
+    <button data-src="XXXTENTACION - MOONLIGHT (OFFICIAL MUSIC VIDEO).mp3">XXXTENTACION - MOONLIGHT</button>
+    <button data-src="t.A.T.u. - All The Things She Said (Official Music Video).mp3">t.A.T.u. - All The Things She Said</button>
+    <button data-src="tame_impala_let_it_happen_mp3_55159.mp3">Tame Impala - Let It Happen</button>
+    <button data-src="funk_mi_camino_mp3_55239.mp3">Funk - Mi Camino</button>
+  </div>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="" type="audio/mpeg" />
+  Tarayıcı desteklemiyor.
+</audio>
+
+<script>
+  const music = document.getElementById("bgMusic");
+  const musicBtn = document.getElementById("musicBtn");
+  const openPlaylistBtn = document.getElementById("openPlaylistBtn");
+  const playlistModal = document.getElementById("playlistModal");
+  const playlistButtons = playlistModal.querySelectorAll('button[data-src]');
+  const currentTrackName = document.getElementById('currentTrackName');
+  const progressContainer = document.getElementById('progressContainer');
+  const progress = document.getElementById('progress');
+  const rewindBtn = document.getElementById('rewindBtn');
+  const forwardBtn = document.getElementById('forwardBtn');
+  const themeToggle = document.getElementById('themeToggle');
+  const body = document.body;
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const controls = document.getElementById('controls');
+
+  let currentIndex = -1;
+
+  function playTrack(index) {
+    const btn = playlistButtons[index];
+    const src = btn.getAttribute('data-src');
+    if (!src) return;
+
+    music.src = src;
+    music.play().catch(() => {});
+    currentIndex = index;
+    currentTrackName.textContent = btn.textContent;
+    musicBtn.innerHTML = '<i class="fas fa-music"></i>Şarkıyı Durdur';
+
+    // Göster
+    currentTrackName.style.display = 'block';
+    progressContainer.style.display = 'block';
+    controls.style.display = 'flex';
+
+    playlistModal.classList.remove('visible');
+  }
+
+  function toggleMusic() {
+    if (music.paused && music.src) {
+      music.play();
+      musicBtn.innerHTML = '<i class="fas fa-music"></i>Şarkıyı Durdur';
+    } else if(!music.src) {
+      alert("Lütfen önce şarkı listesi butonundan bir şarkı seçin!");
+    } else {
+      music.pause();
+      musicBtn.innerHTML = '<i class="fas fa-music"></i>Şarkıyı Aç';
+    }
+  }
+
+  musicBtn.addEventListener('click', toggleMusic);
+
+  music.addEventListener('timeupdate', () => {
+    if(music.duration) {
+      const percent = (music.currentTime / music.duration) * 100;
+      progress.style.width = percent + '%';
+      progressContainer.setAttribute('aria-valuenow', Math.floor(percent));
+    }
+  });
+
+  progressContainer.addEventListener('click', e => {
+    const rect = progressContainer.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+    if(music.duration) {
+      music.currentTime = (clickX / width) * music.duration;
+    }
+  });
+
+  forwardBtn.addEventListener('click', () => {
+    if(music.duration) {
+      music.currentTime = Math.min(music.currentTime + 5, music.duration);
+    }
+  });
+
+  rewindBtn.addEventListener('click', () => {
+    music.currentTime = Math.max(music.currentTime - 5, 0);
+  });
+
+  music.addEventListener('ended', () => {
+    musicBtn.innerHTML = '<i class="fas fa-music"></i>Şarkıyı Aç';
+    currentTrackName.textContent = 'Şarkı seçilmedi';
+    currentIndex = -1;
+
+    currentTrackName.style.display = 'none';
+    progressContainer.style.display = 'none';
+    controls.style.display = 'none';
+  });
+
+  openPlaylistBtn.addEventListener('click', () => {
+    playlistModal.classList.add('visible');
+  });
+
+  closeModalBtn.addEventListener('click', () => {
+    playlistModal.classList.remove('visible');
+  });
+
+  playlistButtons.forEach((btn, i) => {
+    btn.addEventListener('click', () => {
+      playTrack(i);
+    });
+  });
+
+  themeToggle.addEventListener('click', () => {
+    body.classList.toggle('theme2');
+  });
+
+  // ESC ile modal kapatma
+  document.addEventListener('keydown', e => {
+    if(e.key === "Escape" && playlistModal.classList.contains('visible')) {
+      playlistModal.classList.remove('visible');
+    }
+  });
+
+  // Tema butonuna ikon ekleyelim (küçük daire, simge)
+  themeToggle.innerHTML = '<i class="fas fa-adjust" style="color:#00e5ff; font-size:1.6rem;"></i>';
+  themeToggle.style.position = 'fixed';
+  themeToggle.style.top = '20px';
+  themeToggle.style.right = '20px';
+  themeToggle.style.width = '44px';
+  themeToggle.style.height = '44px';
+  themeToggle.style.borderRadius = '50%';
+  themeToggle.style.background = 'rgba(0,0,0,0.3)';
+  themeToggle.style.backdropFilter = 'blur(8px)';
+  themeToggle.style.border = '1.5px solid #00e5ff';
+  themeToggle.style.cursor = 'pointer';
+  themeToggle.style.display = 'flex';
+  themeToggle.style.justifyContent = 'center';
+  themeToggle.style.alignItems = 'center';
+  themeToggle.style.zIndex = '100';
+
+</script>
+
+</body>
+</html>

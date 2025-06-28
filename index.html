@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HESAPLARIM - EGE DENİZ</title>
+<link rel="icon" href="favicon.png" type="image/png" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0; padding: 0;
+  }
+  html, body {
+    height: 100%;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: url('https://i.imgur.com/yslsfnW.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    transition: background 0.6s ease;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 40px 20px 80px;
+    overflow-x: hidden;
+  }
+  body.theme2 {
+    background: url('https://i.imgur.com/0R4Zsdr.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    color: #222;
+  }
+  main {
+    margin-top: 40px;
+    max-width: 420px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 0 25px rgba(0,255,255,0.15);
+    padding: 32px 24px;
+    animation: slideFadeIn 1.2s ease-out;
+  }
+  @keyframes slideFadeIn {
+    from { opacity: 0; transform: translateY(60px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  main a, main button#openPlaylistBtn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: white;
+    padding: 18px 0;
+    border-radius: 18px;
+    background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff, #ff004f);
+    background-size: 300% 300%;
+    animation: gradientShift 6s ease infinite;
+    box-shadow:
+      0 0 8px #ff004f,
+      0 0 16px #6600ff,
+      0 0 24px #00e5ff,
+      inset 0 0 8px #6600ff;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    min-height: 48px;
+  }
+  main a i, main button#openPlaylistBtn i {
+    font-size: 1.6rem;
+    text-shadow: 0 0 8px #fff;
+    min-width: 26px;
+    text-align: center;
+  }
+  main a:hover, main button#openPlaylistBtn:hover {
+    transform: scale(1.07) rotateZ(2deg);
+    box-shadow:
+      0 0 15px #ff005f,
+      0 0 32px #7700ff,
+      0 0 44px #00e5ff,
+      inset 0 0 15px #7700ff;
+    text-shadow: 0 0 20px #fff;
+  }
+  main a::after, main button#openPlaylistBtn::after {
+    content: '';
+    position: absolute;
+    top: -60%;
+    left: -60%;
+    width: 220%;
+    height: 220%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.12), transparent);
+    transform: rotate(25deg);
+    animation: shine 4s infinite linear;
+    pointer-events: none;
+  }
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes shine {
+    0% { transform: translate(-100%, -100%) rotate(25deg); }
+    100% { transform: translate(100%, 100%) rotate(25deg); }
+  }
+  #playerUI {
+    margin-top: 40px;
+    max-width: 420px;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 20px;
+    padding: 20px 25px;
+    box-shadow: 0 0 40px cyan;
+  }
+  #currentTrackName {
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-align: center;
+    user-select: none;
+    min-height: 1.5em;
+  }
+  #progressContainer {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+  }
+  #progress {
+    position: absolute;
+    top: 0; left: 0; height: 100%;
+    background: linear-gradient(90deg, #ff004f, #6600ff, #00e5ff);
+    border-radius: 8px;
+    width: 0%;
+    transition: width 0.2s linear;
+  }
+  #progressThumb {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #00e5ff;
+    box-shadow: 0 0 8px #00e5ff;
+    pointer-events: none;
+  }
+  #timeDisplay {
+    font-size: 0.9rem;
+    font-weight: 600;
+    user-select: none;
+  }
+  #controls {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    margin-top: 8px;
+  }
+  #controls button {
+    background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff);
+    border: none;
+    border-radius: 14px;
+    padding: 12px 18px;
+    color: white;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow:
+      0 0 8px #ff004f,
+      0 0 16px #6600ff,
+      0 0 24px #00e5ff,
+      inset 0 0 8px #6600ff;
+    transition: all 0.3s ease;
+    user-select: none;
+  }
+  #controls button:hover {
+    transform: scale(1.1) rotateZ(3deg);
+    box-shadow:
+      0 0 15px #ff005f,
+      0 0 32px #7700ff,
+      0 0 44px #00e5ff,
+      inset 0 0 15px #7700ff;
+    text-shadow: 0 0 20px #fff;
+  }
+  dialog#playlistModal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    border-radius: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    z-index: 9999;
+  }
+  #playlistContent {
+    margin-top: 40px;
+    width: 90%;
+    max-width: 480px;
+    background: rgba(0,0,0,0.7);
+    border-radius: 16px;
+    padding: 24px 30px 40px;
+    box-shadow: 0 0 40px cyan;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #betaTag {
+    align-self: flex-start;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #ff004f;
+    margin-bottom: 6px;
+    user-select: none;
+  }
+  #playlistTitle {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+    user-select: none;
+  }
+  #playlistDesc {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    user-select: none;
+  }
+  #searchSongs {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: none;
+    margin-bottom: 20px;
+    outline-offset: 2px;
+    transition: box-shadow 0.3s ease;
+  }
+  #searchSongs:focus {
+    box-shadow: 0 0 15px #00e5ff;
+  }
+  #songList {
+    width: 100%;
+    max-height: 280px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .songBtn {
+    width: 100%;
+    background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff);
+    background-size: 300% 300%;
+    animation: gradientShift 6s ease infinite;
+    border: none;
+    border-radius: 14px;
+    color: white;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 14px 20px;
+    cursor: pointer;
+    text-align: left;
+    user-select: none;
+    box-shadow:
+      0 0 8px #ff004f,
+      0 0 16px #6600ff,
+      0 0 24px #00e5ff,
+      inset 0 0 8px #6600ff;
+    transition: all 0.3s ease;
+  }
+  .songBtn:hover {
+    transform: scale(1.05);
+    box-shadow:
+      0 0 20px #ff005f,
+      0 0 36px #7700ff,
+      0 0 44px #00e5ff,
+      inset 0 0 15px #7700ff;
+  }
+  #closeModalBtn {
+    margin-top: 28px;
+    padding: 12px 26px;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 16px;
+    background: #ff004f;
+    color: white;
+    cursor: pointer;
+    box-shadow:
+      0 0 15px #ff004f,
+      inset 0 0 8px #ff004f;
+    transition: all 0.3s ease;
+    user-select: none;
+  }
+  #closeModalBtn:hover {
+    background: #e50045;
+    box-shadow:
+      0 0 20px #e50045,
+      inset 0 0 12px #e50045;
+  }
+  footer {
+    position: fixed;
+    bottom: 12px;
+    width: 100%;
+    text-align: center;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.7);
+    text-shadow: 0 0 4px #000;
+    user-select: none;
+    z-index: 10;
+  }
+  #themeToggle {
+    position: fixed;
+    bottom: 85px;
+    right: 22px;
+    background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff);
+    border: none;
+    border-radius: 50%;
+    padding: 14px 18px;
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+    box-shadow:
+      0 0 15px #ff004f,
+      0 0 32px #6600ff,
+      0 0 44px #00e5ff,
+      inset 0 0 15px #6600ff;
+    transition: all 0.3s ease;
+    user-select: none;
+    z-index: 20;
+  }
+  #themeToggle:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow:
+      0 0 22px #ff005f,
+      0 0 44px #7700ff,
+      0 0 56px #00e5ff,
+      inset 0 0 22px #7700ff;
+  }
+  /* Scrollbar modern */
+  #songList::-webkit-scrollbar {
+    width: 8px;
+  }
+  #songList::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  #songList::-webkit-scrollbar-thumb {
+    background: #00e5ff;
+    border-radius: 4px;
+  }
+  /* Responsive */
+  @media (max-width: 520px) {
+    main {
+      max-width: 100%;
+      padding: 24px 12px;
+      gap: 16px;
+      margin-top: 20px;
+      grid-template-columns: 1fr 1fr;
+    }
+    main a, main button#openPlaylistBtn {
+      font-size: 1rem;
+      padding: 14px 0;
+      min-height: 44px;
+    }
+    main a i, main button#openPlaylistBtn i {
+      font-size: 1.3rem;
+      min-width: 22px;
+    }
+    #playerUI {
+      max-width: 95%;
+      padding: 16px 18px;
+    }
+    #playlistContent {
+      width: 95%;
+      padding: 20px 24px 32px;
+    }
+    #searchSongs {
+      font-size: 0.9rem;
+    }
+    .songBtn {
+      font-size: 1rem;
+      padding: 12px 16px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <a href="https://instagram.com/10110310132100101110105l22" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i>Instagram</a>
+  <a href="https://t.me/l0110310132100101110105122" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><i class="fab fa-telegram" aria-hidden="true"></i>Telegram</a>
+  <a href="https://www.tiktok.com/@010169716901l7" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok" aria-hidden="true"></i>TikTok</a>
+  <button id="openPlaylistBtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="playlistModal" aria-label="Şarkı listesi">Şarkı Listesi</button>
+</main>
+
+<section id="playerUI" aria-live="polite" aria-atomic="true" role="region" aria-label="Müzik çalar">
+  <div id="currentTrackName" tabindex="0"></div>
+  <div id="progressContainer" aria-label="Şarkı ilerleme çubuğu" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+    <div id="progress"></div>
+    <div id="progressThumb" tabindex="-1"></div>
+  </div>
+  <div id="timeDisplay" aria-live="off" aria-atomic="true" aria-label="Şarkı süresi"></div>
+  <div id="controls">
+    <button id="prevBtn" aria-label="Önceki şarkı" title="Önceki"><i class="fas fa-backward"></i></button>
+    <button id="playPauseBtn" aria-label="Oynat/Durdur" title="Oynat/Durdur"><i class="fas fa-play"></i></button>
+    <button id="stopBtn" aria-label="Durdur" title="Durdur"><i class="fas fa-stop"></i></button>
+    <button id="nextBtn" aria-label="Sonraki şarkı" title="Sonraki"><i class="fas fa-forward"></i></button>
+  </div>
+</section>
+
+<!-- Şarkı Listesi Modal -->
+<dialog id="playlistModal" role="dialog" aria-modal="true" aria-labelledby="playlistTitle">
+  <div id="playlistContent">
+    <div id="betaTag">BETA ⚠️</div>
+    <h2 id="playlistTitle">Şarkı Listesi</h2>
+    <p id="playlistDesc">Şarkı ismine tıklayarak dinlemeye başlayabilirsiniz. Daha fazla eklenecektir 🥳.</p>
+    <input type="text" id="searchSongs" aria-label="Şarkı ara" placeholder="Şarkı ara..." />
+    <div id="songList" role="list" tabindex="0"></div>
+    <button id="closeModalBtn" aria-label="Şarkı listesini kapat">Kapat</button>
+  </div>
+</dialog>
+
+<footer>
+  Tüm hakları saklıdır. © 2025 Ege Deniz.
+</footer>
+
+<button id="themeToggle" aria-label="Tema değiştir" title="Tema değiştir" aria-pressed="false"><i class="fas fa-adjust"></i></button>
+
+<audio id="bgMusic" preload="metadata"></audio>
+
+<script>
+  const songs = [
+    {name:"Juice WRLD - Let Me Know", src:"Juice WRLD Let Me Know (I Wonder Why Freestyle) (Official Audio).mp3"},
+    {name:"Doja Cat - Streets", src:"Doja Cat - Streets (Official Audio).mp3"},
+    {name:"lliinnee", src:"lliinnee.mp3"},
+    {name:"Lana Del Rey - Summertime Sadness", src:"Lana Del Rey - Summertime Sadness (Official Music Video).mp3"},
+    {name:"Nicky Jam - Hasta el Amanecer", src:"22. Hasta el Amanecer - Nicky Jam  Video Oficial.mp3"},
+    {name:"Amor Na Praia", src:"Amor Na Praia.mp3"},
+    {name:"Smezir 2 (Slowed)", src:"smezir 2 (Super Slowed).mp3"},
+    {name:"Djo - End Of Beginning", src:"Djo - End Of Beginning (Official Audio).mp3"},
+    {name:"Twenty One Pilots - Doubt", src:"twenty-one-pilots-Doubt-_Official-Audio_.mp3"},
+    {name:"lil 17th - Mary Jane", src:"lil 17th - Mary Jane.mp3"},
+    {name:"XXXTENTACION - MOONLIGHT", src:"XXXTENTACION - MOONLIGHT (OFFICIAL MUSIC VIDEO).mp3"},
+    {name:"t.A.T.u. - All The Things She Said", src:"t.A.T.u. - All The Things She Said (Official Music Video).mp3"},
+    {name:"Tame Impala - Let It Happen", src:"tame_impala_let_it_happen_mp3_55159.mp3"},
+    {name:"Funk - Mi Camino", src:"funk_mi_camino_mp3_55239.mp3"}
+  ];
+
+  const bgMusic = document.getElementById("bgMusic");
+  const currentTrackName = document.getElementById("currentTrackName");
+  const progressContainer = document.getElementById("progressContainer");
+  const progress = document.getElementById("progress");
+  const progressThumb = document.getElementById("progressThumb");
+  const timeDisplay = document.getElementById("timeDisplay");
+  const playPauseBtn = document.getElementById("playPauseBtn");
+  const stopBtn = document.getElementById("stopBtn");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const playerUI = document.getElementById("playerUI");
+  const openPlaylistBtn = document.getElementById("openPlaylistBtn");
+  const playlistModal = document.getElementById("playlistModal");
+  const closeModalBtn = document.getElementById("closeModalBtn");
+  const songList = document.getElementById("songList");
+  const searchSongs = document.getElementById("searchSongs");
+  const themeToggle = document.getElementById("themeToggle");
+  const body = document.body;
+  const LS_CURRENT = "egedeniz_currentSongIndex";
+  const LS_THEME = "egedeniz_theme";
+
+  let currentSongIndex = 0;
+  let isPlaying = false;
+  let isDragging = false;
+
+  // LocalStorage'dan tema ve şarkı indexi yükle
+  window.onload = () => {
+    const savedTheme = localStorage.getItem(LS_THEME);
+    if(savedTheme === "theme2") body.classList.add("theme2");
+
+    const savedIndex = localStorage.getItem(LS_CURRENT);
+    if(savedIndex !== null && !isNaN(savedIndex) && songs[savedIndex]) {
+      currentSongIndex = parseInt(savedIndex, 10);
+      loadSong(currentSongIndex);
+      updatePlayerUI();
+      showPlayer();
+    }
+    populateSongList();
+  };
+
+  // Şarkı Listesini doldur
+  function populateSongList(filter="") {
+    songList.innerHTML = "";
+    const filteredSongs = songs.filter(s => s.name.toLowerCase().includes(filter.toLowerCase()));
+    filteredSongs.forEach((song, i) => {
+      const btn = document.createElement("button");
+      btn.classList.add("songBtn");
+      btn.textContent = song.name;
+      btn.setAttribute("data-index", songs.indexOf(song));
+      btn.onclick = () => {
+        currentSongIndex = songs.indexOf(song);
+        loadSong(currentSongIndex);
+        playSong();
+        playlistModal.close();
+        openPlaylistBtn.setAttribute("aria-expanded", "false");
+        showPlayer();
+        saveCurrentSongIndex();
+      };
+      songList.appendChild(btn);
+    });
+  }
+
+  searchSongs.addEventListener("input", e => {
+    populateSongList(e.target.value);
+  });
+
+  // Şarkı yükle
+  function loadSong(index) {
+    const song = songs[index];
+    bgMusic.src = song.src;
+    currentTrackName.textContent = song.name;
+  }
+
+  // Şarkıyı oynat
+  function playSong() {
+    bgMusic.play();
+    isPlaying = true;
+    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+  }
+
+  // Şarkıyı durdur
+  function pauseSong() {
+    bgMusic.pause();
+    isPlaying = false;
+    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+  }
+
+  // Şarkıyı durdur ve başa sar
+  function stopSong() {
+    bgMusic.pause();
+    bgMusic.currentTime = 0;
+    isPlaying = false;
+    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+  }
+
+  // Önceki şarkı
+  function prevSong() {
+    currentSongIndex = (currentSongIndex -1 + songs.length) % songs.length;
+    loadSong(currentSongIndex);
+    playSong();
+    saveCurrentSongIndex();
+  }
+
+  // Sonraki şarkı
+  function nextSong() {
+    currentSongIndex = (currentSongIndex +1) % songs.length;
+    loadSong(currentSongIndex);
+    playSong();
+    saveCurrentSongIndex();
+  }
+
+  // İlerleme çubuğunu güncelle
+  bgMusic.addEventListener("timeupdate", () => {
+    if(!isDragging){
+      const progressPercent = (bgMusic.currentTime / bgMusic.duration) * 100;
+      progress.style.width = progressPercent + "%";
+      progressThumb.style.left = progressPercent + "%";
+      timeDisplay.textContent = formatTime(bgMusic.currentTime) + " / " + formatTime(bgMusic.duration);
+      // ARIA slider güncelle
+      progressContainer.setAttribute("aria-valuenow", Math.floor(progressPercent));
+    }
+  });
+
+  // İlerleme çubuğu tıklama ve sürükleme ile değiştirme
+  progressContainer.addEventListener("mousedown", e => {
+    isDragging = true;
+    updateProgress(e);
+  });
+  window.addEventListener("mouseup", e => {
+    if(isDragging){
+      updateProgress(e);
+      isDragging = false;
+    }
+  });
+  window.addEventListener("mousemove", e => {
+    if(isDragging){
+      updateProgress(e);
+    }
+  });
+
+  // Dokunmatik ekran için
+  progressContainer.addEventListener("touchstart", e => {
+    isDragging = true;
+    updateProgress(e.touches[0]);
+  });
+  progressContainer.addEventListener("touchmove", e => {
+    if(isDragging){
+      updateProgress(e.touches[0]);
+    }
+  });
+  progressContainer.addEventListener("touchend", e => {
+    if(isDragging){
+      isDragging = false;
+    }
+  });
+
+  function updateProgress(e){
+    const rect = progressContainer.getBoundingClientRect();
+    let offsetX = e.clientX - rect.left;
+    if(offsetX < 0) offsetX = 0;
+    if(offsetX > rect.width) offsetX = rect.width;
+    const percentage = offsetX / rect.width;
+    bgMusic.currentTime = percentage * bgMusic.duration;
+  }
+
+  // Format: mm:ss
+  function formatTime(time){
+    if(isNaN(time)) return "00:00";
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes < 10 ? '0'+minutes : minutes}:${seconds < 10 ? '0'+seconds : seconds}`;
+  }
+
+  // Oynat / durdur butonu
+  playPauseBtn.onclick = () => {
+    if(isPlaying){
+      pauseSong();
+    } else {
+      playSong();
+    }
+  };
+
+  // Durdur butonu
+  stopBtn.onclick = () => {
+    stopSong();
+  };
+
+  // Önceki şarkı
+  prevBtn.onclick = () => {
+    prevSong();
+  };
+
+  // Sonraki şarkı
+  nextBtn.onclick = () => {
+    nextSong();
+  };
+
+  // Şarkı bittiğinde otomatik sonraki şarkıya geç
+  bgMusic.addEventListener("ended", () => {
+    nextSong();
+  });
+
+  // Şarkı çalma durumunda player UI göster
+  function showPlayer(){
+    playerUI.style.display = "flex";
+  }
+
+  // Şarkı listesini aç/kapa modal
+  openPlaylistBtn.onclick = () => {
+    playlistModal.showModal();
+    openPlaylistBtn.setAttribute("aria-expanded", "true");
+    searchSongs.focus();
+  };
+  closeModalBtn.onclick = () => {
+    playlistModal.close();
+    openPlaylistBtn.setAttribute("aria-expanded", "false");
+    openPlaylistBtn.focus();
+  };
+
+  // Tema değiştirme
+  themeToggle.onclick = () => {
+    body.classList.toggle("theme2");
+    themeToggle.setAttribute("aria-pressed", body.classList.contains("theme2") ? "true" : "false");
+    localStorage.setItem(LS_THEME, body.classList.contains("theme2") ? "theme2" : "default");
+  };
+
+  // Tema localStorage'dan yükle
+  (function loadTheme(){
+    const savedTheme = localStorage.getItem(LS_THEME);
+    if(savedTheme === "theme2"){
+      body.classList.add("theme2");
+      themeToggle.setAttribute("aria-pressed", "true");
+    }
+  })();
+
+  // Şu anki çalınan şarkı indexini localStorage'a kaydet
+  function saveCurrentSongIndex(){
+    localStorage.setItem(LS_CURRENT, currentSongIndex);
+  }
+
+  // Yükleme ve başlatma
+  if(songs.length > 0){
+    if(!bgMusic.src) loadSong(currentSongIndex);
+  }
+
+</script>
+
+</body>
+</html>

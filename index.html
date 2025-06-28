@@ -1,0 +1,788 @@
+Kanka bu koduma baksana iyi mi 
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HESAPLARIM VE ŞARKILARIM - EGE DENİZ</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+      user-select: none;
+      text-decoration: none !important;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: url('https://i.imgur.com/yslsfnW.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      padding: 40px 20px 140px;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background-image 0.8s ease;
+    }
+    main {
+      max-width: 480px;
+      width: 100%;
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      justify-items: center;
+    }
+    main a, #showPlaylistBtn {
+      width: 100%;
+      max-width: 220px;
+      padding: 18px 0;
+      font-weight: 700;
+      font-size: 1.15rem;
+      border-radius: 20px;
+      background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff, #ff004f);
+      background-size: 320% 320%;
+      animation: gradientShift 7s ease infinite;
+      box-shadow: 0 0 10px #ff004f, 0 0 20px #6600ff, 0 0 28px #00e5ff, inset 0 0 10px #6600ff;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      min-height: 60px;
+      border: none;
+      outline: none;
+    }
+    main a:hover, #showPlaylistBtn:hover {
+      transform: scale(1.05) rotateZ(1.5deg);
+      box-shadow: 0 0 20px #ff005f, 0 0 38px #7700ff, 0 0 50px #00e5ff, inset 0 0 20px #7700ff;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 14px 0;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-align: center;
+      background: transparent;
+      z-index: 1000;
+      user-select: none;
+    }
+
+    /* Playlist Modal */
+    #playlistModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    #playlistContent {
+      width: 90%;
+      max-width: 440px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      max-height: 90vh;
+      overflow-y: auto;
+      color: #fff;
+      box-shadow: 0 0 30px #00e5ff;
+      user-select: text;
+    }
+    #playlistContent h2 {
+      margin-bottom: 10px;
+      font-size: 1.6rem;
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    #playlistContent h2 span {
+      font-size: 0.85rem;
+      background: #ff004f;
+      padding: 4px 12px;
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      user-select: none;
+      box-shadow: 0 0 12px #ff004f;
+    }
+    #playlistContent ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0 25px;
+      max-height: 360px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #0ff transparent;
+    }
+    #playlistContent ul::-webkit-scrollbar {
+      width: 6px;
+    }
+    #playlistContent ul::-webkit-scrollbar-thumb {
+      background: #0ff;
+      border-radius: 3px;
+    }
+    #playlistContent ul li {
+      margin-bottom: 12px;
+    }
+    #playlistContent ul li button {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background 0.4s, transform 0.3s;
+      background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff, #ff004f);
+      background-size: 320% 320%;
+      color: #fff;
+      box-shadow: 0 0 18px #0ff inset;
+      user-select: none;
+      outline: none;
+    }
+    #playlistContent ul li button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 42px #0ff inset;
+    }
+
+    /* Report Button */
+    #reportBtn {
+      margin: 12px auto 20px;
+      padding: 14px 24px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      background: linear-gradient(45deg, #00e5ff, #6600ff);
+      color: white;
+      cursor: pointer;
+      transition: 0.3s ease;
+      border: none;
+      outline: none;
+      user-select: none;
+      box-shadow: 0 0 25px #00e5ff;
+    }
+    #reportBtn:hover {
+      background: linear-gradient(45deg, #00fff2, #7700ff);
+      transform: scale(1.07);
+      box-shadow: 0 0 40px #00fff2;
+    }
+
+    /* Close Playlist Button - Modern */
+    #closePlaylistBtn {
+      margin: 0 auto;
+      padding: 12px 30px;
+      border-radius: 24px;
+      font-weight: 700;
+      font-size: 1rem;
+      background: #ff004f;
+      color: white;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      user-select: none;
+      box-shadow: 0 0 20px #ff004f;
+      transition: background 0.3s ease, transform 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+    #closePlaylistBtn:hover {
+      background: #ff3366;
+      transform: scale(1.1);
+      box-shadow: 0 0 35px #ff3366;
+    }
+
+    /* Report Modal */
+    #reportModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 20000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    #reportModalContent {
+      background: rgba(30,30,40,0.97);
+      border-radius: 20px;
+      max-width: 480px;
+      width: 100%;
+      padding: 30px 30px;
+      color: #0ff;
+      box-shadow: 0 0 30px #0ff;
+      font-weight: 600;
+      user-select: text;
+    }
+    #reportModalContent h3 {
+      text-align: center;
+      margin-bottom: 24px;
+      font-size: 1.6rem;
+      color: #0ff;
+      text-shadow: 0 0 14px #0ff;
+    }
+
+    /* --- Yeni: Gelişmiş Sorun Bildir Formu --- */
+    #reportForm label {
+      display: block;
+      margin: 12px 0 6px;
+      font-weight: 700;
+    }
+    #reportForm input, #reportForm select, #reportForm textarea {
+      width: 100%;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      border-radius: 14px;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      resize: none;
+      outline: none;
+      user-select: text;
+      transition: background 0.3s ease;
+    }
+    #reportForm input:focus, #reportForm select:focus, #reportForm textarea:focus {
+      background: rgba(255,255,255,0.18);
+      box-shadow: 0 0 12px #0ff;
+      color: #0ff;
+    }
+    /* Yıldızlı değerlendirme (değerlendirme seçilince görünür) */
+    #ratingStars {
+      display: none;
+      margin: 0 0 14px 0;
+      text-align: center;
+      user-select: none;
+    }
+    #ratingStars label {
+      font-size: 1.8rem;
+      color: #444;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      margin: 0 6px;
+    }
+    #ratingStars input {
+      display: none;
+    }
+    #ratingStars input:checked ~ label,
+    #ratingStars label:hover,
+    #ratingStars label:hover ~ label {
+      color: #00e5ff;
+      text-shadow: 0 0 8px #00e5ff;
+    }
+
+    /* Current Song & Progress */
+    #currentSongName {
+      margin-top: 30px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0ff;
+      text-shadow: 0 0 12px #0ff;
+      text-align: center;
+      user-select: none;
+    }
+    #progressContainer {
+      width: 90%;
+      max-width: 480px;
+      margin: 15px auto 5px;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      cursor: pointer;
+      display: none;
+      box-shadow: 0 0 10px #0ff inset;
+    }
+    #progressBar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00e5ff, #6600ff);
+      border-radius: 10px;
+      transition: width 0.1s linear;
+    }
+    #timeInfo {
+      text-align: center;
+      margin-top: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0ff;
+      text-shadow: 0 0 8px #0ff;
+      user-select: none;
+    }
+
+    /* Controls */
+    #controls {
+      margin: 30px auto 0;
+      display: none;
+      justify-content: center;
+      gap: 25px;
+    }
+    #controls button {
+      background: linear-gradient(45deg, #ff004f, #6600ff, #00e5ff, #ff004f);
+      background-size: 320% 320%;
+      animation: gradientShift 7s ease infinite;
+      border: none;
+      border-radius: 50%;
+      width: 58px;
+      height: 58px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 18px #00e5ff inset;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.6rem;
+      transition: transform 0.3s ease;
+      outline: none;
+      user-select: none;
+    }
+    #controls button:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 42px #00e5ff inset;
+    }
+
+    /* Responsive */
+    @media (max-width: 520px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+      main a, #showPlaylistBtn {
+        max-width: none;
+      }
+      #playlistContent {
+        max-width: 100%;
+      }
+      #controls button {
+        width: 48px;
+        height: 48px;
+        font-size: 1.3rem;
+      }
+      #ratingStars label {
+        font-size: 1.4rem;
+        margin: 0 4px;
+      }
+    }
+
+    /* --- Tema Değiştirici Buton --- */
+    #themeToggleBtn {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: linear-gradient(45deg, #00e5ff, #6600ff);
+      border: none;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 28px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 0 20px #00e5ff;
+      user-select: none;
+      transition: background 0.3s ease, transform 0.3s ease;
+      z-index: 30000;
+    }
+    #themeToggleBtn:hover {
+      background: linear-gradient(45deg, #00fff2, #7700ff);
+      transform: scale(1.05);
+      box-shadow: 0 0 35px #00fff2;
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <a href="https://instagram.com/10110310132100101110105l22" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i>Instagram</a>
+  <a href="https://t.me/l0110310132100101110105122" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i>Telegram</a>
+  <a href="https://www.tiktok.com/@010169716901l7" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i>TikTok</a>
+  <button id="showPlaylistBtn" aria-haspopup="dialog" aria-controls="playlistModal"><i class="fas fa-music"></i> Şarkı Listesi</button>
+</main>
+
+<audio id="audioPlayer" preload="auto"></audio>
+
+<div id="playlistModal" role="dialog" aria-modal="true" aria-labelledby="playlistTitle">
+  <div id="playlistContent">
+    <h2 id="playlistTitle">Şarkı Listesi <span>BETA</span></h2>
+    <ul>
+      <li><button data-src="Juice WRLD Let Me Know (I Wonder Why Freestyle) (Official Audio).mp3">Juice WRLD - Let Me Know</button></li>
+      <li><button data-src="Doja Cat - Streets (Official Audio).mp3">Doja Cat - Streets</button></li>
+      <li><button data-src="lliinnee.mp3">lliinnee</button></li>
+      <li><button data-src="Lana Del Rey - Summertime Sadness (Official Music Video).mp3">Lana Del Rey - Summertime Sadness</button></li>
+      <li><button data-src="22. Hasta el Amanecer - Nicky Jam  Video Oficial.mp3">Nicky Jam - Hasta el Amanecer</button></li>
+      <li><button data-src="Amor Na Praia.mp3">Amor Na Praia</button></li>
+      <li><button data-src="smezir 2 (Super Slowed).mp3">Smezir 2 (Slowed)</button></li>
+      <li><button data-src="Djo - End Of Beginning (Official Audio).mp3">Djo - End Of Beginning</button></li>
+      <li><button data-src="twenty-one-pilots-Doubt-_Official-Audio_.mp3">Twenty One Pilots - Doubt</button></li>
+      <li><button data-src="lil 17th - Mary Jane.mp3">lil 17th - Mary Jane</button></li>
+      <li><button data-src="XXXTENTACION - MOONLIGHT (OFFICIAL MUSIC VIDEO).mp3">XXXTENTACION - MOONLIGHT</button></li>
+      <li><button data-src="t.A.T.u. - All The Things She Said (Official Music Video).mp3">t.A.T.u. - All The Things She Said</button></li>
+      <li><button data-src="tame_impala_let_it_happen_mp3_55159.mp3">Tame Impala - Let It Happen</button></li>
+      <li><button data-src="funk_mi_camino_mp3_55239.mp3">Funk - Mi Camino</button></li>
+    </ul>
+    <button id="reportBtn" aria-label="Sorun Bildir">Sorun Bildir</button>
+    <button id="closePlaylistBtn" aria-label="Şarkı Listesini Kapat"><i class="fas fa-times"></i> Kapat</button>
+  </div>
+</div>
+
+<div id="reportModal" role="dialog" aria-modal="true" aria-labelledby="reportTitle" aria-describedby="reportDesc">
+  <div id="reportModalContent">
+    <h3 id="reportTitle">Sorun Bildir / Değerlendirme</h3>
+    <form id="reportForm" autocomplete="off" novalidate>
+      <label for="reportName">İsim (Zorunlu)</label>
+      <input type="text" id="reportName" name="name" required placeholder="Adınızı girin" autocomplete="name" />
+
+      <label for="reportEmail">E-posta (Zorunlu)</label>
+      <input type="email" id="reportEmail" name="email" required placeholder="E-posta adresiniz" autocomplete="email" />
+
+      <label for="reportType">Tür</label>
+      <select id="reportType" name="type" required aria-describedby="typeHelp">
+        <option value="sorun" selected>Sorun</option>
+        <option value="degerlendirme">Değerlendirme</option>
+      </select>
+      <div id="typeHelp" style="font-size:0.85rem; color:#0ff; margin-bottom:10px;">Lütfen türü seçin.</div>
+
+      <div id="ratingStars" aria-label="Değerlendirme yıldızları" role="radiogroup">
+        <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 Yıldız"><i class="fas fa-star"></i></label>
+        <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 Yıldız"><i class="fas fa-star"></i></label>
+        <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 Yıldız"><i class="fas fa-star"></i></label>
+        <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 Yıldız"><i class="fas fa-star"></i></label>
+        <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 Yıldız"><i class="fas fa-star"></i></label>
+      </div>
+
+      <label for="reportMessage">Mesajınız</label>
+      <textarea id="reportMessage" name="message" rows="4" placeholder="Sorununuzu veya değerlendirmenizi yazınız..."></textarea>
+
+      <button type="submit" id="sendReportBtn" style="background:#00e5ff; color:#000; font-weight:700; padding:14px 0; border:none; border-radius:16px; width:100%; cursor:pointer; user-select:none;">Gönder</button>
+      <button type="button" id="closeReportBtn" style="margin-top: 12px; background:#ff004f; color:#fff; font-weight:700; padding:14px 0; border:none; border-radius:16px; width:100%; cursor:pointer; user-select:none;">İptal</button>
+    </form>
+  </div>
+</div>
+
+<div id="currentSongName" aria-live="polite" aria-atomic="true"></div>
+<div id="progressContainer" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Şarkı ilerleme çubuğu">
+  <div id="progressBar"></div>
+</div>
+
+<div id="controls" role="group" aria-label="Müzik kontrolleri">
+  <button id="btnPlayPause" aria-label="Oynat/Durdur"><i class="fas fa-play"></i></button>
+  <button id="btnPrev" aria-label="Önceki şarkı"><i class="fas fa-backward"></i></button>
+  <button id="btnNext" aria-label="Sonraki şarkı"><i class="fas fa-forward"></i></button>
+</div>
+
+<button id="themeToggleBtn" aria-label="Tema Değiştir">Tema Değiştir</button>
+
+<script>
+  (() => {
+    const audio = document.getElementById('audioPlayer');
+    const playlistModal = document.getElementById('playlistModal');
+    const reportModal = document.getElementById('reportModal');
+    const showPlaylistBtn = document.getElementById('showPlaylistBtn');
+    const closePlaylistBtn = document.getElementById('closePlaylistBtn');
+    const reportBtn = document.getElementById('reportBtn');
+    const closeReportBtn = document.getElementById('closeReportBtn');
+    const reportForm = document.getElementById('reportForm');
+    const ratingStars = document.getElementById('ratingStars');
+    const reportType = document.getElementById('reportType');
+    const currentSongName = document.getElementById('currentSongName');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBar = document.getElementById('progressBar');
+    const btnPlayPause = document.getElementById('btnPlayPause');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+    const playlistButtons = playlistModal.querySelectorAll('ul li button');
+
+    // Şarkı listesi
+    const songs = Array.from(playlistButtons).map(btn => ({
+      name: btn.textContent.trim(),
+      src: btn.getAttribute('data-src'),
+      btn: btn
+    }));
+
+    let currentIndex = 0;
+    let buttonFlashTimeouts = [];
+
+    // Fonksiyonlar
+    function loadSong(index) {
+      if (index < 0) index = songs.length - 1;
+      if (index >= songs.length) index = 0;
+      currentIndex = index;
+      audio.src = songs[currentIndex].src;
+      currentSongName.textContent = songs[currentIndex].name;
+      audio.load();
+      updateAriaProgress(0);
+      resetButtonsFlash();
+      flashAllButtons();
+      showControls();
+    }
+
+    function playSong() {
+      audio.play();
+      btnPlayPause.innerHTML = '<i class="fas fa-pause"></i>';
+    }
+    function pauseSong() {
+      audio.pause();
+      btnPlayPause.innerHTML = '<i class="fas fa-play"></i>';
+    }
+    function togglePlayPause() {
+      if (audio.paused) playSong();
+      else pauseSong();
+    }
+    function nextSong() {
+      loadSong(currentIndex + 1);
+      playSong();
+    }
+    function prevSong() {
+      loadSong(currentIndex - 1);
+      playSong();
+    }
+
+    function flashAllButtons() {
+      // Butonlarda 5 saniyelik ışık patlaması (box-shadow değişimi)
+      clearTimeouts();
+      playlistButtons.forEach(btn => {
+        btn.style.transition = 'box-shadow 0.3s ease';
+        btn.style.boxShadow = '0 0 24px 6px #00e5ff inset, 0 0 18px #00e5ff';
+        // 5 saniye sonra eski haline dön
+        const t = setTimeout(() => {
+          btn.style.boxShadow = '';
+        }, 5000);
+        buttonFlashTimeouts.push(t);
+      });
+    }
+
+    function clearTimeouts() {
+      buttonFlashTimeouts.forEach(t => clearTimeout(t));
+      buttonFlashTimeouts = [];
+    }
+
+    function resetButtonsFlash() {
+      clearTimeouts();
+      playlistButtons.forEach(btn => {
+        btn.style.boxShadow = '';
+      });
+    }
+
+    function showControls() {
+      document.getElementById('controls').style.display = 'flex';
+      progressContainer.style.display = 'block';
+    }
+
+    // İlerleme çubuğu güncelle
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        const progressPercent = (audio.currentTime / audio.duration) * 100;
+        progressBar.style.width = progressPercent + '%';
+        updateAriaProgress(progressPercent);
+        updateTimeInfo(audio.currentTime, audio.duration);
+      }
+    });
+
+    // İlerleme çubuğu tıklanabilir ve sürüklenebilir
+    progressContainer.addEventListener('click', e => {
+      const rect = progressContainer.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const percent = clickX / rect.width;
+      if (audio.duration) {
+        audio.currentTime = percent * audio.duration;
+      }
+    });
+
+    // Klavye ile slider kontrolü (sol/sağ ok)
+    progressContainer.addEventListener('keydown', e => {
+      if (!audio.duration) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        audio.currentTime = Math.min(audio.currentTime + 5, audio.duration);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        audio.currentTime = Math.max(audio.currentTime - 5, 0);
+      }
+    });
+
+    function updateAriaProgress(percent) {
+      progressContainer.setAttribute('aria-valuenow', Math.floor(percent));
+    }
+
+    function updateTimeInfo(current, duration) {
+      let formatTime = (t) => {
+        const m = Math.floor(t / 60);
+        const s = Math.floor(t % 60);
+        return m + ':' + (s < 10 ? '0' : '') + s;
+      };
+      currentSongName.setAttribute('aria-label', `${songs[currentIndex].name}, ${formatTime(current)} / ${formatTime(duration)}`);
+      document.getElementById('timeInfo')?.remove();
+      const timeInfo = document.createElement('div');
+      timeInfo.id = 'timeInfo';
+      timeInfo.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
+      currentSongName.after(timeInfo);
+    }
+
+    // Playlist butonları dinleme
+    playlistButtons.forEach((btn, i) => {
+      btn.addEventListener('click', () => {
+        loadSong(i);
+        playSong();
+        playlistModal.style.display = 'none';
+      });
+    });
+
+    // Modal aç/kapa
+    showPlaylistBtn.addEventListener('click', () => {
+      playlistModal.style.display = 'flex';
+      reportModal.style.display = 'none';
+    });
+    closePlaylistBtn.addEventListener('click', () => {
+      playlistModal.style.display = 'none';
+    });
+
+    // Ses bitince sonraki şarkı
+    audio.addEventListener('ended', nextSong);
+
+    // Play/pause buton
+    btnPlayPause.addEventListener('click', togglePlayPause);
+    btnNext.addEventListener('click', nextSong);
+    btnPrev.addEventListener('click', prevSong);
+
+    // Klavye kısayolları (boşluk: play/pause, sağ/sol ok: şarkı değiştir)
+    window.addEventListener('keydown', e => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+      if (e.code === 'Space') {
+        e.preventDefault();
+        togglePlayPause();
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        nextSong();
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        prevSong();
+      }
+    });
+
+    // Report modal aç/kapa
+    reportBtn.addEventListener('click', () => {
+      reportModal.style.display = 'flex';
+      playlistModal.style.display = 'none';
+      resetReportForm();
+    });
+    closeReportBtn.addEventListener('click', () => {
+      reportModal.style.display = 'none';
+    });
+
+    // Report tür seçimi ile yıldız görünürlüğü kontrolü
+    function toggleRatingVisibility() {
+      if (reportType.value === 'degerlendirme') {
+        ratingStars.style.display = 'block';
+      } else {
+        ratingStars.style.display = 'none';
+        // yıldız seçili ise kaldır
+        const checkedStar = reportForm.querySelector('input[name="rating"]:checked');
+        if (checkedStar) checkedStar.checked = false;
+      }
+    }
+    reportType.addEventListener('change', toggleRatingVisibility);
+
+    // Report form gönderimi (mailto link oluşturma)
+    reportForm.addEventListener('submit', e => {
+      e.preventDefault();
+      // Zorunlu alanlar kontrolü
+      if (!reportForm.name.value.trim() || !reportForm.email.value.trim()) {
+        alert('Lütfen isim ve e-posta alanlarını doldurun.');
+        return;
+      }
+      // Mailto linkini hazırla
+      const name = encodeURIComponent(reportForm.name.value.trim());
+      const email = encodeURIComponent(reportForm.email.value.trim());
+      const type = reportType.value;
+      const message = encodeURIComponent(reportForm.message.value.trim() || '');
+      let rating = '';
+      if (type === 'degerlendirme') {
+        const checkedStar = reportForm.querySelector('input[name="rating"]:checked');
+        rating = checkedStar ? checkedStar.value : '0';
+      }
+      const subject = encodeURIComponent(`Site ${type === 'sorun' ? 'Sorun' : 'Değerlendirme'}: ${songs[currentIndex].name}`);
+      let body = `Merhaba,%0D%0A%0D%0ASitenizde bir ${type === 'sorun' ? 'sorun' : 'değerlendirme'} iletmek istiyorum.%0D%0A`;
+      body += `Şarkı: ${encodeURIComponent(songs[currentIndex].name)}%0D%0A`;
+      body += `Tür: ${type === 'sorun' ? 'Sorun' : 'Değerlendirme'}%0D%0A`;
+      if (type === 'degerlendirme') body += `Puan: ${rating} / 5%0D%0A`;
+      body += `İsim: ${name}%0D%0A`;
+      body += `E-posta: ${email}%0D%0A%0D%0A`;
+      body += `Mesaj:%0D%0A${message}%0D%0A%0D%0Aİyi günler.`;
+
+      const mailtoLink = `mailto:example@example.com?subject=${subject}&body=${body}`;
+
+      window.location.href = mailtoLink;
+      reportModal.style.display = 'none';
+    });
+
+    function resetReportForm() {
+      reportForm.reset();
+      toggleRatingVisibility();
+    }
+
+    // Tema değiştirme
+    const themes = [
+      {
+        name: 'Neymar',
+        bg: "url('https://i.imgur.com/yslsfnW.jpeg') no-repeat center center fixed"
+      },
+      {
+        name: 'Alternatif',
+        bg: "url('https://i.imgur.com/qtUaCM4.jpeg') no-repeat center center fixed"
+      }
+    ];
+
+    function setTheme(index) {
+      document.body.style.background = themes[index].bg;
+      document.body.style.backgroundSize = 'cover';
+      localStorage.setItem('siteTheme', index);
+    }
+    function toggleTheme() {
+      let current = localStorage.getItem('siteTheme') || '0';
+      current = parseInt(current);
+      const next = (current + 1) % themes.length;
+      setTheme(next);
+    }
+
+    themeToggleBtn.addEventListener('click', toggleTheme);
+
+    // Sayfa yüklendiğinde kayıtlı tema varsa uygula
+    window.addEventListener('load', () => {
+      const savedTheme = localStorage.getItem('siteTheme') || '0';
+      setTheme(parseInt(savedTheme));
+      loadSong(0);
+    });
+
+  })();
+</script>
+
+<footer>© 2025 Ege Deniz. All rights reserved.</footer>
+
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HESAPLAR VE ŞARKILAR</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family:'Poppins',sans-serif;
+      background: url('https://i.imgur.com/yslsfnW.jpeg') center/cover fixed no-repeat;
+      color:white;
+      padding:40px 20px 100px;
+      display:flex; flex-direction:column; align-items:center;
+    }
+    body.theme2 {
+      background: url('https://i.imgur.com/bA2Nqor.jpeg') center/cover fixed no-repeat;
+    }
+    .buttons { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; max-width:420px; width:100%; margin-top:20px; }
+    .buttons a, .buttons button {
+      display:flex; align-items:center; justify-content:center;
+      gap:10px; text-decoration:none; color:white;
+      background:linear-gradient(135deg,#ff004f,#6600ff,#00e5ff);
+      background-size:300% 300%; padding:14px;
+      border-radius:14px; font-size:1rem; font-weight:600;
+      border:none; cursor:pointer;
+      box-shadow:0 0 10px rgba(0,0,0,0.4),0 0 15px rgba(255,255,255,0.1);
+      transition:transform .3s ease;
+      animation:gradientShift 6s ease infinite;
+    }
+    .buttons a:hover, .buttons button:hover { transform:scale(1.05); }
+    @keyframes gradientShift {
+      0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}
+    }
+
+    #playerUI { display:none; justify-content:center; align-items:center; gap:20px;
+      background:rgba(0,0,0,0.4); border-radius:12px; padding:16px; margin-top:30px;
+      box-shadow:0 0 12px rgba(0,0,0,0.6);
+    }
+    #playerUI.show { display:flex; }
+    #playerUI button { font-size:1.3rem; background:none; border:none; color:white; cursor:pointer; }
+
+    #currentTrackName { margin-top:20px; font-size:1.1rem; text-align:center; }
+
+    .theme-toggle {
+      position:fixed; bottom:80px; right:20px;
+      background:rgba(0,0,0,0.6); color:white;
+      border:none; padding:10px 14px; border-radius:10px;
+      cursor:pointer; font-weight:bold; z-index:10;
+    }
+
+    #playlistModal, #reportModal {
+      position:fixed; top:0; left:0; right:0; bottom:0;
+      background:rgba(0,0,0,0.9); display:none;
+      justify-content:center; align-items:center; z-index:99;
+    }
+    .modal.show { display:flex; }
+
+    .modal-content {
+      background:rgba(255,255,255,0.05); padding:24px;
+      border-radius:14px; backdrop-filter:blur(12px);
+      max-width:340px; width:90%; text-align:center;
+    }
+    .modal-content h2 { font-size:1.2rem; margin-bottom:12px; color:#ff004f; }
+
+    .modal-content p, .modal-content label { font-size:.95rem; margin-bottom:8px; display:block; }
+
+    .modal-content ul { list-style:none; max-height:260px; overflow-y:auto; margin-bottom:16px; }
+    .modal-content li { margin:6px 0; }
+    .modal-content li button {
+      width:100%; padding:10px; background:rgba(255,255,255,0.1);
+      color:white; border:none; border-radius:8px;
+      font-weight:600; cursor:pointer; transition:background .3s;
+    }
+    .modal-content li button:hover { background:rgba(255,255,255,0.2); }
+
+    .bottom-btn { width:100%; padding:10px; margin-top:10px;
+      background:rgba(255,255,255,0.1); color:white;
+      border:2px dashed #ff004f; border-radius:8px;
+      font-weight:600; cursor:pointer; transition:all .3s ease;
+    }
+    .bottom-btn:hover { background:rgba(255,255,255,0.2); }
+
+    /* Report Form */
+    .modal-content form { display:flex; flex-direction:column; gap:10px; }
+    .modal-content input, .modal-content textarea {
+      width:100%; padding:10px;
+      background:rgba(255,255,255,0.1);
+      border:none; border-radius:8px; color:white;
+      font-size:.95rem;
+    }
+    .modal-content textarea { resize: vertical; min-height:80px; }
+    .modal-content button.submit {
+      padding:10px; background:#ff004f; color:white;
+      border:none; border-radius:8px;
+      font-weight:bold; cursor:pointer;
+      transition:background .3s ease;
+    }
+    .modal-content button.submit:hover { background:#e50046; }
+
+    footer {
+      position:fixed; bottom:10px; width:100%;
+      text-align:center; color:rgba(255,255,255,0.7);
+      font-size:.9rem; text-shadow:0 0 4px black; z-index:5;
+    }
+  </style>
+</head>
+<body>
+  <div class="buttons">
+    <a href="#" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
+    <a href="#" target="_blank"><i class="fab fa-telegram"></i>Telegram</a>
+    <a href="#" target="_blank"><i class="fab fa-tiktok"></i>TikTok</a>
+    <button id="openPlaylist"><i class="fas fa-music"></i>Şarkı Listesi</button>
+  </div>
+
+  <div id="playerUI">
+    <button id="prevBtn"><i class="fas fa-backward"></i></button>
+    <button id="playPauseBtn"><i class="fas fa-play"></i></button>
+    <button id="nextBtn"><i class="fas fa-forward"></i></button>
+  </div>
+  <div id="currentTrackName"></div>
+
+  <!-- Playlist Modal -->
+  <div id="playlistModal" class="modal">
+    <div class="modal-content">
+      <h2>🎵 Şarkı Listesi</h2>
+      <p>Şarkıya tıklayarak çalmaya başlayabilirsiniz!</p>
+      <ul id="songList"></ul>
+      <button id="openReport" class="bottom-btn">Sorun Bildir</button>
+      <button id="closePlaylist" class="bottom-btn">Kapat</button>
+    </div>
+  </div>
+
+  <!-- Report Modal -->
+  <div id="reportModal" class="modal">
+    <div class="modal-content">
+      <h2>🚨 Sorun Bildir</h2>
+      <form id="reportForm">
+        <label>Adınız (isteğe bağlı):</label>
+        <input type="text" name="name" placeholder="Adınız" />
+        <label>E‑posta (isteğe bağlı):</label>
+        <input type="email" name="email" placeholder="mail@ornek.com" />
+        <label>Sorununuz:</label>
+        <textarea name="issue" required placeholder="Sorununuzu buraya yazın…"></textarea>
+        <button type="submit" class="submit">Gönder</button>
+        <button type="button" id="closeReport" class="bottom-btn">İptal</button>
+      </form>
+    </div>
+  </div>
+
+  <audio id="bgMusic"></audio>
+  <button class="theme-toggle" id="themeToggle">Tema Değiştir</button>
+  <footer>© 2025 Ege Deniz. All rights reserved.</footer>
+
+  <script>
+    const songs = [
+      { name: "Juice WRLD - Let Me Know", src: "Juice WRLD Let Me Know (I Wonder Why Freestyle) (Official Audio).mp3" },
+      { name: "Doja Cat - Streets", src: "Doja Cat - Streets (Official Audio).mp3" },
+      { name: "lliinnee", src: "lliinnee.mp3" },
+      { name: "Lana Del Rey - Summertime Sadness", src: "Lana Del Rey - Summertime Sadness (Official Music Video).mp3" },
+      { name: "Nicky Jam - Hasta el Amanecer", src: "22. Hasta el Amanecer - Nicky Jam  Video Oficial.mp3" },
+      { name: "Amor Na Praia", src: "Amor Na Praia.mp3" },
+      { name: "Smezir 2 (Slowed)", src: "smezir 2 (Super Slowed).mp3" },
+      { name: "Djo - End Of Beginning", src: "Djo - End Of Beginning (Official Audio).mp3" },
+      { name: "Twenty One Pilots - Doubt", src: "twenty-one-pilots-Doubt-_Official-Audio_.mp3" },
+      { name: "lil 17th - Mary Jane", src: "lil 17th - Mary Jane.mp3" },
+      { name: "XXXTENTACION - MOONLIGHT", src: "XXXTENTACION - MOONLIGHT (OFFICIAL MUSIC VIDEO).mp3" },
+      { name: "t.A.T.u. - All The Things She Said", src: "t.A.T.u. - All The Things She Said (Official Music Video).mp3" },
+      { name: "Tame Impala - Let It Happen", src: "tame_impala_let_it_happen_mp3_55159.mp3" },
+      { name: "Funk - Mi Camino", src: "funk_mi_camino_mp3_55239.mp3" }
+    ];
+
+    const bgMusic = document.getElementById("bgMusic");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const currentTrackName = document.getElementById("currentTrackName");
+    const playerUI = document.getElementById("playerUI");
+    const openPlaylistBtn = document.getElementById("openPlaylist");
+    const closePlaylistBtn = document.getElementById("closePlaylist");
+    const playlistModal = document.getElementById("playlistModal");
+    const themeToggle = document.getElementById("themeToggle");
+    const songList = document.getElementById("songList");
+
+    const openReport = document.getElementById("openReport");
+    const reportModal = document.getElementById("reportModal");
+    const closeReport = document.getElementById("closeReport");
+    const reportForm = document.getElementById("reportForm");
+
+    let currentIndex = -1;
+    let isPlaying = false;
+
+    function renderSongs() {
+      songList.innerHTML = "";
+      songs.forEach((song, index) => {
+        const li = document.createElement("li");
+        const btn = document.createElement("button");
+        btn.textContent = song.name;
+        btn.onclick = () => {
+          loadSong(index);
+          playlistModal.classList.remove("show");
+        };
+        li.appendChild(btn);
+        songList.appendChild(li);
+      });
+    }
+
+    function loadSong(index) {
+      if (index < 0 || index >= songs.length) return;
+      currentIndex = index;
+      bgMusic.src = songs[index].src;
+      currentTrackName.textContent = songs[index].name;
+      playerUI.classList.add("show");
+      playSong();
+    }
+
+    function playSong() {
+      bgMusic.play();
+      isPlaying = true;
+      updatePlayPauseBtn();
+    }
+
+    function pauseSong() {
+      bgMusic.pause();
+      isPlaying = false;
+      updatePlayPauseBtn();
+    }
+
+    function updatePlayPauseBtn() {
+      playPauseBtn.innerHTML = isPlaying
+        ? '<i class="fas fa-pause"></i>'
+        : '<i class="fas fa-play"></i>';
+    }
+
+    playPauseBtn.onclick = () => (isPlaying ? pauseSong() : playSong());
+    nextBtn.onclick = () => {
+      currentIndex = (currentIndex + 1) % songs.length;
+      loadSong(currentIndex);
+    };
+    prevBtn.onclick = () => {
+      currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+      loadSong(currentIndex);
+    };
+
+    bgMusic.addEventListener("ended", () => {
+      currentIndex = (currentIndex + 1) % songs.length;
+      loadSong(currentIndex);
+    });
+
+    openPlaylistBtn.onclick = () => playlistModal.classList.add("show");
+    closePlaylistBtn.onclick = () => playlistModal.classList.remove("show");
+
+    themeToggle.onclick = () => document.body.classList.toggle("theme2");
+
+    // Report
+    openReport.onclick = () => {
+      playlistModal.classList.remove("show");
+      reportModal.classList.add("show");
+    };
+    closeReport.onclick = () => reportModal.classList.remove("show");
+
+    reportForm.onsubmit = (e) => {
+      e.preventDefault();
+      const name = reportForm.name.value.trim();
+      const email = reportForm.email.value.trim();
+      const issue = reportForm.issue.value.trim();
+      const song = songs[currentIndex] ? songs[currentIndex].name : "Şarkı seçilmedi";
+      const subject = encodeURIComponent("Müzik Sitesi Sorun Bildirimi");
+      const body = encodeURIComponent(
+        `Ad: ${name || "Belirtilmedi"}\nEmail: ${email || "Belirtilmedi"}\nŞu an çalan şarkı: ${song}\n\nSorun:\n${issue}`
+      );
+      window.location.href = `mailto:ege@egeherz.com?subject=${subject}&body=${body}`;
+      reportModal.classList.remove("show");
+      reportForm.reset();
+    };
+
+    // Başlangıçta şarkı çalmasın, player UI görünmesin
+    window.onload = () => renderSongs();
+  </script>
+</body>
+</html>
+

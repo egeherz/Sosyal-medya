@@ -1,49 +1,45 @@
-# Egeherz Hesapları ve şarkı sitesi
+# Müzik Sitesi 🎵
 
-© 2025 egeherz. Tüm Hakları Saklıdır.
+## Durum
 
----
-
-## Lisans ve Kullanım Koşulları
-
-Bu yazılım, tasarım ve ilgili tüm materyaller (bundan sonra “Çalışma” olarak anılacaktır), tamamen **egeherz** tarafından oluşturulmuş ve sadece onun kişisel kullanımı için sağlanmıştır.
+🚧 **GELİŞTİRME AŞAMASINDA** 🚧  
+Bu site hâlen geliştirilme aşamasındadır.  
+Henüz tam bitmedi, bazı özellikler değişebilir veya eksik olabilir.
 
 ---
 
-### 1. Mülkiyet ve Haklar
+## Hakkında
 
-- Bu projenin tüm içeriği, yapısı, kod tabanı, tasarımı ve varlıkları **egeherz**'in münhasır fikri mülkiyetidir.
-- Uluslararası telif hakkı ve ilgili fikri mülkiyet kanunlarıyla korunmaktadır.
-- Çalışmanın tamamının veya herhangi bir parçasının izinsiz kullanımı, çoğaltılması, dağıtımı, değiştirilmesi veya kamuya sunulması yasaktır ve hukuki yaptırımlara tabidir.
-
-### 2. Kullanım Kısıtlamaları
-
-- Çalışma üçüncü şahıslar tarafından kopyalanamaz, yeniden yayımlanamaz, dağıtılamaz, değiştirilemez veya başka platformlara entegre edilemez.
-- Çalışma, **egeherz** dışında herhangi bir kişi veya kurum tarafından satılamaz veya ticari amaçlarla kullanılamaz.
-- Çalışmanın herhangi bir parçası yeniden markalanamaz, klonlanamaz veya taklit edilemez.
-
-### 3. Kişisel Kullanım
-
-- Bu Çalışmayı kullanma, barındırma ve özelleştirme hakkı sadece **egeherz**'e aittir.
-- Üçüncü taraflara herhangi bir lisans verilmemiş veya verilmekte değildir.
-
-### 4. Garanti Reddi
-
-- Çalışma “olduğu gibi” sunulmaktadır.
-- Herhangi bir açık veya zımni garanti verilmemektedir (ticari uygunluk, belirli bir amaca uygunluk veya ihlal etmeme dahil).
-- Yaratıcı, çalışmanın kullanımı veya yanlış kullanımı sonucu oluşabilecek zararlardan sorumlu tutulamaz.
-
-### 5. Hukuki İşlem
-
-- İzinsiz kullanım, kopyalama, değiştirme veya dağıtım durumunda yasal işlem başlatılacaktır.
-- İhlal edenler, ilgili yerel ve uluslararası fikri mülkiyet yasalarına göre cezalandırılacaktır.
+- Modern ve şık tasarımlı müzik çalar  
+- Çoklu tema desteği (4 farklı tema)  
+- Canlı saat göstergesi  
+- Erişilebilir ve klavye dostu arayüz  
+- Mobil uyumlu ve dokunmatik destekli  
+- Şarkı listesi modalı ve kolay kullanım  
+- Animasyonlu butonlar ve geçiş efektleri
 
 ---
 
-## ⚠️ Önemli Uyarı
+## Kullanım
 
-Bu proje tamamen özel ve korumalıdır. Eğer **egeherz** değilseniz, bu içeriğe herhangi bir şekilde erişmek, kullanmak veya etkileşimde bulunmak yetkiniz yoktur.
+Site açıldığında otomatik olarak son çalınan şarkı devam eder.  
+Tema değiştirme butonuyla arka plan değiştirilebilir.  
+Şarkı listesinden istediğiniz parçayı seçebilirsiniz.
 
 ---
 
-*Egeherz tarafından hazırlanmıştır.*
+## İletişim
+
+Sorun bildirimi için e-posta butonu kullanılabilir.
+
+---
+
+## Notlar
+
+- İndex.html dosyasını silerseniz veya erişim dışı kalırsa,  
+  site otomatik olarak "GELİŞTİRME AŞAMASINDA" sayfasına yönlendirilebilir.  
+- Site geliştirilmeye devam edecektir.
+
+---
+
+© 2025 Ege Deniz  

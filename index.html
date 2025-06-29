@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HESAPLAR VE ŞARKILAR</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* Aynı CSS kodların buraya gelecek, değiştirilmedi */
+    /* ... (CSS kısmı aynı) ... */
+  </style>
+</head>
+<body>
+  <div id="liveClock" aria-live="polite" aria-atomic="true"></div>
+
+  <nav class="buttons" role="navigation" aria-label="Sosyal medya ve şarkı listesi">
+    <a href="https://instagram.com/10110310132100101110105l22" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i>Instagram</a>
+    <a href="https://t.me/l0110310132100101110105122" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram"></i>Telegram</a>
+    <a href="https://www.tiktok.com/@010169716901l7" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i>TikTok</a>
+    <button id="openPlaylist" aria-haspopup="dialog" aria-expanded="false"><i class="fas fa-music"></i>Şarkı Listesi</button>
+  </nav>
+
+  <section id="playerUI" role="region" aria-label="Müzik çalar kontrolü" hidden>
+    <button id="prevBtn" aria-label="Önceki şarkı"><i class="fas fa-backward"></i></button>
+    <button id="playPauseBtn" aria-label="Oynat/Duraklat"><i class="fas fa-play"></i></button>
+    <button id="nextBtn" aria-label="Sonraki şarkı"><i class="fas fa-forward"></i></button>
+
+    <div id="progressContainer" aria-label="İlerleme çubuğu" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div id="progress"></div>
+    </div>
+
+    <div id="timeDisplay" aria-live="polite" aria-atomic="true">00:00 / 00:00</div>
+  </section>
+
+  <div id="currentTrackName" aria-live="polite" aria-atomic="true"></div>
+
+  <dialog id="playlistModal" role="dialog" aria-modal="true" aria-labelledby="playlistTitle" aria-describedby="playlistDesc">
+    <div class="playlist-content">
+      <h2 id="playlistTitle">Beta⚠️</h2>
+      <p id="playlistDesc">Şarkı ismine tıklayarak dinlemeye başlayabilirsiniz<br>Daha fazla eklenecektir 🥳</p>
+      <ul id="songList"></ul>
+      <button class="report-button" id="reportBtn">Sorun Bildir</button>
+      <button class="playlist-close" id="closePlaylist" aria-label="Kapat">Kapat</button>
+    </div>
+  </dialog>
+
+  <audio id="bgMusic"></audio>
+
+  <button class="theme-toggle" id="themeToggle" aria-pressed="false">Tema Değiştir</button>
+
+  <footer>© 2025 Ege Deniz. All rights reserved.</footer>
+
+  <script>
+    const songs = [
+      { name: "Juice WRLD - Let Me Know", src: "Juice WRLD Let Me Know (I Wonder Why Freestyle) (Official Audio).mp3" },
+      { name: "Doja Cat - Streets", src: "Doja Cat - Streets (Official Audio).mp3" },
+      { name: "lliinnee", src: "lliinnee.mp3" },
+      { name: "Lana Del Rey - Summertime Sadness", src: "Lana Del Rey - Summertime Sadness (Official Music Video).mp3" },
+      { name: "Nicky Jam - Hasta el Amanecer", src: "22. Hasta el Amanecer - Nicky Jam  Video Oficial.mp3" },
+      { name: "Amor Na Praia", src: "Amor Na Praia.mp3" },
+      { name: "Smezir 2 (Slowed)", src: "smezir 2 (Super Slowed).mp3" },
+      { name: "Djo - End Of Beginning", src: "Djo - End Of Beginning (Official Audio).mp3" },
+      { name: "Twenty One Pilots - Doubt", src: "twenty-one-pilots-Doubt-_Official-Audio_.mp3" },
+      { name: "lil 17th - Mary Jane", src: "lil 17th - Mary Jane.mp3" },
+      { name: "XXXTENTACION - MOONLIGHT", src: "XXXTENTACION - MOONLIGHT (OFFICIAL MUSIC VIDEO).mp3" },
+      { name: "t.A.T.u. - All The Things She Said", src: "t.A.T.u. - All The Things She Said (Official Music Video).mp3" },
+      { name: "Tame Impala - Let It Happen", src: "tame_impala_let_it_happen_mp3_55159.mp3" },
+      { name: "Funk - Mi Camino", src: "funk_mi_camino_mp3_55239.mp3" }
+    ];
+
+    const bgMusic = document.getElementById("bgMusic");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const currentTrackName = document.getElementById("currentTrackName");
+    const playerUI = document.getElementById("playerUI");
+    const openPlaylistBtn = document.getElementById("openPlaylist");
+    const closePlaylistBtn = document.getElementById("closePlaylist");
+    const playlistModal = document.getElementById("playlistModal");
+    const themeToggle = document.getElementById("themeToggle");
+    const songList = document.getElementById("songList");
+    const reportBtn = document.getElementById("reportBtn");
+    const progressContainer = document.getElementById("progressContainer");
+    const progress = document.getElementById("progress");
+    const timeDisplay = document.getElementById("timeDisplay");
+    const liveClock = document.getElementById("liveClock");
+
+    let currentIndex = parseInt(localStorage.getItem("lastSongIndex")) || -1;
+    let isPlaying = false;
+
+    // Canlı saati göster
+    const updateClock = () => {
+      const now = new Date();
+      liveClock.textContent = now.toLocaleTimeString("tr-TR", { hour12: false });
+    };
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    const renderSongs = () => {
+      songList.innerHTML = "";
+      songs.forEach((song, index) => {
+        const li = document.createElement("li");
+        const btn = document.createElement("button");
+        btn.textContent = song.name;
+        btn.setAttribute("aria-current", "false");
+        btn.type = "button";
+        btn.onclick = () => {
+          loadSong(index);
+          if (playlistModal.open) playlistModal.close();
+          openPlaylistBtn.setAttribute("aria-expanded", "false");
+          updateActiveSong();
+        };
+        li.appendChild(btn);
+        songList.appendChild(li);
+      });
+      updateActiveSong();
+    };
+
+    const updateActiveSong = () => {
+      const buttons = songList.querySelectorAll("button");
+      buttons.forEach((btn, idx) => {
+        if (idx === currentIndex) {
+          btn.classList.add("active");
+          btn.setAttribute("aria-current", "true");
+          btn.disabled = true;
+        } else {
+          btn.classList.remove("active");
+          btn.setAttribute("aria-current", "false");
+          btn.disabled = false;
+        }
+      });
+    };
+
+    const loadSong = (index) => {
+      if (index < 0 || index >= songs.length) return;
+      currentIndex = index;
+      bgMusic.src = songs[index].src;
+      currentTrackName.textContent = songs[index].name;
+      playerUI.hidden = false;
+      playSong();
+      localStorage.setItem('lastSongIndex', currentIndex);
+      updateActiveSong();
+    };
+
+    const playSong = () => {
+      bgMusic.play();
+      isPlaying = true;
+      updatePlayPauseBtn();
+    };
+
+    const pauseSong = () => {
+      bgMusic.pause();
+      isPlaying = false;
+      updatePlayPauseBtn();
+    };
+
+    const updatePlayPauseBtn = () => {
+      playPauseBtn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+      playPauseBtn.setAttribute("aria-label", isPlaying ? "Duraklat" : "Oynat");
+    };
+
+    playPauseBtn.onclick = () => isPlaying ? pauseSong() : playSong();
+    playPauseBtn.onkeydown = e => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        isPlaying ? pauseSong() : playSong();
+      }
+    };
+
+    nextBtn.onclick = () => { currentIndex = (currentIndex + 1) % songs.length; loadSong(currentIndex); };
+    prevBtn.onclick = () => { currentIndex = (currentIndex - 1 + songs.length) % songs.length; loadSong(currentIndex); };
+
+    openPlaylistBtn.onclick = () => {
+      playlistModal.showModal();
+      openPlaylistBtn.setAttribute("aria-expanded", "true");
+    };
+
+    closePlaylistBtn.onclick = () => {
+      playlistModal.close();
+      openPlaylistBtn.setAttribute("aria-expanded", "false");
+    };
+
+    themeToggle.onclick = () => {
+      const isTheme2 = document.body.classList.toggle("theme2");
+      themeToggle.setAttribute("aria-pressed", isTheme2.toString());
+    };
+
+    bgMusic.addEventListener("ended", () => {
+      currentIndex = (currentIndex + 1) % songs.length;
+      loadSong(currentIndex);
+    });
+
+    reportBtn.onclick = () => {
+      const currentSong = songs[currentIndex] ? songs[currentIndex].name : "Henüz şarkı çalmıyor";
+      const subject = encodeURIComponent("Müzik Sitesi Sorun Bildirimi");
+      const body = encodeURIComponent(`Merhaba,\n\nAşağıdaki konuda destek rica ediyorum:\n\n(Sorununuzu buraya yazınız)\n\nŞu an dinlenen şarkı: ${currentSong}\n\nTeşekkürler.`);
+      window.location.href = `mailto:ege@egeherz.com?subject=${subject}&body=${body}`;
+    };
+
+    // İlerleme çubuğu ve süre güncellemesi
+    const formatTime = seconds => {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+    };
+
+    bgMusic.addEventListener("timeupdate", () => {
+      if (bgMusic.duration) {
+        const progressPercent = (bgMusic.currentTime / bgMusic.duration) * 100;
+        progress.style.width = progressPercent + "%";
+        timeDisplay.textContent = `${formatTime(bgMusic.currentTime)} / ${formatTime(bgMusic.duration)}`;
+        progressContainer.setAttribute("aria-valuenow", Math.floor(progressPercent));
+      }
+    });
+
+    progressContainer.addEventListener("click", e => {
+      const rect = progressContainer.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const width = rect.width;
+      const clickPercent = clickX / width;
+      if (bgMusic.duration) {
+        bgMusic.currentTime = clickPercent * bgMusic.duration;
+      }
+    });
+
+    progressContainer.addEventListener("keydown", e => {
+      if (!bgMusic.duration) return;
+      let seekTime = bgMusic.currentTime;
+      const step = 5;
+      if (e.key === "ArrowRight") {
+        seekTime = Math.min(bgMusic.currentTime + step, bgMusic.duration);
+        bgMusic.currentTime = seekTime;
+        e.preventDefault();
+      } else if (e.key === "ArrowLeft") {
+        seekTime = Math.max(bgMusic.currentTime - step, 0);
+        bgMusic.currentTime = seekTime;
+        e.preventDefault();
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderSongs();
+      if (currentIndex !== -1) loadSong(currentIndex);
+    });
+  </script>
+</body>
+</html>

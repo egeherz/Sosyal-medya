@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Fragments Müzik Botu</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+  body {
+    margin:0; padding:0;
+    font-family: 'Montserrat', sans-serif;
+    background: url('https://i.imgur.com/xNOMlPs.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    color: #e0e0e0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  header {
+    width: 100%;
+    padding: 8px 16px;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #c0c0c0;
+    user-select:none;
+  }
+  header .logo {
+    display: flex;
+    align-items: center;
+    gap:8px;
+  }
+  header .logo img {
+    height: 28px;
+    width: 28px;
+    object-fit: contain;
+  }
+  header .time {
+    font-weight: 600;
+  }
+  header .lang-select {
+    background: transparent;
+    border: none;
+    color: #e0e0e0;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  main {
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 15px;
+    text-align: center;
+    text-shadow: 0 0 10px #000000cc;
+  }
+  main h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #f1c40f;
+  }
+  main p.subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    max-width: 380px;
+    line-height: 1.4;
+  }
+  .btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    max-width: 420px;
+  }
+  button.open-modal-btn {
+    background: #1abc9c;
+    border: none;
+    padding: 14px 24px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 5px 10px rgb(26 188 156 / 0.5);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 1 1 140px;
+    min-width: 140px;
+  }
+  button.open-modal-btn:hover {
+    background: #16a085;
+  }
+  /* Modal overlay */
+  .modal-overlay {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 9999;
+  }
+  .modal-overlay.active {
+    display: flex;
+  }
+  .modal {
+    background: #121212cc;
+    border-radius: 12px;
+    width: 95%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+    color: #eee;
+    box-shadow: 0 0 20px #00b894cc;
+    display: flex;
+    flex-direction: column;
+  }
+  .modal header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #00b89444;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #00cec9;
+  }
+  .modal header .close-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.8rem;
+    color: #00cec9;
+    cursor: pointer;
+  }
+  .modal nav {
+    display: flex;
+    border-bottom: 1px solid #00b89444;
+    background: #0d0d0d;
+  }
+  .modal nav button {
+    flex: 1;
+    padding: 12px 10px;
+    border: none;
+    background: transparent;
+    color: #55efc4;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+  }
+  .modal nav button.active {
+    background: #00cec9;
+    color: #121212;
+    border-radius: 12px 12px 0 0;
+  }
+  .modal section.content {
+    padding: 20px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: #ddd;
+    white-space: pre-wrap;
+  }
+  .modal section.content a {
+    color: #00cec9;
+    text-decoration: none;
+  }
+  .modal section.content a:hover {
+    text-decoration: underline;
+  }
+  /* Footer */
+  footer {
+    padding: 14px 10px;
+    background: rgba(0,0,0,0.7);
+    text-align: center;
+    font-size: 13px;
+    color: #999;
+    user-select:none;
+  }
+  footer a {
+    color: #00cec9;
+    text-decoration: none;
+  }
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive & mobile tweaks */
+  @media (max-width: 480px) {
+    main h1 {
+      font-size: 1.8rem;
+    }
+    main p.subtitle {
+      font-size: 1rem;
+      max-width: 90vw;
+    }
+    button.open-modal-btn {
+      min-width: 120px;
+      padding: 12px 16px;
+      font-size: 0.9rem;
+    }
+    .modal {
+      max-width: 95vw;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" title="Fragments Müzik Botu">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/240px-Telegram_logo.svg.png" alt="Telegram Logo" />
+    <span>Fragments</span>
+  </div>
+  <div>
+    <span class="time" id="time-display">--:-- --</span>
+  </div>
+  <select id="lang-select" aria-label="Dil Seçimi" title="Dil Seçimi" class="lang-select">
+    <option value="tr" selected>Türkçe</option>
+    <option value="en">English</option>
+    <option value="ru">Русский</option>
+    <option value="ar">العربية</option>
+  </select>
+</header>
+
+<main>
+  <h1 id="main-title">🎧 Fragments Müzik Botu</h1>
+  <p id="main-subtitle" class="subtitle">
+    Telegram üzerinden saniyeler içinde şarkı indirmeni sağlayan, sade, şık ve güçlü bir müzik botudur.
+  </p>
+  <div class="btn-container">
+    <button class="open-modal-btn" data-modal="commands">Komutlar</button>
+    <button class="open-modal-btn" data-modal="privacy">Gizlilik Politikası</button>
+    <button class="open-modal-btn" data-modal="terms">Kullanım Koşulları</button>
+    <a href="https://t.me/FragmentsofmeBOT" target="_blank" rel="noopener noreferrer">
+      <button class="open-modal-btn">Botu Aç</button>
+    </a>
+  </div>
+</main>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal" tabindex="-1">
+    <header>
+      <span id="modal-title">Başlık</span>
+      <button class="close-btn" aria-label="Kapat">&times;</button>
+    </header>
+    <nav>
+      <button class="tab-btn active" data-tab="commands-tab">Komutlar</button>
+      <button class="tab-btn" data-tab="privacy-tab">Gizlilik Politikası</button>
+      <button class="tab-btn" data-tab="terms-tab">Kullanım Koşulları</button>
+      <button class="tab-btn" data-tab="links-tab">Bağlantılar</button>
+    </nav>
+    <section class="content" id="content-area" tabindex="0">
+      <!-- İçerik buraya gelecek -->
+    </section>
+  </div>
+</div>
+
+<footer>
+  © 2025 Fragments Müzik Botu | 
+  İletişim: <a href="mailto:contact@egeherz.com">contact@egeherz.com</a> | 
+  <a href="https://t.me/fragmentsduyuru" target="_blank" rel="noopener noreferrer">Duyuru Kanalı</a> | 
+  <a href="https://t.me/fragmentsmuzik" target="_blank" rel="noopener noreferrer">Topluluk Grubu</a> | 
+  <a href="https://t.me/l0110310132100101110105122" target="_blank" rel="noopener noreferrer">Geliştirici</a>
+</footer>
+
+<script>
+  const timeDisplay = document.getElementById('time-display');
+  const langSelect = document.getElementById('lang-select');
+  const modalOverlay = document.getElementById('modal-overlay');
+  const modalTitle = document.getElementById('modal-title');
+  const contentArea = document.getElementById('content-area');
+  const closeBtn = modalOverlay.querySelector('.close-btn');
+  const tabButtons = modalOverlay.querySelectorAll('.tab-btn');
+  const openModalButtons = document.querySelectorAll('.open-modal-btn');
+
+  // Komutlar, Gizlilik, Kullanım, Bağlantılar içerikleri
+  const content = {
+    tr: {
+      commands: `
+• /start - Başlatır
+• /sarki [isim] - Şarkı indirir
+• /durumum - İndirdiğin şarkı sayısını gösterir
+• /surem - Premium süreni gösterir
+• /premiumol - Premium avantajlarını gösterir
+• /gecmisim - (Premium) Son 10 şarkını listeler
+• /hediyepremium [id] - (Admin) Premium hediye eder
+• /bakimac - (Admin) Bakım modunu açar
+• /bakimkapat - (Admin) Bakım modunu kapatır
+      `,
+      privacy: `
+Fragments Müzik Botu olarak kullanıcıların gizliliğine büyük önem veriyoruz.
+Toplanan veriler sadece botun çalışması ve kullanıcı deneyiminin geliştirilmesi için kullanılır.
+Kişisel verileriniz hiçbir şekilde üçüncü taraflarla paylaşılmaz.
+
+Telegram üzerinden geliştiriciye veya destekçilere mesaj göndermek kesinlikle yasaktır.
+🔒 Bu tür girişimler, bot tarafından otomatik algılanır, ilgili kullanıcının tüm verileri sistemden kalıcı olarak silinir ve bot tarafından engellenir.
+Lütfen yalnızca şu e-posta adresini kullanın:
+📩 contact@egeherz.com
+      `,
+      terms: `
+Fragments Müzik Botu'nu kullanarak aşağıdaki koşulları kabul etmiş sayılırsınız:
+- Bot sadece müzik indirme amaçlıdır, başka amaçlarla kullanılamaz.
+- Botun çalışması ve hizmet sürekliliği için geliştiricinin uyarılarına uyunuz.
+- Herhangi bir yasa dışı, zararlı ya da saldırgan kullanım yasaktır.
+- Botun kullanımından doğacak her türlü sorumluluk kullanıcıya aittir.
+
+Herhangi bir sorun yaşarsanız lütfen contact@egeherz.com adresine e-posta gönderin.
+      `,
+      links: `
+<a href="https://t.me/fragmentsduyuru" target="_blank" rel="noopener noreferrer">📢 Duyuru Kanalı</a><br/>
+<a href="https://t.me/fragmentsmuzik" target="_blank" rel="noopener noreferrer">👥 Topluluk Grubu</a><br/>
+<a href="https://t.me/l0110310132100101110105122" target="_blank" rel="noopener noreferrer">👨‍💻 Geliştirici</a><br/>
+<a href="https://t.me/FragmentsofmeBOT" target="_blank" rel="noopener noreferrer">🤖 Botu Aç</a>
+      `
+    },
+    en: {
+      commands: `
+• /start - Start the bot
+• /sarki [name] - Download a song
+• /durumum - Show your download count
+• /surem - Show your premium time left
+• /premiumol - Show premium advantages
+• /gecmisim - (Premium) Show last 10 songs
+• /hediyepremium [id] - (Admin) Gift premium
+• /bakimac - (Admin) Enable maintenance mode
+• /bakimkapat - (Admin) Disable maintenance mode
+      `,
+      privacy: `
+At Fragments Music Bot, we highly value user privacy.
+Collected data is used solely for bot functionality and improving user experience.
+Personal data is never shared with third parties.
+
+Messaging the developer or supporters via Telegram is strictly prohibited.
+🔒 Such attempts are automatically detected; all related user data is permanently deleted from the system and the user is blocked.
+Please use only this email address:
+📩 contact@egeherz.com
+      `,
+      terms: `
+By using Fragments Music Bot, you agree to the following terms:
+- Bot is only for downloading music, no other purposes.
+- Follow developer warnings for bot stability and service continuity.
+- Illegal, harmful or aggressive use is prohibited.
+- All responsibility for usage lies with the user.
+
+For any issues, please email contact@egeherz.com.
+      `,
+      links: `
+<a href="https://t.me/fragmentsduyuru" target="_blank" rel="noopener noreferrer">📢 Announcement Channel</a><br/>
+<a href="https://t.me/fragmentsmuzik" target="_blank" rel="noopener noreferrer">👥 Community Group</a><br/>
+<a href="https://t.me/l0110310132100101110105122" target="_blank" rel="noopener noreferrer">👨‍💻 Developer</a><br/>
+<a href="https://t.me/FragmentsofmeBOT" target="_blank" rel="noopener noreferrer">🤖 Open Bot</a>
+      `
+    },
+    ru: {
+      commands: `
+• /start - Запустить бота
+• /sarki [название] - Скачать песню
+• /durumum - Показать количество скачиваний
+• /surem - Показать время премиума
+• /premiumol - Показать преимущества премиума
+• /gecmisim - (Премиум) Показать последние 10 песен
+• /hediyepremium [id] - (Админ) Подарить премиум
+• /bakimac - (Админ) Включить режим обслуживания
+• /bakimkapat - (Админ) Выключить режим обслуживания
+      `,
+      privacy: `
+Fragments Music Bot уважает вашу конфиденциальность.
+Собранные данные используются только для работы бота и улучшения пользовательского опыта.
+Личные данные не передаются третьим лицам.
+
+Запрещено отправлять сообщения разработчику или поддержке через Telegram.
+🔒 Такие попытки автоматически обнаруживаются, все данные пользователя удаляются из системы, а пользователь блокируется.
+Пожалуйста, используйте только этот email:
+📩 contact@egeherz.com
+      `,
+      terms: `
+Используя Fragments Music Bot, вы соглашаетесь с условиями:
+- Бот предназначен только для скачивания музыки.
+- Следуйте предупреждениям разработчика для стабильной работы.
+- Запрещено незаконное или вредоносное использование.
+- Ответственность за использование лежит на пользователе.
+
+Пишите по вопросам на contact@egeherz.com.
+      `,
+      links: `
+<a href="https://t.me/fragmentsduyuru" target="_blank" rel="noopener noreferrer">📢 Канал объявлений</a><br/>
+<a href="https://t.me/fragmentsmuzik" target="_blank" rel="noopener noreferrer">👥 Группа сообщества</a><br/>
+<a href="https://t.me/l0110310132100101110105122" target="_blank" rel="noopener noreferrer">👨‍💻 Разработчик</a><br/>
+<a href="https://t.me/FragmentsofmeBOT" target="_blank" rel="noopener noreferrer">🤖 Открыть бота</a>
+      `
+    },
+    ar: {
+      commands: `
+• /start - تشغيل البوت
+• /sarki [اسم] - تحميل أغنية
+• /durumum - عرض عدد التنزيلات
+• /surem - عرض مدة البريميوم
+• /premiumol - عرض مزايا البريميوم
+• /gecmisim - (بريميوم) عرض آخر 10 أغاني
+• /hediyepremium [id] - (مدير) منح بريميوم
+• /bakimac - (مدير) تفعيل وضع الصيانة
+• /bakimkapat - (مدير) تعطيل وضع الصيانة
+      `,
+      privacy: `
+بوت فراغمنتس يحترم خصوصيتك.
+تُستخدم البيانات فقط لتحسين أداء البوت وتجربة المستخدم.
+لا يتم مشاركة بياناتك مع أي طرف ثالث.
+
+الرسائل إلى المطور أو الدعم عبر Telegram ممنوعة.
+🔒 يتم كشف هذه المحاولات آليًا، وتحذف جميع بيانات المستخدم، ويُحظر المستخدم.
+يرجى استخدام البريد الإلكتروني فقط:
+📩 contact@egeherz.com
+      `,
+      terms: `
+باستخدام بوت فراغمنتس، أنت توافق على الشروط التالية:
+- البوت مخصص لتنزيل الموسيقى فقط.
+- اتبع تحذيرات المطور للحفاظ على استقرار الخدمة.
+- يمنع الاستخدام غير القانوني أو الضار.
+- المسؤولية تقع على المستخدم.
+
+لأي استفسارات، يرجى مراسلة contact@egeherz.com.
+      `,
+      links: `
+<a href="https://t.me/fragmentsduyuru" target="_blank" rel="noopener noreferrer">📢 قناة الإعلانات</a><br/>
+<a href="https://t.me/fragmentsmuzik" target="_blank" rel="noopener noreferrer">👥 مجموعة المجتمع</a><br/>
+<a href="https://t.me/l0110310132100101110105122" target="_blank" rel="noopener noreferrer">👨‍💻 المطور</a><br/>
+<a href="https://t.me/FragmentsofmeBOT" target="_blank" rel="noopener noreferrer">🤖 افتح البوت</a>
+      `
+    }
+  };
+
+  // Saat ve tarih göstergesi
+  function updateTime() {
+    const now = new Date();
+    // Gün adlarını dillerde
+    const days = {
+      tr: ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'],
+      en: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+      ru: ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'],
+      ar: ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت']
+    };
+    const lang = localStorage.getItem('lang') || 'tr';
+    const dayName = days[lang][now.getDay()];
+    // Saat formatı (24 saat)
+    const h = now.getHours().toString().padStart(2,'0');
+    const m = now.getMinutes().toString().padStart(2,'0');
+    timeDisplay.textContent = `${dayName}, ${h}:${m}`;
+  }
+  setInterval(updateTime, 60000);
+  updateTime();
+
+  // Dil değiştirme ve localStorage
+  function changeLanguage(lang) {
+    localStorage.setItem('lang', lang);
+    langSelect.value = lang;
+    updateTexts(lang);
+  }
+  langSelect.addEventListener('change', e => {
+    changeLanguage(e.target.value);
+  });
+  // Başlangıç dili
+  const savedLang = localStorage.getItem('lang') || 'tr';
+  langSelect.value = savedLang;
+  updateTexts(savedLang);
+
+  // Metin güncelleme fonksiyonu
+  function updateTexts(lang) {
+    // Ana başlık ve açıklama
+    const titles = {
+      tr: ['🎧 Fragments Müzik Botu','Telegram üzerinden saniyeler içinde şarkı indirmeni sağlayan, sade, şık ve güçlü bir müzik botudur.'],
+      en: ['🎧 Fragments Music Bot','A simple, stylish & powerful music bot that lets you download songs within seconds on Telegram.'],
+      ru: ['🎧 Фрагменты Музыкальный Бот','Простой, стильный и мощный бот, позволяющий скачивать песни за секунды в Telegram.'],
+      ar: ['🎧 بوت فراغمنتس للموسيقى','بوت بسيط وأنيق وقوي يمكنك من تنزيل الأغاني في ثوانٍ على تيليجرام.']
+    };
+    document.getElementById('main-title').textContent = titles[lang][0];
+    document.getElementById('main-subtitle').textContent = titles[lang][1];
+
+    // Modal başlık ve içerik varsayılan sekme = komutlar
+    modalTitle.textContent = {
+      tr: 'Komutlar',
+      en: 'Commands',
+      ru: 'Команды',
+      ar: 'الأوامر'
+    }[lang];
+    contentArea.innerHTML = content[lang].commands;
+
+    // Aktif tab sıfırla
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabButtons[0].classList.add('active');
+
+    // Sayfa yönü
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+  }
+
+  // Modal açma kapama
+  openModalButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const modalName = btn.dataset.modal || 'commands';
+      modalOverlay.classList.add('active');
+      setModalContent(modalName);
+      // Focus modal for accessibility
+      modalOverlay.querySelector('.modal').focus();
+    });
+  });
+  closeBtn.addEventListener('click', () => {
+    modalOverlay.classList.remove('active');
+  });
+  window.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && modalOverlay.classList.contains('active')){
+      modalOverlay.classList.remove('active');
+    }
+  });
+
+  // Modal tab switching
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      setModalContent(btn.dataset.tab.replace('-tab',''));
+    });
+  });
+
+  function setModalContent(tabName) {
+    const lang = localStorage.getItem('lang') || 'tr';
+    switch(tabName){
+      case 'commands': modalTitle.textContent = {tr:'Komutlar',en:'Commands',ru:'Команды',ar:'الأوامر'}[lang]; contentArea.innerHTML = content[lang].commands; break;
+      case 'privacy': modalTitle.textContent = {tr:'Gizlilik Politikası',en:'Privacy Policy',ru:'Политика конфиденциальности',ar:'سياسة الخصوصية'}[lang]; contentArea.innerHTML = content[lang].privacy; break;
+      case 'terms': modalTitle.textContent = {tr:'Kullanım Koşulları',en:'Terms of Use',ru:'Условия использования',ar:'شروط الاستخدام'}[lang]; contentArea.innerHTML = content[lang].terms; break;
+      case 'links': modalTitle.textContent = {tr:'Bağlantılar',en:'Links',ru:'Ссылки',ar:'روابط'}[lang]; contentArea.innerHTML = content[lang].links; break;
+      default: contentArea.innerHTML = ''; break;
+    }
+  }
+</script>
+
+</body>
+</html>

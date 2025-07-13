@@ -1,45 +1,31 @@
-# Müzik Sitesi 🎵
+# Fragments Müzik Botu Web Sitesi
 
-## Durum
+**DİKKAT!**
 
-🚧 **GELİŞTİRME AŞAMASINDA** 🚧  
-Bu site hâlen geliştirilme aşamasındadır.  
-Henüz tam bitmedi, bazı özellikler değişebilir veya eksik olabilir.
+Bu web sitesi sadece **Fragments Müzik Botu** için özel olarak tasarlanmıştır.  
+**İzinsiz kullanımı, kopyalanması veya çoğaltılması kesinlikle yasaktır!**
 
----
+- Kodlar ve tasarım size özel, kesinlikle çoğaltılamaz.  
+- Başkalarının kullanımına açık değildir, ticari veya kişisel izin olmadan kullanmak yasaktır.  
+- Herhangi bir kopyalama veya kötüye kullanım tespit edilirse yasal işlemler başlatılacaktır.  
+- Bu projeyi anlamadan, üzerinde değişiklik yapmadan veya izin almadan kullanmaya çalışmak tamamen yasaktır.
 
-## Hakkında
-
-- Modern ve şık tasarımlı müzik çalar  
-- Çoklu tema desteği (4 farklı tema)  
-- Canlı saat göstergesi  
-- Erişilebilir ve klavye dostu arayüz  
-- Mobil uyumlu ve dokunmatik destekli  
-- Şarkı listesi modalı ve kolay kullanım  
-- Animasyonlu butonlar ve geçiş efektleri
+**Bu projeyi kullanmak isteyenler, yeterli teknik bilgiye sahip olmadıkça kesinlikle işe yaramayacaktır.**
 
 ---
 
-## Kullanım
-
-Site açıldığında otomatik olarak son çalınan şarkı devam eder.  
-Tema değiştirme butonuyla arka plan değiştirilebilir.  
-Şarkı listesinden istediğiniz parçayı seçebilirsiniz.
+**Geliştirici İletişim:**  
+[@l0110310132100101110105122](https://t.me/l0110310132100101110105122)  
+E-posta: contact@egeherz.com
 
 ---
 
-## İletişim
-
-Sorun bildirimi için e-posta butonu kullanılabilir.
-
----
-
-## Notlar
-
-- İndex.html dosyasını silerseniz veya erişim dışı kalırsa,  
-  site otomatik olarak "GELİŞTİRME AŞAMASINDA" sayfasına yönlendirilebilir.  
-- Site geliştirilmeye devam edecektir.
+**Uyarı:**  
+Telegram üzerinden geliştiriciye veya destekçilere gereksiz mesaj göndermek yasaktır.  
+Bu tür davranışlar tespit edildiğinde kalıcı olarak engellenirsiniz.
 
 ---
 
-© 2025 Ege Deniz  
+**Kısaca:**  
+Bu proje sadece “anlayabilenler” içindir.  
+İzinsiz kullanmak veya kopyalamak **sıfır hoşgörüyle** karşılanacaktır.

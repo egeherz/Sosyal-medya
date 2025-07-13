@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fragments Müzik Botu - Yorumlar ve Bilgilendirme</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+  body {
+    margin:0; padding:0;
+    background-color: #121212;
+    color: #eee;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  header {
+    padding: 1rem;
+    text-align: center;
+    background: #1e1e1e;
+    width: 100%;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+  }
+  main {
+    max-width: 1000px;
+    width: 95%;
+    margin: 1rem auto;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  /* Sütunlar */
+  .column {
+    background: #222;
+    border-radius: 10px;
+    padding: 1rem;
+    flex: 1 1 280px;
+    min-width: 280px;
+  }
+  h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #f39c12;
+    padding-bottom: 0.5rem;
+    color: #f39c12;
+  }
+  button.modal-btn {
+    background: #f39c12;
+    border: none;
+    color: #121212;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button.modal-btn:hover {
+    background: #d78e0e;
+  }
+  /* Modal genel */
+  .modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0; 
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    overflow-y: auto;
+    padding: 2rem 1rem;
+  }
+  .modal.active {
+    display: block;
+  }
+  .modal-content {
+    background: #181818;
+    margin: auto;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    max-width: 700px;
+    color: #ddd;
+    box-shadow: 0 0 20px #f39c12cc;
+    position: relative;
+  }
+  .modal-content h3 {
+    margin-top: 0;
+    color: #f39c12;
+  }
+  .close-btn {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    color: #f39c12;
+    cursor: pointer;
+  }
+  /* Yorum alanı */
+  form.comment-form {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  form.comment-form input,
+  form.comment-form textarea {
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+  }
+  form.comment-form input {
+    background: #333;
+    color: #eee;
+  }
+  form.comment-form textarea {
+    background: #333;
+    color: #eee;
+    resize: vertical;
+    min-height: 80px;
+  }
+  form.comment-form button {
+    align-self: flex-start;
+    background: #f39c12;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    font-weight: 700;
+    color: #121212;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  form.comment-form button:hover {
+    background: #d78e0e;
+  }
+  /* Yorum listesi */
+  .comments-list {
+    margin-top: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+    border-top: 1px solid #444;
+  }
+  .comment {
+    border-bottom: 1px solid #333;
+    padding: 0.8rem 0;
+  }
+  .comment strong {
+    color: #f39c12;
+  }
+  .comment .email {
+    font-size: 0.85rem;
+    color: #888;
+  }
+  .comment .text {
+    margin: 0.3rem 0 0.5rem;
+  }
+  .reply {
+    margin-left: 1rem;
+    background: #2a2a2a;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #aaa;
+    white-space: pre-wrap;
+  }
+  .reply-label {
+    color: #f1c40f;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  /* Admin cevap formu */
+  .admin-reply-form {
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+  .admin-reply-form textarea {
+    flex: 1;
+    min-height: 40px;
+    background: #333;
+    color: #eee;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    border: none;
+  }
+  .admin-reply-form button {
+    background: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 0 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .admin-reply-form button:hover {
+    background: #1e8449;
+  }
+  /* Admin panel butonu */
+  #adminToggleBtn {
+    background: #c0392b;
+    color: #fff;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-weight: 700;
+  }
+  #adminToggleBtn.active {
+    background: #27ae60;
+  }
+  /* Responsive */
+  @media (max-width: 720px) {
+    main {
+      flex-direction: column;
+      align-items: center;
+    }
+    .column {
+      min-width: 95%;
+    }
+  }
+  /* Link modal içi butonu */
+  .link-btn {
+    background: transparent;
+    border: none;
+    color: #f39c12;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 1rem;
+    padding: 0;
+  }
+</style>
+</head>
+<body>
+
+<header>Fragments Müzik Botu - Bilgi & Yorumlar</header>
+
+<main>
+  <div class="column">
+    <h2>Gizlilik Politikası</h2>
+    <button class="modal-btn" data-modal="privacyModal">Oku</button>
+  </div>
+  <div class="column">
+    <h2>Kullanım Koşulları</h2>
+    <button class="modal-btn" data-modal="termsModal">Oku</button>
+  </div>
+  <div class="column">
+    <h2>Komutlar</h2>
+    <button class="modal-btn" data-modal="commandsModal">Göster</button>
+  </div>
+  <div class="column">
+    <h2>Bağlantılar</h2>
+    <button class="modal-btn" data-modal="linksModal">Göster</button>
+  </div>
+</main>
+
+<section class="column" style="max-width: 1000px; margin: 1rem auto;">
+  <h2>Yorumlar</h2>
+  <form id="commentForm" class="comment-form">
+    <input type="text" id="nameInput" placeholder="Adınız" required maxlength="30" autocomplete="off" />
+    <input type="email" id="emailInput" placeholder="E-posta (cevap için)" required autocomplete="off" />
+    <textarea id="commentInput" placeholder="Yorumunuzu yazın..." required maxlength="500"></textarea>
+    <button type="submit">Yorum Gönder</button>
+  </form>
+  <div id="commentsList" class="comments-list" aria-live="polite" aria-relevant="additions"></div>
+  <button id="adminToggleBtn">Admin Modu Aç</button>
+</section>
+
+<!-- Modal Gizlilik -->
+<div id="privacyModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+  <div class="modal-content">
+    <button class="close-btn" data-close>&times;</button>
+    <h3 id="privacyTitle">Gizlilik Politikası</h3>
+    <p>
+      Buraya uzun ve detaylı gizlilik politikası yazabilirsiniz. Kullanıcı verileri güvende tutulur, izinsiz paylaşılmaz. Yorumlar ve bilgiler sadece bu platformda kullanılır ve hiçbir şekilde üçüncü taraflarla paylaşılmaz.
+    </p>
+    <p>
+      Bot ve site kullanıcıları, gizlilik haklarına saygı gösterilmesini bekleyebilir. Her türlü veri koruma kanunlarına uygun hareket edilmektedir.
+    </p>
+  </div>
+</div>
+
+<!-- Modal Kullanım Koşulları -->
+<div id="termsModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+  <div class="modal-content">
+    <button class="close-btn" data-close>&times;</button>
+    <h3 id="termsTitle">Kullanım Koşulları</h3>
+    <p>
+      Site ve botun kullanımı sırasında tüm kullanıcılar bu kurallara uymayı kabul eder.
+      Telegram üzerinden geliştiriciye veya destekçilere mesaj göndermek kesinlikle yasaktır.
+      Bu tür girişimler tespit edildiğinde, ilgili kullanıcıların tüm verileri sistemden kalıcı olarak silinir ve erişimleri engellenir.
+    </p>
+    <p>
+      Kullanıcılar, hizmeti kötüye kullanmamayı, hakaret, spam veya illegal içerik paylaşmamayı taahhüt eder.
+      Herhangi bir sorun durumunda sadece belirtilen e-posta adresi üzerinden destek talebi yapılmalıdır.
+    </p>
+  </div>
+</div>
+
+<!-- Modal Komutlar -->
+<div id="commandsModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="commandsTitle">
+  <div class="modal-content">
+    <button class="close-btn" data-close>&times;</button>
+    <h3 id="commandsTitle">Bot Komutları</h3>
+    <ul>
+      <li><strong>/durumum</strong> → Kaç şarkı indirdiğinizi gösterir</li>
+      <li><strong>/surem</strong> → Premium sürenizi kontrol edin</li>
+      <li><strong>/premiumol</strong> → Premium avantajlarını gösterir</li>
+      <li><strong>/gecmisim</strong> → (Premium) Son 10 şarkı geçmişinizi gösterir</li>
+      <li><strong>/sarki Şarkı Adı</strong> → Şarkı indirmenizi sağlar</li>
+      <li><strong>/adminbakim</strong> → (Admin) Bot bakım modunu yönetir</li>
+      <li><strong>/premiumver</strong> → (Admin) Kullanıcıya premium verir</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Modal Bağlantılar -->
+<div id="linksModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="linksTitle">
+  <div class="modal-content">
+    <button class="close-btn" data-close>&times;</button>
+    <h3 id="linksTitle">Önemli Bağlantılar</h3>
+    <ul>
+      <li><a href="https://t.me/fragmentsduyuru" target="_blank" rel="noopener" class="link-btn">Duyuru Kanalı</a></li>
+      <li><a href="https://t.me/fragmentsmuzik" target="_blank" rel="noopener" class="link-btn">Test ve Topluluk Grubu</a></li>
+      <li><a href="https://t.me/l0110310132100101110105122" target="_blank" rel="noopener" class="link-btn">Geliştirici</a></li>
+      <li><a href="https://egeherz.com" target="_blank" rel="noopener" class="link-btn">Resmi Web Sitemiz</a></li>
+    </ul>
+  </div>
+</div>
+
+<script>
+// Modal kontrolü
+document.querySelectorAll('.modal-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const modal = document.getElementById(e.currentTarget.dataset.modal);
+    modal.classList.add('active');
+  });
+});
+document.querySelectorAll('[data-close]').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.currentTarget.closest('.modal').classList.remove('active');
+  });
+});
+
+// Yorumlar için localStorage anahtarları
+const COMMENTS_KEY = 'fragments_comments';
+const ADMIN_PASSWORD = 'admin123'; // Sen değiştir admin şifreni buraya
+
+// Admin modu değişkeni
+let adminMode = false;
+
+// Yorumları getir ve DOM'a ekle
+function loadComments() {
+  const commentsList = document.getElementById('commentsList');
+  commentsList.innerHTML = '';
+  const comments = JSON.parse(localStorage.getItem(COMMENTS_KEY)) || [];
+
+  comments.forEach((comment, idx) => {
+    const div = document.createElement('div');
+    div.classList.add('comment');
+    div.setAttribute('data-index', idx);
+    div.innerHTML = `
+      <strong>${escapeHTML(comment.name)}</strong> <span class="email">(${escapeHTML(comment.email)})</span>
+      <p class="text">${escapeHTML(comment.text)}</p>
+      ${comment.reply ? `<div class="reply"><div class="reply-label">Admin Yanıtı:</div>${escapeHTML(comment.reply)}</div>` : ''}
+    `;
+    // Admin ise cevap verme formu göster
+    if(adminMode && !comment.reply) {
+      const replyForm = document.createElement('form');
+      replyForm.className = 'admin-reply-form';
+      replyForm.innerHTML = `
+        <textarea placeholder="Yanıtınızı yazın..." required></textarea>
+        <button type="submit">Yanıtla</button>
+      `;
+      replyForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const replyText = replyForm.querySelector('textarea').value.trim();
+        if(replyText === '') return alert('Yanıt boş olamaz.');
+        comment.reply = replyText;
+        saveComments(comments);
+        loadComments();
+      });
+      div.appendChild(replyForm);
+    }
+    commentsList.appendChild(div);
+  });
+}
+
+// Yorumları kaydet
+function saveComments(comments) {
+  localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
+}
+
+// Güvenlik için HTML escape
+function escapeHTML(str) {
+  if(!str) return '';
+  return str.replace(/[&<>"']/g, function(m) {
+    return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[m];
+  });
+}
+
+// Yorum form gönderimi
+document.getElementById('commentForm').addEventListener('submit', e => {
+  e.preventDefault();
+  if(adminMode) {
+    alert('Admin modunda yorum gönderemezsiniz.');
+    return;
+  }
+  const name = e.target.name.value || document.getElementById('nameInput').value.trim();
+  const email = e.target.email.value || document.getElementById('emailInput').value.trim();
+  const text = e.target.comment.value || document.getElementById('commentInput').value.trim();
+  if(!name || !email || !text) {
+    alert('Lütfen tüm alanları doldurun.');
+    return;
+  }
+  const comments = JSON.parse(localStorage.getItem(COMMENTS_KEY)) || [];
+  comments.push({name, email, text});
+  saveComments(comments);
+  loadComments();
+  e.target.reset();
+});
+
+// Admin modu aç/kapa
+document.getElementById('adminToggleBtn').addEventListener('click', () => {
+  if(!adminMode) {
+    const pass = prompt('Admin modunu açmak için şifreyi girin:');
+    if(pass === ADMIN_PASSWORD) {
+      adminMode = true;
+      alert('Admin modu aktif.');
+      document.getElementById('adminToggleBtn').textContent = 'Admin Modu Kapat';
+      document.getElementById('adminToggleBtn').classList.add('active');
+      loadComments();
+    } else {
+      alert('Şifre yanlış!');
+    }
+  } else {
+    adminMode = false;
+    alert('Admin modu kapandı.');
+    document.getElementById('adminToggleBtn').textContent = 'Admin Modu Aç';
+    document.getElementById('adminToggleBtn').classList.remove('active');
+    loadComments();
+  }
+});
+
+// Sayfa açıldığında yorumları yükle
+loadComments();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Fragments Müzik Botu</title>
+<style>
+  /* Google Fonts Montserrat */
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+  /* Reset */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: url('https://i.imgur.com/2cu9SVp.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #e0e0e0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    overflow-x: hidden;
+  }
+  /* Overlay blur to ease eye strain */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(5px);
+    z-index: -1;
+  }
+
+  header {
+    width: 100%;
+    padding: 10px 18px;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #c0c0c0;
+    letter-spacing: 0.05em;
+  }
+  header .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  header .logo img {
+    height: 30px;
+    width: 30px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 1px #00f0cc);
+    transition: transform 0.3s ease;
+  }
+  header .logo img:hover {
+    transform: rotate(12deg) scale(1.1);
+  }
+  header .time {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  header .lang-select {
+    background: transparent;
+    border: 1.5px solid #00cec9;
+    border-radius: 24px;
+    color: #00cec9;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px 14px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  header .lang-select:hover, header .lang-select:focus {
+    background-color: #00cec9;
+    color: #121212;
+    outline: none;
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 20px;
+    text-align: center;
+    text-shadow:
+      0 0 12px #000000dd,
+      0 0 20px #00cec9aa;
+  }
+  main h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #00cec9;
+    letter-spacing: 0.04em;
+    animation: fadeInDown 1.2s ease forwards;
+  }
+  main p.subtitle {
+    font-size: 1.2rem;
+    max-width: 400px;
+    line-height: 1.45;
+    margin-bottom: 38px;
+    color: #b0f0e6dd;
+    animation: fadeInUp 1.2s ease forwards;
+  }
+  .btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    max-width: 460px;
+  }
+  button.open-modal-btn {
+    background: linear-gradient(135deg, #00cec9, #008080);
+    border: none;
+    padding: 14px 30px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #121212;
+    border-radius: 30px;
+    box-shadow:
+      0 6px 10px rgb(0 206 201 / 0.6),
+      0 2px 6px rgb(0 206 201 / 0.5);
+    cursor: pointer;
+    transition:
+      background-position 0.45s ease,
+      box-shadow 0.3s ease,
+      color 0.3s ease;
+    background-size: 200% 200%;
+    background-position: left center;
+    flex: 1 1 140px;
+    min-width: 140px;
+  }
+  button.open-modal-btn:hover,
+  button.open-modal-btn:focus {
+    background-position: right center;
+    color: #f0fdfa;
+    box-shadow:
+      0 12px 20px rgb(0 230 230 / 0.8),
+      0 6px 12px rgb(0 230 230 / 0.6);
+    outline: none;
+  }
+  a.open-modal-btn {
+    text-decoration: none;
+  }
+
+  /* Modal overlay */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.95);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 9999;
+    overflow-y: auto;
+  }
+  .modal-overlay.active {
+    display: flex;
+    animation: fadeIn 0.3s ease forwards;
+  }
+  .modal {
+    background: #111111ee;
+    border-radius: 14px;
+    width: 95%;
+    max-width: 620px;
+    max-height: 85vh;
+    overflow-y: auto;
+    color: #e0e0e0;
+    box-shadow: 0 0 30px #00d4b3aa;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.3s ease forwards;
+    outline: none;
+  }
+  .modal header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #00d4b3cc;
+    font-weight: 700;
+    font-size: 1.45rem;
+    color: #00e6ca;
+  }
+  .modal header .close-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.9rem;
+    color: #00e6ca;
+    cursor: pointer;
+    transition: color 0.25s ease;
+  }
+  .modal header .close-btn:hover,
+  .modal header .close-btn:focus {
+    color: #009974;
+    outline: none;
+  }
+  .modal nav {
+    display: flex;
+    border-bottom: 1.7px solid #00d4b388;
+    background: #111111dd;
+  }
+  .modal nav button {
+    flex: 1;
+    padding: 14px 12px;
+    border: none;
+    background: transparent;
+    color: #6ef2db;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .modal nav button.active {
+    background: #00e6ca;
+    color: #111111;
+    border-radius: 14px 14px 0 0;
+    box-shadow:
+      0 0 8px #00e6caaa,
+      0 0 15px #00e6ca99;
+  }
+  .modal section.content {
+    padding: 24px 28px 28px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #c9f9f2cc;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    scrollbar-width: thin;
+    scrollbar-color: #00e6ca33 transparent;
+  }
+  .modal section.content a {
+    color: #00e6ca;
+    text-decoration: none;
+    font-weight: 600;
+    transition: text-decoration 0.25s ease;
+  }
+  .modal section.content a:hover,
+  .modal section.content a:focus {
+    text-decoration: underline;
+    outline: none;
+  }
+  /* Scrollbar */
+  .modal section.content::-webkit-scrollbar {
+    width: 6px;
+  }
+  .modal section.content::-webkit-scrollbar-thumb {
+    background: #00d4b3bb;
+    border-radius: 12px;
+  }
+  /* Footer */
+  footer {
+    padding: 16px 12px;
+    background: rgba(0,0,0,0.8);
+    text-align: center;
+    font-size: 13px;
+    color: #7ad5c2;
+    user-select:none;
+    letter-spacing: 0.06em;
+  }
+  footer a {
+    color: #00e6ca;
+    text-decoration: none;
+    font-weight: 700;
+    margin: 0 8px;
+  }
+  footer a:hover,
+  footer a:focus {
+    text-decoration: underline;
+    outline: none;
+  }
+  /* Social icons */
+  footer a.social-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  footer a.social-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: #00e6ca;
+    transition: fill 0.3s ease;
+  }
+  footer a.social-icon:hover svg,
+  footer a.social-icon:focus svg {
+    fill: #009974;
+  }
+
+  /* Responsive & mobile tweaks */
+  @media (max-width: 480px) {
+    main h1 {
+      font-size: 2rem;
+    }
+    main p.subtitle {
+      font-size: 1rem;
+      max-width: 90vw;
+    }
+    button.open-modal-btn {
+      min-width: 130px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+    }
+    .modal {
+      max-width: 95vw;
+    }
+    .modal header {
+      font-size: 1.25rem;
+      padding: 16px 20px 14px;
+    }
+    .modal nav button {
+      font-size: 1rem;
+      padding: 10px 6px;
+    }
+    footer {
+      font-size: 12px;
+      padding: 14px 8px;
+    }
+    footer a {
+      margin: 0 6px;
+      font-size: 12px;
+    }
+  }
+
+  /* Animations */
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-15px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }
+  @keyframes slideUp {
+    0% {transform: translateY(15px); opacity: 0;}
+    100% {transform: translateY(0); opacity: 1;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" title="Fragments Müzik Botu">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/240px-Telegram_logo.svg.png" alt="Telegram Logo" />
+    <span>Fragments</span>
+  </div>
+  <div>
+    <span class="time" id="time-display">--:-- --</span>
+  </div>
+  <select id="lang-select" aria-label="Dil Seçimi" title="Dil Seçimi" class="lang-select" aria-live="polite" aria-atomic="true">
+    <option value="tr" selected>Türkçe</option>
+    <option value="en">English</option>
+    <option value="ru">Русский</option>
+    <option value="ar">العربية</option>
+  </select>
+</header>
+
+<main>
+  <h1 id="main-title">🎧 Fragments Müzik Botu</h1>
+  <p id="main-subtitle" class="subtitle">
+    Telegram üzerinden saniyeler içinde şarkı indirmeni sağlayan, sade, şık ve güçlü bir müzik botudur.
+  </p>
+  <div class="btn-container" role="group" aria-label="Modal Açma Butonları">
+    <button class="open-modal-btn" data-modal="commands" aria-haspopup="dialog" aria-controls="modal-overlay" aria-expanded="false">Komutlar</button>
+    <button class="open-modal-btn" data-modal="privacy" aria-haspopup="dialog" aria-controls="modal-overlay" aria-expanded="false">Gizlilik Politikası</button>
+    <button class="open-modal-btn" data-modal="terms" aria-haspopup="dialog" aria-controls="modal-overlay" aria-expanded="false">Kullanım Koşulları</button>
+    <a href="https://t.me/FragmentsofmeBOT" target="_blank" rel="noopener noreferrer" aria-label="Botu Telegram'da Aç">
+      <button class="open-modal-btn">Botu Aç</button>
+    </a>
+  </div>
+
+  <!-- Yorum sistemi -->
+  <div id="comments-section" style="max-width:460px; margin: 30px auto; text-align:left; color:#00cec9;">
+
+    <h2 style="margin-bottom:12px; font-weight:700; font-size:1.3rem; color:#00e6ca;">Yorumlar / Comments</h2>
+
+    <form id="comment-form" aria-label="Yorum Formu" style="display:flex; flex-direction:column; gap:8px;">
+      <input type="text" id="comment-username" placeholder="Adınız / Your name" required
+        style="padding:10px 12px; border-radius:8px; border:none; font-size:1rem;"/>
+      <textarea id="comment-text" placeholder="Yorumunuz / Your comment" required rows="3"
+        style="resize:none; padding:10px 12px; border-radius:8px; border:none; font-size:1rem;"></textarea>
+      <button type="submit" style="
+        background:#00cec9; color:#121212; font-weight:700; border:none; border-radius:24px; padding:12px 0; cursor:pointer; font-size:1rem;
+        box-shadow:0 6px 10px rgb(0 206 201 / 0.6);
+        transition: background-color 0.3s ease;
+      ">Gönder / Submit</button>
+    </form>
+
+    <ul id="comments-list" style="list-style:none; margin-top:20px; max-height:250px; overflow-y:auto; padding-left:0;">
+      <!-- Yorumlar buraya gelecek -->
+    </ul>
+  </div>
+</main>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="content-area" tabindex="-1">
+  <div class="modal" tabindex="0">
+    <header>
+      <span id="modal-title">Başlık</span>
+      <button class="close-btn" aria-label="Kapat">&times;</button>
+    </header>
+    <nav role="tablist" aria-label="Modal Sekmeleri">
+      <button class="tab-btn active" data-tab="commands-tab" role="tab" aria-selected="true" aria-controls="content-area" id="tab-commands">Komutlar</button>
+      <button class="tab-btn" data-tab="privacy-tab" role="tab" aria-selected="false" aria-controls="content-area" id="tab-privacy">Gizlilik Politikası</button>
+      <button class="tab-btn" data-tab="terms-tab" role="tab" aria-selected="false" aria-controls="content-area" id="tab-terms">Kullanım Koşulları</button>
+      <button class="tab-btn" data-tab="links-tab" role="tab" aria-selected="false" aria-controls="content-area" id="tab-links">Bağlantılar</button>
+    </nav>
+    <section class="content" id="content-area" tabindex="0" role="tabpanel" aria-labelledby="tab-commands">
+      <!-- İçerik buraya gelecek -->
+    </section>
+  </div>
+</div>
+
+<footer>
+  © 2025 Fragments Müzik Botu |
+  <a href="mailto:contact@egeherz.com" class="social-icon" aria-label="E-posta Gönder">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M1.5 5.25A2.25 2.25 0 0 1 3.75 3h16.5A2.25 2.25 0 0 1 22.5 5.25v13.5a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18.75V5.25zM3.75 5.25v.423l8.25 5.466 8.25-5.466V5.25H3.75zM21 18.75V7.427l-8.228 5.448a.75.75 0 0 1-.544.174.75.75 0 0 1-.544-.174L3 7.427v11.323h18z"/></svg>
+    contact@egeherz.com
+  </a>
+</footer>
+
+<script>
+  // İçerik dilleri
+  const content = {
+    tr: {
+      commands: `
+• /surem - Premium süreni gösterir
+• /premiumol - Premium avantajlarını gösterir
+• /gecmisim - (Premium) Son 10 şarkını listeler
+• /hediyepremium [id] - (Yönetici) Premium verir
+• /bakimac - (Yönetici) Bakım modunu açar
+• /bakimkapat - (Yönetici) Bakım modunu kapatır
+      `,
+      privacy: `
+Fragments botu gizliliğinizi önemser.
+Veriler sadece bot performansını ve kullanıcı deneyimini artırmak için kullanılır.
+Verileriniz üçüncü taraflarla paylaşılmaz.
+
+Telegram üzerinden geliştiriciye veya destek ekibine mesaj göndermek yasaktır.
+🔒 Bu tür girişimler otomatik olarak tespit edilir, kullanıcı verileri silinir ve engellenir.
+Lütfen sadece e-posta ile iletişime geçiniz:
+📩 contact@egeherz.com
+      `,
+      terms: `
+Fragments botunu kullanarak aşağıdaki şartları kabul etmiş sayılırsınız:
+- Bot yalnızca müzik indirme amaçlıdır.
+- Geliştiricinin uyarılarına uymak hizmetin istikrarı için gereklidir.
+- Yasadışı veya zararlı kullanımı yasaktır.
+- Sorumluluk kullanıcıya aittir.
+
+Sorular için contact@egeherz.com adresine yazabilirsiniz.
+      `,
+      links: `
+<a href="https://t.me/fragmentsduyuru" target="_blank" rel="noopener noreferrer">📢 Duyuru Kanalı</a><br/>
+<a href="https://t.me/fragmentsmuzik" target="_blank" rel="noopener noreferrer">👥 Topluluk Grubu</a><br/>
+<a href="https://t.me/l0110310132100101110105122" target="_blank" rel="noopener noreferrer">👨‍💻 Geliştirici</a><br/>
+<a href="https://t.me/FragmentsofmeBOT" target="_blank" rel="noopener noreferrer">🤖 Botu Aç</a>
+      `
+    },
+    en: {
+      commands: `
+• /surem - Show premium duration
+• /premiumol - Show premium benefits
+• /gecmisim - (Premium) Show last 10 songs
+• /hediyepremium [id] - (Admin) Grant premium
+• /bakimac - (Admin) Enable maintenance mode
+• /bakimkapat - (Admin) Disable maintenance mode
+      `,
+      privacy: `
+Fragments bot respects your privacy.
+Data is only used to improve bot performance and user experience.
+Your data is not shared with any third parties.
+
+Messaging developer or support via Telegram is forbidden.
+🔒 Attempts are detected automatically; user data is deleted and user banned.
+Please contact only via email:
+📩 contact@egeherz.com
+      `,
+      terms: `
+By using Fragments bot, you agree to the following:
+- Bot is for music downloading only.
+- Follow developer warnings to keep service stable.
+- Illegal or harmful use is prohibited.
+- User is responsible.
+
+For questions, contact contact@egeherz.com.
+      `,
+      links: `
+<a href="https://t.me/fragmentsduyuru" target="_blank" rel="noopener noreferrer">📢 Announcement Channel</a><br/>
+<a href="https://t.me/fragmentsmuzik" target="_blank" rel="noopener noreferrer">👥 Community Group</a><br/>
+<a href="https://t.me/l0110310132100101110105122" target="_blank" rel="noopener noreferrer">👨‍💻 Developer</a><br/>
+<a href="https://t.me/FragmentsofmeBOT" target="_blank" rel="noopener noreferrer">🤖 Open Bot</a>
+      `
+    },
+    ru: {
+      commands: `
+• /surem - Показать длительность премиума
+• /premiumol - Показать преимущества премиума
+• /gecmisim - (Премиум) Показать последние 10 песен
+• /hediyepremium [id] - (Админ) Выдать премиум
+• /bakimac - (Админ) Включить режим обслуживания
+• /bakimkapat - (Админ) Выключить режим обслуживания
+      `,
+      privacy: `
+Фрагменты бот уважает вашу конфиденциальность.
+Данные используются только для улучшения производительности бота и пользовательского опыта.
+Ваши данные не передаются третьим лицам.
+
+Сообщения разработчику или поддержке через Telegram запрещены.
+🔒 Попытки автоматически обнаруживаются; данные пользователя удаляются и пользователь блокируется.
+Пожалуйста, обращайтесь только по электронной почте:
+📩 contact@egeherz.com
+      `,
+      terms: `
+Используя бота Фрагменты, вы соглашаетесь с условиями:
+- Бот предназначен только для загрузки музыки.
+- Следуйте предупреждениям разработчика для стабильной работы сервиса.
+- Запрещено незаконное или вредоносное использование.
+- Ответственность на пользователе.
+
+Вопросы отправляйте на contact@egeherz.com.
+      `,
+      links: `
+<a href="https://t.me/fragmentsduyuru" target="_blank" rel="noopener noreferrer">📢 Канал объявлений</a><br/>
+<a href="https://t.me/fragmentsmuzik" target="_blank" rel="noopener noreferrer">👥 Группа сообщества</a><br/>
+<a href="https://t.me/l0110310132100101110105122" target="_blank" rel="noopener noreferrer">👨‍💻 Разработчик</a><br/>
+<a href="https://t.me/FragmentsofmeBOT" target="_blank" rel="noopener noreferrer">🤖 Открыть бота</a>
+      `
+    },
+    ar: {
+      commands: `
+• /surem - عرض مدة البريميوم
+• /premiumol - عرض مزايا البريميوم
+• /gecmisim - (بريميوم) عرض آخر 10 أغاني
+• /hediyepremium [id] - (مدير) منح بريميوم
+• /bakimac - (مدير) تفعيل وضع الصيانة
+• /bakimkapat - (مدير) تعطيل وضع الصيانة
+      `,
+      privacy: `
+بوت فراغمنتس يحترم خصوصيتك.
+تُستخدم البيانات فقط لتحسين أداء البوت وتجربة المستخدم.
+لا يتم مشاركة بياناتك مع أي طرف ثالث.
+
+الرسائل إلى المطور أو الدعم عبر Telegram ممنوعة.
+🔒 يتم كشف هذه المحاولات آليًا، وتحذف جميع بيانات المستخدم، ويُحظر المستخدم.
+يرجى استخدام البريد الإلكتروني فقط:
+📩 contact@egeherz.com
+      `,
+      terms: `
+باستخدام بوت فراغمنتس، أنت توافق على الشروط التالية:
+- البوت مخصص لتنزيل الموسيقى فقط.
+- اتبع تحذيرات المطور للحفاظ على استقرار الخدمة.
+- يمنع الاستخدام غير القانوني أو الضار.
+- المسؤولية تقع على المستخدم.
+
+لأي استفسارات، يرجى مراسلة contact@egeherz.com.
+      `,
+      links: `
+<a href="https://t.me/fragmentsduyuru" target="_blank" rel="noopener noreferrer">📢 قناة الإعلانات</a><br/>
+<a href="https://t.me/fragmentsmuzik" target="_blank" rel="noopener noreferrer">👥 مجموعة المجتمع</a><br/>
+<a href="https://t.me/l0110310132100101110105122" target="_blank" rel="noopener noreferrer">👨‍💻 المطور</a><br/>
+<a href="https://t.me/FragmentsofmeBOT" target="_blank" rel="noopener noreferrer">🤖 افتح البوت</a>
+      `
+    }
+  };
+
+  // Saat ve tarih göstergesi
+  function updateTime() {
+    const now = new Date();
+    // Gün adlarını dillerde
+    const days = {
+      tr: ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'],
+      en: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+      ru: ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'],
+      ar: ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت']
+    };
+    const lang = localStorage.getItem('lang') || 'tr';
+    const dayName = days[lang][now.getDay()];
+    // Saat formatı (24 saat) + saniye eklendi
+    const h = now.getHours().toString().padStart(2,'0');
+    const m = now.getMinutes().toString().padStart(2,'0');
+    const s = now.getSeconds().toString().padStart(2,'0');
+    const timeDisplay = document.getElementById('time-display');
+    if(timeDisplay) timeDisplay.textContent = `${dayName}, ${h}:${m}:${s}`;
+  }
+  setInterval(updateTime, 1000);
+  updateTime();
+
+  // Dil değiştirme ve localStorage
+  const langSelect = document.getElementById('lang-select');
+  langSelect.addEventListener('change', e => {
+    const lang = e.target.value;
+    localStorage.setItem('lang', lang);
+    updateTexts(lang);
+  });
+
+  // Sayfa yüklendiğinde dil ayarla
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedLang = localStorage.getItem('lang') || 'tr';
+    langSelect.value = savedLang;
+    updateTexts(savedLang);
+  });
+
+  // Modal & içerik
+  const modalOverlay = document.getElementById('modal-overlay');
+  const modalTitle = document.getElementById('modal-title');
+  const contentArea = document.getElementById('content-area');
+  const closeBtn = modalOverlay.querySelector('.close-btn');
+  const tabButtons = Array.from(modalOverlay.querySelectorAll('nav button.tab-btn'));
+  const openModalButtons = Array.from(document.querySelectorAll('.open-modal-btn'));
+
+  function updateTexts(lang) {
+    const titles = {
+      tr: ['🎧 Fragments Müzik Botu','Telegram üzerinden saniyeler içinde şarkı indirmeni sağlayan, sade, şık ve güçlü bir müzik botudur.'],
+      en: ['🎧 Fragments Music Bot','A simple, stylish & powerful music bot that lets you download songs within seconds on Telegram.'],
+      ru: ['🎧 Фрагменты Музыкальный Бот','Простой, стильный и мощный бот, позволяющий скачивать песни за секунды в Telegram.'],
+      ar: ['🎧 بوت فراغمنتس للموسيقى','بوت بسيط وأنيق وقوي يمكنك من تنزيل الأغاني في ثوانٍ على تيليجرام.']
+    };
+    document.getElementById('main-title').textContent = titles[lang][0];
+    document.getElementById('main-subtitle').textContent = titles[lang][1];
+
+    // Modal default tab - commands
+    modalTitle.textContent = {
+      tr: 'Komutlar',
+      en: 'Commands',
+      ru: 'Команды',
+      ar: 'الأوامر'
+    }[lang];
+    contentArea.innerHTML = content[lang].commands;
+
+    // Aktif tab sıfırla ve ilk buton aktif et
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabButtons[0].classList.add('active');
+
+    // Sayfa yönü (rtl - ltr)
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+  }
+
+  // Modal açma kapama
+  openModalButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const modalName = btn.dataset.modal || 'commands';
+      modalOverlay.classList.add('active');
+      setModalContent(modalName);
+      modalOverlay.querySelector('.modal').focus();
+      // Buton aria-expanded değiştir
+      btn.setAttribute('aria-expanded','true');
+    });
+  });
+  closeBtn.addEventListener('click', () => {
+    modalOverlay.classList.remove('active');
+    // Buton aria-expanded sıfırla
+    openModalButtons.forEach(btn => btn.setAttribute('aria-expanded','false'));
+  });
+  window.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && modalOverlay.classList.contains('active')){
+      modalOverlay.classList.remove('active');
+      openModalButtons.forEach(btn => btn.setAttribute('aria-expanded','false'));
+    }
+  });
+
+  // Modal tab switching
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabButtons.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      setModalContent(btn.dataset.tab.replace('-tab',''));
+    });
+  });
+
+  function setModalContent(tabName) {
+    const lang = localStorage.getItem('lang') || 'tr';
+    switch(tabName){
+      case 'commands': 
+        modalTitle.textContent = {tr:'Komutlar',en:'Commands',ru:'Команды',ar:'الأوامر'}[lang]; 
+        contentArea.innerHTML = content[lang].commands; 
+        contentArea.setAttribute('aria-labelledby','tab-commands');
+        break;
+      case 'privacy': 
+        modalTitle.textContent = {tr:'Gizlilik Politikası',en:'Privacy Policy',ru:'Политика конфиденциальности',ar:'سياسة الخصوصية'}[lang]; 
+        contentArea.innerHTML = content[lang].privacy;
+        contentArea.setAttribute('aria-labelledby','tab-privacy');
+        break;
+      case 'terms': 
+        modalTitle.textContent = {tr:'Kullanım Koşulları',en:'Terms of Use',ru:'Условия использования',ar:'شروط الاستخدام'}[lang]; 
+        contentArea.innerHTML = content[lang].terms;
+        contentArea.setAttribute('aria-labelledby','tab-terms');
+        break;
+      case 'links': 
+        modalTitle.textContent = {tr:'Bağlantılar',en:'Links',ru:'Ссылки',ar:'روابط'}[lang]; 
+        contentArea.innerHTML = content[lang].links;
+        contentArea.setAttribute('aria-labelledby','tab-links');
+        break;
+      default: contentArea.innerHTML = ''; break;
+    }
+  }
+
+  /* ---- Yorum sistemi JS ---- */
+  // Yorumlar için localStorage anahtarı
+  const COMMENTS_KEY = 'comments';
+
+  // Yorumları yükle ve ekrana yazdır
+  function loadComments() {
+    const commentsList = document.getElementById('comments-list');
+    commentsList.innerHTML = '';
+    const comments = JSON.parse(localStorage.getItem(COMMENTS_KEY)) || [];
+    comments.forEach(({username, text, date}) => {
+      const li = document.createElement('li');
+      li.style.borderBottom = '1px solid #00cec933';
+      li.style.padding = '8px 0';
+      li.innerHTML = `
+        <strong style="color:#00e6ca;">${escapeHtml(username)}</strong> <small style="color:#66fff9;">[${date}]</small><br/>
+        <span style="white-space:pre-wrap;">${escapeHtml(text)}</span>
+      `;
+      commentsList.appendChild(li);
+    });
+  }
+
+  // Güvenlik için HTML escape fonksiyonu
+  function escapeHtml(text) {
+    return text.replace(/[&<>"']/g, (m) => {
+      return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[m];
+    });
+  }
+
+  // Yorum ekleme işlemi
+  document.getElementById('comment-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const usernameInput = document.getElementById('comment-username');
+    const commentInput = document.getElementById('comment-text');
+    const username = usernameInput.value.trim();
+    const text = commentInput.value.trim();
+    if(!username || !text) return; // Boşsa ekleme
+
+    const comments = JSON.parse(localStorage.getItem(COMMENTS_KEY)) || [];
+    const now = new Date();
+    const date = now.toLocaleString();
+    comments.push({username, text, date});
+    localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
+
+    // Formu temizle ve listeyi güncelle
+    usernameInput.value = '';
+    commentInput.value = '';
+    loadComments();
+  });
+
+  // Sayfa yüklendiğinde yorumları göster
+  document.addEventListener('DOMContentLoaded', loadComments);
+</script>
+
+</body>
+</html>

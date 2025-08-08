@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Social Link</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+    }
+
+    body {
+      background: url('https://i.imgur.com/S95JAKZ.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+    }
+
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://i.ibb.co/C9qDNf9/particles.gif') center/cover no-repeat;
+      opacity: 0.2;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 12px 24px;
+      margin-top: 15px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    .social-link i {
+      font-size: 22px;
+    }
+
+    .play-button {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 3;
+      transition: opacity 1s ease;
+    }
+
+    .play-button.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="particles"></div>
+
+  <div class="play-button" onclick="startAudio()">▶ Start Music</div>
+
+  <div class="container">
+    <a class="social-link" href="https://t.me/iidontneedyou" target="_blank">
+      <i class="fab fa-telegram"></i> Telegram
+    </a>
+    <a class="social-link" href="https://wa.me/447846848820" target="_blank">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+  </div>
+
+  <footer>
+    © 2025 Ege Deniz. All rights reserved.
+  </footer>
+
+  <audio id="bg-audio" loop>
+    <source src="https://raw.githubusercontent.com/FragmentsBOT/audio/main/twenty-one-pilots-Doubt-_Official-Audio_.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function startAudio() {
+      const audio = document.getElementById("bg-audio");
+      const btn = document.querySelector(".play-button");
+      audio.play();
+      btn.classList.add("hide");
+    }
+  </script>
+</body>
+</html>

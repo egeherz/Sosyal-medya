@@ -1,31 +1,19 @@
-# Fragments Müzik Botu Web Sitesi
+# Kişisel Sosyal Link Sayfası
 
-**DİKKAT!**
+**DİKKAT:** Bu web sayfası, sadece Ege Deniz’e aittir ve kişisel hesaplarını içerir. İzinsiz kopyalanması, çoğaltılması veya kullanılması kesinlikle yasaktır. Tüm hakları saklıdır.
 
-Bu web sitesi sadece **Fragments Müzik Botu** için özel olarak tasarlanmıştır.  
-**İzinsiz kullanımı, kopyalanması veya çoğaltılması kesinlikle yasaktır!**
+## Özellikler
+- Sadece Ege Deniz’in sosyal medya bağlantısı bulunmaktadır.
+- Tasarım sade, modern ve güvenlidir.
+- Arka plan bulanıklaştırılmış karanlık bir görsel ile desteklenmiştir.
 
-- Kodlar ve tasarım size özel, kesinlikle çoğaltılamaz.  
-- Başkalarının kullanımına açık değildir, ticari veya kişisel izin olmadan kullanmak yasaktır.  
-- Herhangi bir kopyalama veya kötüye kullanım tespit edilirse yasal işlemler başlatılacaktır.  
-- Bu projeyi anlamadan, üzerinde değişiklik yapmadan veya izin almadan kullanmaya çalışmak tamamen yasaktır.
+## Kullanım Koşulları
+- Bu sayfa sadece Ege Deniz’in kişisel kullanımı içindir.
+- Herhangi bir amaçla izinsiz erişim, kopyalama, yeniden dağıtım veya ticari kullanım yasaktır.
+- Hukuki yollara başvurulacaktır.
 
-**Bu projeyi kullanmak isteyenler, yeterli teknik bilgiye sahip olmadıkça kesinlikle işe yaramayacaktır.**
+## Teknik Detaylar
+- HTML, CSS ve FontAwesome ile hazırlanmıştır.
+- Mobil ve masaüstü uyumludur.
 
----
-
-**Geliştirici İletişim:**  
-[@l0110310132100101110105122](https://t.me/l0110310132100101110105122)  
-E-posta: contact@egeherz.com
-
----
-
-**Uyarı:**  
-Telegram üzerinden geliştiriciye veya destekçilere gereksiz mesaj göndermek yasaktır.  
-Bu tür davranışlar tespit edildiğinde kalıcı olarak engellenirsiniz.
-
----
-
-**Kısaca:**  
-Bu proje sadece “anlayabilenler” içindir.  
-İzinsiz kullanmak veya kopyalamak **sıfır hoşgörüyle** karşılanacaktır.
+© 2025 Ege Deniz. Tüm hakları saklıdır.

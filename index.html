@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Social Links</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+    html, body {
+      height: 100%;
+      background: url("https://i.imgur.com/S95JAKZ.jpeg") no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+      color: white;
+      overflow: hidden;
+    }
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(12px);
+      background-color: rgba(0, 0, 0, 0.55);
+      z-index: 0;
+    }
+    .light-beams {
+      display: none;
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 22px;
+      padding: 100px 24px 24px;
+      opacity: 0;
+      animation: fadeIn 1.5s forwards ease-in-out;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    a.social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: rgba(255 255 255 / 0.15);
+      padding: 16px 32px;
+      border-radius: 22px;
+      color: white;
+      text-decoration: none;
+      font-size: 22px;
+      font-weight: 700;
+      transition: all 0.35s ease;
+      border: 2px solid rgba(255 255 255 / 0.35);
+      user-select: none;
+      max-width: 360px;
+      width: 100%;
+      box-shadow: 0 4px 10px rgba(255, 0, 150, 0.3), 0 6px 20px rgba(0, 200, 255, 0.25);
+    }
+    a.social-link:hover {
+      background: rgba(255 255 255 / 0.4);
+      transform: translateY(-6px) scale(1.08);
+      border-color: #ff0096;
+      box-shadow: 0 6px 20px rgba(255, 0, 150, 0.7), 0 10px 30px rgba(0, 200, 255, 0.6);
+      cursor: pointer;
+      text-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+    }
+    a.social-link i {
+      font-size: 32px;
+      min-width: 36px;
+      text-align: center;
+    }
+    footer {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 15px;
+      color: rgba(255 255 255 / 0.8);
+      z-index: 1;
+    }
+    .popup-wrapper {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(20, 20, 20, 0.95);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 0, 150, 0.6);
+      font-size: 18px;
+      width: 300px;
+      height: 300px;
+      z-index: 10000;
+      text-align: center;
+      color: #eee;
+      display: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .popup-wrapper button {
+      margin-top: 22px;
+      background-color: #ff0096;
+      border: none;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 0 14px rgba(255, 0, 150, 0.7);
+    }
+    .popup-wrapper button:hover {
+      background-color: #e6007e;
+    }
+  </style>
+</head>
+<body>
+  <div class="light-beams"></div>
+  <div class="container">
+    <a class="social-link" href="https://t.me/iidontneedyou" target="_blank">
+      <i class="fab fa-telegram"></i> Telegram
+    </a>
+    <a class="social-link" href="#" id="whatsappLink">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+  </div>
+
+  <footer>© 2025 Ege Deniz. All rights reserved.</footer>
+
+  <audio id="bg-audio" loop>
+    <source src="https://raw.githubusercontent.com/egeherz/sosyal-medya/main/twenty-one-pilots-Doubt-_Official-Audio_.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="popup-wrapper" id="popupMessage">
+    <div>Beni stalklıyorsun, yakaladım seni :)</div>
+    <button id="popupCloseBtn">😏</button>
+  </div>
+
+  <script>
+    const audio = document.getElementById("bg-audio");
+
+    window.onload = function () {
+      const popup = document.getElementById("popupMessage");
+      const closeBtn = document.getElementById("popupCloseBtn");
+
+      if (!localStorage.getItem("popupShown")) {
+        popup.style.display = "flex";
+      }
+
+      closeBtn.addEventListener("click", () => {
+        popup.style.display = "none";
+        localStorage.setItem("popupShown", "true");
+        audio.play();
+      });
+    };
+
+    document.getElementById("whatsappLink").addEventListener("click", function (e) {
+      e.preventDefault();
+      const correctPassword = "egosss";
+      const userInput = prompt("WhatsApp bağlantısı için şifre gir:");
+      if (userInput === correctPassword) {
+        window.location.href = "https://wa.me/447846848820";
+      } else if (userInput !== null) {
+        alert("❌ Hatalı şifre. Erişim yok.");
+      }
+    });
+  </script>
+</body>
+</html>

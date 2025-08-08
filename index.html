@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Social Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: url('https://i.imgur.com/S95JAKZ.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-direction: column;
+      position: relative;
+      padding-top: 80px;
+      padding-left: 50%;
+      transform: translateX(-50%);
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(18px) brightness(0.7);
+      -webkit-backdrop-filter: blur(18px) brightness(0.7);
+      background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+      z-index: 0;
+      animation: bgfade 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgfade {
+      0% { background-position: left; }
+      100% { background-position: right; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 50px 40px;
+      border-radius: 28px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      text-align: center;
+      animation: slideIn 1.4s ease forwards;
+    }
+
+    @keyframes slideIn {
+      0% { opacity: 0; transform: translateY(60px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.14);
+      padding: 18px 34px;
+      margin-top: 24px;
+      border-radius: 20px;
+      text-decoration: none;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 600;
+      transition: all 0.35s ease;
+      backdrop-filter: blur(10px);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      position: relative;
+    }
+
+    .social-link::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      opacity: 0;
+      transition: 0.4s;
+      border-radius: 20px;
+    }
+
+    .social-link:hover::after {
+      opacity: 1;
+    }
+
+    .social-link:hover {
+      transform: scale(1.08);
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .social-link i {
+      font-size: 26px;
+    }
+
+    .play-button {
+      position: absolute;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(12px);
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+
+    .play-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateX(-50%) scale(1.1);
+    }
+
+    .play-button i {
+      font-size: 28px;
+      color: white;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+      70% { box-shadow: 0 0 0 15px rgba(255,255,255,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 15px;
+      letter-spacing: 0.6px;
+      z-index: 1;
+      animation: fadeIn 2s ease forwards;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  </style>
+</head>
+<body>
+  <audio id="bg-audio">
+    <source src="https://raw.githubusercontent.com/USERNAME/REPO/main/twenty-one-pilots-Doubt-_Official-Audio_.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="play-button" onclick="startAudio(this)">
+    <i class="fas fa-play"></i>
+  </div>
+
+  <div class="container">
+    <a class="social-link" href="https://t.me/iidontneedyou" target="_blank">
+      <i class="fab fa-telegram"></i> Telegram
+    </a>
+    <a class="social-link" href="https://wa.me/447846848820" target="_blank">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+  </div>
+
+  <footer>
+    © 2025 Ege Deniz. All rights reserved.
+  </footer>
+
+  <script>
+    function startAudio(btn) {
+      const audio = document.getElementById('bg-audio');
+      audio.play();
+      btn.classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

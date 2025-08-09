@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Social Link</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+    }
+
+    body {
+      background: url('https://i.imgur.com/S95JAKZ.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      background-color: rgba(0, 0, 0, 0.35);
+      z-index: 0;
+    }
+
+    .social-link {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 250px;
+      height: 55px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+      animation: glow 2s infinite alternate;
+      margin: 8px 0;
+      gap: 10px;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+      to { box-shadow: 0 0 25px rgba(255,255,255,1); }
+    }
+
+    .telegram { background-color: rgba(34, 158, 217, 0.8); }
+    .telegram:hover { background-color: rgba(34, 158, 217, 1); }
+
+    .spotify { background-color: rgba(30, 215, 96, 0.8); }
+    .spotify:hover { background-color: rgba(30, 215, 96, 1); }
+
+    .tiktok { background: linear-gradient(45deg, #010101, #fe2c55, #25f4ee); }
+    .tiktok:hover { filter: brightness(1.2); }
+
+    .instagram { background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5); }
+    .instagram:hover { filter: brightness(1.2); }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <a class="social-link telegram" href="https://t.me/doubtyou" target="_blank">
+    <i class="fab fa-telegram"></i> Telegram
+  </a>
+  
+  <a class="social-link spotify" href="https://open.spotify.com/playlist/3UQr73d3ozG2n7vAdH5F4f" target="_blank">
+    <i class="fab fa-spotify"></i> Spotify
+  </a>
+
+  <a class="social-link tiktok" href="https://www.tiktok.com/@egeherz" target="_blank">
+    <i class="fab fa-tiktok"></i> TikTok
+  </a>
+
+  <a class="social-link instagram" href="https://www.instagram.com/iidontneeddyou" target="_blank">
+    <i class="fab fa-instagram"></i> Instagram
+  </a>
+
+  <footer>
+    © 2025 Ege Deniz. All rights reserved.
+  </footer>
+
+</body>
+</html>

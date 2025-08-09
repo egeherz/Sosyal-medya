@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ege Deniz | Sosyal Linkler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+    body, html { height: 100%; }
+
+    body {
+      background: url('https://i.imgur.com/S95JAKZ.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      padding: 24px;
+    }
+
+    /* --- Profil resmi (küçük kare) --- */
+    .profile-img {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: 0; /* kare yapmak için 0 */
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      margin-bottom: 18px;
+      border: 2px solid rgba(255,255,255,0.06);
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 260px;
+      padding: 14px;
+      margin: 8px 0;
+      border-radius: 50px;
+      font-size: 17px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform .25s ease, box-shadow .25s ease;
+      color: white;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    }
+
+    /* Marka renkleri */
+    .telegram { background-color: #229ED9; }
+    .spotify  { background-color: #1DB954; }
+    .tiktok   { background-color: #FE2C55; }
+    .instagram{ background-color: #E4405F; }
+
+    /* Hover efekti (her buton kendi renginin parıltısını alır) */
+    .social-link:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+      filter: brightness(1.04);
+    }
+
+    /* İkon boyutu */
+    .social-link i { font-size: 20px; }
+
+    footer {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 14px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .visitor-counter {
+      margin-top: 6px;
+      font-size: 15px;
+      display: inline-block;
+    }
+
+    @media (max-width: 420px) {
+      .social-link { width: 92%; font-size: 16px; padding: 12px; }
+      .profile-img { width: 60px; height: 60px; margin-bottom: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Profil resmi (küçük kare) -->
+  <img class="profile-img" src="https://i.imgur.com/ZksBjgA.jpeg" alt="Ege Deniz">
+
+  <!-- Sosyal linkler -->
+  <a class="social-link telegram" href="https://t.me/doubtyou" target="_blank" rel="noopener">
+    <i class="fab fa-telegram"></i> Telegram
+  </a>
+
+  <a class="social-link spotify" href="https://open.spotify.com/playlist/3UQr73d3ozG2n7vAdH5F4f?si=obmbnbUdTO-S-ryAiS9j8w&pi=dJsv1cSCTx62j" target="_blank" rel="noopener">
+    <i class="fab fa-spotify"></i> Spotify
+  </a>
+
+  <a class="social-link tiktok" href="https://www.tiktok.com/@egeherz" target="_blank" rel="noopener">
+    <i class="fab fa-tiktok"></i> TikTok
+  </a>
+
+  <a class="social-link instagram" href="https://www.instagram.com/iidontneeddyou" target="_blank" rel="noopener">
+    <i class="fab fa-instagram"></i> Instagram
+  </a>
+
+  <footer>
+    © 2025 Ege Deniz. All rights reserved.
+    <div class="visitor-counter">👁‍🗨 Ziyaretçi Sayısı: <span id="visitorCount" aria-live="polite">0</span></div>
+  </footer>
+
+  <script>
+    // Sayaç ayarları
+    const NAMESPACE = 'ege-deniz-social-links';
+    const KEY = 'visits';
+    const HIT_URL = `https://api.countapi.xyz/hit/${NAMESPACE}/${KEY}`;
+    const GET_URL = `https://api.countapi.xyz/get/${NAMESPACE}/${KEY}`;
+    const ONE_HOUR = 3600000;
+
+    function setCount(num) {
+      const el = document.getElementById('visitorCount');
+      el.textContent = (typeof num === 'number') ? num : num;
+    }
+
+    (function updateVisitorCount(){
+      const lastVisit = parseInt(localStorage.getItem('lastVisitTime'), 10);
+      const now = Date.now();
+
+      // Eğer 1 saatten fazla olduysa hit (arttır), değilse sadece getir
+      if (!lastVisit || (now - lastVisit) > ONE_HOUR) {
+        fetch(HIT_URL)
+          .then(res => res.json())
+          .then(data => {
+            if (data && data.value !== undefined) {
+              setCount(data.value);
+              localStorage.setItem('lastVisitTime', now.toString());
+            } else {
+              // beklenmeyen cevap, fallback ile get isteği yap
+              return fetch(GET_URL).then(r => r.json()).then(d => setCount(d.value));
+            }
+          })
+          .catch(() => {
+            // ağ hatası olursa sadece getir
+            fetch(GET_URL)
+              .then(r => r.json())
+              .then(d => setCount(d.value))
+              .catch(() => setCount('—'));
+          });
+      } else {
+        // kısa sürede tekrar gelinmişse sadece mevcut değeri getir
+        fetch(GET_URL)
+          .then(res => res.json())
+          .then(data => setCount(data.value))
+          .catch(() => setCount('—'));
+      }
+    })();
+  </script>
+</body>
+</html>

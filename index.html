@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Social Link</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body, html { height: 100%; }
+    body {
+      background: url('https://i.imgur.com/S95JAKZ.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+    }
+    .social-link {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 14px 28px;
+      margin: 10px 0;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 600;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
+    .social-link:hover {
+      transform: scale(1.05);
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    .social-link i { font-size: 20px; }
+    .social-link span {
+      background: linear-gradient(90deg, #fff, #ffd700, #fff);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 3s linear infinite;
+    }
+    @keyframes shine {
+      to { background-position: 200% center; }
+    }
+    .telegram { color: #229ED9; }
+    .spotify { color: #1DB954; }
+    .tiktok { color: #000000; }
+    .instagram { color: #E4405F; }
+    #visitorCounter {
+      position: relative;
+      z-index: 1;
+      margin-top: 20px;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 16px;
+    }
+    footer {
+      position: absolute;
+      bottom: 20px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <a class="social-link telegram" href="https://t.me/doubtyou" target="_blank">
+    <i class="fab fa-telegram"></i> <span>𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦</span>
+  </a>
+  <a class="social-link spotify" href="https://open.spotify.com/playlist/3UQr73d3ozG2n7vAdH5F4f?si=obmbnbUdTO-S-ryAiS9j8w&pi=dJsv1cSCTx62j" target="_blank">
+    <i class="fab fa-spotify"></i> <span>𝐒𝐩𝐨𝐭𝐢𝐟𝐲</span>
+  </a>
+  <a class="social-link tiktok" href="https://www.tiktok.com/@egeherz" target="_blank">
+    <i class="fab fa-tiktok"></i> <span>𝐓𝐢𝐤𝐓𝐨𝐤</span>
+  </a>
+  <a class="social-link instagram" href="https://instagram.com/iidontneeddyou" target="_blank">
+    <i class="fab fa-instagram"></i> <span>𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦</span>
+  </a>
+
+  <div id="visitorCounter">👁️ Ziyaretçi Sayısı: yükleniyor...</div>
+
+  <footer>© 2025 Ege Deniz. All rights reserved.</footer>
+
+  <script>
+    fetch('https://counterapi.dev/api/ut_jrWbvWWh2gHaF8uC5yqqApHtb7Q8xcWY9KKUSm4A/increment')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('visitorCounter').textContent = `👁️ Ziyaretçi Sayısı: ${data.count}`;
+      })
+      .catch(() => {
+        document.getElementById('visitorCounter').textContent = "👁️ Sayaç yüklenemedi";
+      });
+  </script>
+</body>
+</html>
